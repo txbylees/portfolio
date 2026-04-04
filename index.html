@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Portfolio — Quality Engineered</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Noise overlay -->
+  <div class="noise"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-dot"></span>
+        <span>Toby<em>Lees</em></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#clients">Clients</a></li>
+        <li><a href="#projects">Projects</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-lines"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge" data-reveal>
+        <span class="badge-dot"></span>
+        QA Engineer
+      </div>
+
+      <h1 class="hero-title" data-reveal>
+        <span class="line">Quality</span>
+        <span class="line accent-line">Assurance</span>
+        <span class="line">Engineering</span>
+      </h1>
+
+      <p class="hero-sub" data-reveal>
+        I break things professionally — so your users don't have to.<br />
+        Precision testing, automation & flawless software delivery.
+      </p>
+
+      <div class="hero-cta" data-reveal>
+        <a href="#projects" class="btn-primary">View My Work</a>
+        <a href="#clients" class="btn-ghost">See Clients</a>
+      </div>
+
+      <div class="hero-stats" data-reveal>
+        <div class="stat">
+          <span class="stat-num" data-count="150">0</span><span>+</span>
+          <p>Projects Tested</p>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-count="98">0</span><span>%</span>
+          <p>Bug Detection Rate</p>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-count="40">0</span><span>+</span>
+          <p>Happy Clients</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <span class="t-dot red"></span>
+          <span class="t-dot yellow"></span>
+          <span class="t-dot green"></span>
+          <span class="t-title">test-suite.spec.js</span>
+        </div>
+        <div class="terminal-body" id="terminalBody">
+          <div class="t-line"><span class="t-keyword">describe</span><span class="t-paren">(</span><span class="t-string">'User Auth Flow'</span><span class="t-paren">)</span> <span class="t-brace">{</span></div>
+          <div class="t-line indent"><span class="t-keyword">it</span><span class="t-paren">(</span><span class="t-string">'should log in successfully'</span><span class="t-paren">)</span> <span class="t-brace">{</span></div>
+          <div class="t-line indent2"><span class="t-fn">cy</span>.<span class="t-method">visit</span><span class="t-paren">(</span><span class="t-string">'/login'</span><span class="t-paren">)</span></div>
+          <div class="t-line indent2"><span class="t-fn">cy</span>.<span class="t-method">get</span><span class="t-paren">(</span><span class="t-string">'#email'</span><span class="t-paren">)</span>.<span class="t-method">type</span><span class="t-paren">(</span><span class="t-string">'user@test.com'</span><span class="t-paren">)</span></div>
+          <div class="t-line indent2"><span class="t-fn">cy</span>.<span class="t-method">get</span><span class="t-paren">(</span><span class="t-string">'#password'</span><span class="t-paren">)</span>.<span class="t-method">type</span><span class="t-paren">(</span><span class="t-string">'••••••••'</span><span class="t-paren">)</span></div>
+          <div class="t-line indent2"><span class="t-fn">cy</span>.<span class="t-method">get</span><span class="t-paren">(</span><span class="t-string">'.btn-login'</span><span class="t-paren">)</span>.<span class="t-method">click</span><span class="t-paren">()</span></div>
+          <div class="t-line indent2"><span class="t-fn">cy</span>.<span class="t-method">url</span><span class="t-paren">()</span>.<span class="t-method">should</span><span class="t-paren">(</span><span class="t-string">'include'</span>, <span class="t-string">'/dashboard'</span><span class="t-paren">)</span></div>
+          <div class="t-line indent"><span class="t-brace">}</span><span class="t-pass">✓ PASSED</span></div>
+          <div class="t-line indent"><span class="t-keyword">it</span><span class="t-paren">(</span><span class="t-string">'validates API response schema'</span><span class="t-paren">)</span> <span class="t-brace">{</span></div>
+          <div class="t-line indent2"><span class="t-comment">// Schema validation running...</span></div>
+          <div class="t-line indent"><span class="t-brace">}</span><span class="t-pass">✓ PASSED</span></div>
+          <div class="t-line"><span class="t-brace">}</span></div>
+          <div class="t-line results"><span class="t-pass">✓ 12 passing</span> <span class="t-fail">0 failing</span> <span class="t-duration">(2.3s)</span></div>
+          <div class="t-cursor">▋</div>
+        </div>
+      </div>
+      <div class="floating-badge badge-tl">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        All Tests Passing
+      </div>
+      <div class="floating-badge badge-br">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        2.3s Runtime
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-label" data-reveal>About Me</p>
+          <h2 data-reveal>I find the bugs <em>before</em> your customers do.</h2>
+          <p data-reveal>With a meticulous eye for detail and a passion for software quality, I specialise in manual and automated testing across web and mobile platforms. I partner with development teams to ship with confidence.</p>
+          <p data-reveal>From exploratory testing to building robust Cypress & Playwright suites — I make sure every release is something to be proud of.</p>
+          <div class="about-tags" data-reveal>
+            <span>Agile Teams</span>
+            <span>CI/CD Pipelines</span>
+            <span>API Testing</span>
+            <span>Regression Testing</span>
+            <span>Test Strategy</span>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="process-card" data-reveal>
+            <div class="process-step active">
+              <div class="step-icon">01</div>
+              <div>
+                <strong>Requirements Analysis</strong>
+                <p>Deep dive into specs & user stories</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-icon">02</div>
+              <div>
+                <strong>Test Planning</strong>
+                <p>Strategy, cases & coverage mapping</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-icon">03</div>
+              <div>
+                <strong>Execution & Reporting</strong>
+                <p>Manual, automated & edge cases</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-icon">04</div>
+              <div>
+                <strong>Sign-off & Delivery</strong>
+                <p>Quality certified, release-ready</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <p class="section-label center" data-reveal>Skills & Tools</p>
+      <h2 class="center" data-reveal>My QA Toolkit</h2>
+      <div class="skills-grid">
+        <div class="skill-card" data-reveal>
+          <div class="skill-icon">⚡</div>
+          <h3>Automation</h3>
+          <div class="skill-tags"><span>Cypress</span><span>Playwright</span><span>Selenium</span><span>Jest</span></div>
+        </div>
+        <div class="skill-card" data-reveal>
+          <div class="skill-icon">🔍</div>
+          <h3>Manual Testing</h3>
+          <div class="skill-tags"><span>Exploratory</span><span>Regression</span><span>UAT</span><span>Smoke</span></div>
+        </div>
+        <div class="skill-card" data-reveal>
+          <div class="skill-icon">🌐</div>
+          <h3>API Testing</h3>
+          <div class="skill-tags"><span>Postman</span><span>REST</span><span>GraphQL</span><span>Insomnia</span></div>
+        </div>
+        <div class="skill-card" data-reveal>
+          <div class="skill-icon">📱</div>
+          <h3>Mobile QA</h3>
+          <div class="skill-tags"><span>iOS</span><span>Android</span><span>Appium</span><span>BrowserStack</span></div>
+        </div>
+        <div class="skill-card" data-reveal>
+          <div class="skill-icon">🚀</div>
+          <h3>CI/CD</h3>
+          <div class="skill-tags"><span>GitHub Actions</span><span>Jenkins</span><span>CircleCI</span><span>Docker</span></div>
+        </div>
+        <div class="skill-card" data-reveal>
+          <div class="skill-icon">📋</div>
+          <h3>Management</h3>
+          <div class="skill-tags"><span>Jira</span><span>TestRail</span><span>Confluence</span><span>Zephyr</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="clients" id="clients">
+    <div class="container">
+      <p class="section-label center" data-reveal>Client List</p>
+      <h2 class="center" data-reveal>Trusted By Great Teams</h2>
+      <p class="clients-sub center" data-reveal>I've had the privilege of working with companies across fintech, e-commerce, SaaS and healthcare.</p>
+
+      <div class="clients-marquee-wrapper" data-reveal>
+        <div class="clients-marquee">
+          <div class="marquee-track" id="marqueeTrack">
+            <div class="client-logo">Amsterdam<span>Digital</span></div>
+            <div class="client-logo">Venice<span>Studio</span></div>
+            <div class="client-logo">Milano<span>Tech</span></div>
+            <div class="client-logo">Loonira<span>®</span></div>
+            <div class="client-logo">PrimeStudio</div>
+            <div class="client-logo">Vossify<span>Inc</span></div>
+            <div class="client-logo">HelloX</div>
+            <div class="client-logo">Prismora</div>
+            <div class="client-logo">Crawford<span>Labs</span></div>
+            <div class="client-logo">Octu<span>.Design</span></div>
+            <!-- Duplicated for seamless loop -->
+            <div class="client-logo">Amsterdam<span>Digital</span></div>
+            <div class="client-logo">Venice<span>Studio</span></div>
+            <div class="client-logo">Milano<span>Tech</span></div>
+            <div class="client-logo">Loonira<span>®</span></div>
+            <div class="client-logo">PrimeStudio</div>
+            <div class="client-logo">Vossify<span>Inc</span></div>
+            <div class="client-logo">HelloX</div>
+            <div class="client-logo">Prismora</div>
+            <div class="client-logo">Crawford<span>Labs</span></div>
+            <div class="client-logo">Octu<span>.Design</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card" data-reveal>
+          <div class="stars">★★★★★</div>
+          <p>"Found 23 critical bugs before our launch. Saved us from a PR disaster. Absolutely exceptional QA work."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AL</div>
+            <div><strong>Alex Lennon</strong><span>CTO, PrimeStudio</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card" data-reveal>
+          <div class="stars">★★★★★</div>
+          <p>"The test automation suite they built reduced our regression time from 8 hours to 20 minutes. Game changer."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">SR</div>
+            <div><strong>Sara Richie</strong><span>Product Lead, Vossify</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card" data-reveal>
+          <div class="stars">★★★★★</div>
+          <p>"Meticulous, communicative, and brilliant at spotting edge cases no one else would think to test."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MT</div>
+            <div><strong>Marcus Theo</strong><span>Head of Engineering, HelloX</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <p class="section-label" data-reveal>Featured Work</p>
+      <h2 data-reveal>Projects & Case Studies</h2>
+      <div class="projects-grid">
+
+        <div class="project-card featured" data-reveal>
+          <div class="project-label">E-Commerce Platform</div>
+          <h3>Full Regression Suite — Loonira Shop</h3>
+          <p>Built a complete Cypress automation suite covering 200+ user journeys, integrated with GitHub Actions CI/CD pipeline. Zero regressions shipped in 6 months post-implementation.</p>
+          <div class="project-meta">
+            <span class="meta-tag">Cypress</span>
+            <span class="meta-tag">GitHub Actions</span>
+            <span class="meta-tag">REST API</span>
+          </div>
+          <div class="project-stats">
+            <div><strong>200+</strong><small>Test Cases</small></div>
+            <div><strong>94%</strong><small>Coverage</small></div>
+            <div><strong>0</strong><small>P1 Bugs Shipped</small></div>
+          </div>
+          <a href="#" class="project-link">View Case Study →</a>
+        </div>
+
+        <div class="project-card" data-reveal>
+          <div class="project-label">Fintech</div>
+          <h3>API Security Testing — PrimeStudio Pay</h3>
+          <p>End-to-end API testing strategy for a payment gateway, including authentication flows, edge cases, and load testing.</p>
+          <div class="project-meta">
+            <span class="meta-tag">Postman</span>
+            <span class="meta-tag">k6</span>
+            <span class="meta-tag">Security</span>
+          </div>
+          <a href="#" class="project-link">View Case Study →</a>
+        </div>
+
+        <div class="project-card" data-reveal>
+          <div class="project-label">SaaS</div>
+          <h3>Mobile QA — Vossify App</h3>
+          <p>Cross-platform mobile testing across 15 device/OS combinations. Established bug taxonomy and severity classification system.</p>
+          <div class="project-meta">
+            <span class="meta-tag">Appium</span>
+            <span class="meta-tag">BrowserStack</span>
+            <span class="meta-tag">iOS/Android</span>
+          </div>
+          <a href="#" class="project-link">View Case Study →</a>
+        </div>
+
+        <div class="project-card" data-reveal>
+          <div class="project-label">Healthcare</div>
+          <h3>Accessibility Audit — MediTrack</h3>
+          <p>WCAG 2.1 AA compliance testing for a patient-facing healthcare portal. Identified and tracked 47 accessibility violations to resolution.</p>
+          <div class="project-meta">
+            <span class="meta-tag">WCAG 2.1</span>
+            <span class="meta-tag">axe</span>
+            <span class="meta-tag">Screen Readers</span>
+          </div>
+          <a href="#" class="project-link">View Case Study →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a href="#" class="logo">
+          <span class="logo-dot"></span>
+          <span>QA<em>Pro</em></span>
+        </a>
+        <p>© 2025 QAPro. Quality engineered.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

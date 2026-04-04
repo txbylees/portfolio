@@ -289,71 +289,103 @@
     <div class="container">
       <p class="section-label" data-reveal>Featured Work</p>
       <h2 data-reveal>Projects & Case Studies</h2>
-      <div class="projects-grid">
+      <div class="projects-grid projects-grid-4">
 
-        <div class="project-card featured" data-reveal>
-          <div class="project-label">E-Commerce Platform</div>
-          <h3>Full Regression Suite — Loonira Shop</h3>
-          <p>Built a complete Cypress automation suite covering 200+ user journeys, integrated with GitHub Actions CI/CD pipeline. Zero regressions shipped in 6 months post-implementation.</p>
+        <!-- Card 1: Help for Heroes -->
+        <div class="project-card client-card" data-reveal>
+          <div class="client-logo-wrap">
+            <svg class="client-wordmark" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg" aria-label="Help for Heroes">
+              <!-- Shield icon -->
+              <path d="M20 8 L36 8 L36 38 Q36 52 28 58 Q20 52 20 38 Z" fill="none" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M24 26 L28 30 L34 22" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Text -->
+              <text x="44" y="30" font-family="Georgia, serif" font-size="13" font-weight="700" fill="#111" letter-spacing="0.5">HELP FOR</text>
+              <text x="44" y="48" font-family="Georgia, serif" font-size="13" font-weight="700" fill="#111" letter-spacing="0.5">HEROES</text>
+              <line x1="44" y1="54" x2="145" y2="54" stroke="#111" stroke-width="1"/>
+              <text x="44" y="65" font-family="Arial, sans-serif" font-size="7.5" fill="#555" letter-spacing="1.5">SUPPORTING OUR VETERANS</text>
+            </svg>
+          </div>
+          <div class="project-label">Charity — Veterans</div>
+          <h3>Help for Heroes</h3>
+          <p>End-to-end QA across the veteran support platform, covering donation flows, account management and accessibility compliance for Armed Forces beneficiaries.</p>
           <div class="project-meta">
             <span class="meta-tag">Cypress</span>
-            <span class="meta-tag">GitHub Actions</span>
-            <span class="meta-tag">REST API</span>
-          </div>
-          <div class="project-stats">
-            <div><strong>200+</strong><small>Test Cases</small></div>
-            <div><strong>94%</strong><small>Coverage</small></div>
-            <div><strong>0</strong><small>P1 Bugs Shipped</small></div>
-          </div>
-          <a href="#" class="project-link">View Case Study →</a>
-        </div>
-
-        <div class="project-card" data-reveal>
-          <div class="project-label">Fintech</div>
-          <h3>API Security Testing — PrimeStudio Pay</h3>
-          <p>End-to-end API testing strategy for a payment gateway, including authentication flows, edge cases, and load testing.</p>
-          <div class="project-meta">
-            <span class="meta-tag">Postman</span>
-            <span class="meta-tag">k6</span>
-            <span class="meta-tag">Security</span>
-          </div>
-          <a href="#" class="project-link">View Case Study →</a>
-        </div>
-
-        <div class="project-card" data-reveal>
-          <div class="project-label">SaaS</div>
-          <h3>Mobile QA — Vossify App</h3>
-          <p>Cross-platform mobile testing across 15 device/OS combinations. Established bug taxonomy and severity classification system.</p>
-          <div class="project-meta">
-            <span class="meta-tag">Appium</span>
-            <span class="meta-tag">BrowserStack</span>
-            <span class="meta-tag">iOS/Android</span>
-          </div>
-          <a href="#" class="project-link">View Case Study →</a>
-        </div>
-
-        <div class="project-card" data-reveal>
-          <div class="project-label">Healthcare</div>
-          <h3>Accessibility Audit — MediTrack</h3>
-          <p>WCAG 2.1 AA compliance testing for a patient-facing healthcare portal. Identified and tracked 47 accessibility violations to resolution.</p>
-          <div class="project-meta">
             <span class="meta-tag">WCAG 2.1</span>
-            <span class="meta-tag">axe</span>
-            <span class="meta-tag">Screen Readers</span>
+            <span class="meta-tag">API Testing</span>
           </div>
-          <a href="#" class="project-link">View Case Study →</a>
         </div>
 
-        <div class="project-card" data-reveal>
-          <div class="project-label">Healthcare</div>
-          <h3>Accessibility Audit — MediTrack</h3>
-          <p>WCAG 2.1 AA compliance testing for a patient-facing healthcare portal. Identified and tracked 47 accessibility violations to resolution.</p>
-          <div class="project-meta">
-            <span class="meta-tag">WCAG 2.1</span>
-            <span class="meta-tag">axe</span>
-            <span class="meta-tag">Screen Readers</span>
+        <!-- Card 2: Maggie's -->
+        <div class="project-card client-card" data-reveal>
+          <div class="client-logo-wrap">
+            <svg class="client-wordmark" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg" aria-label="Maggie's">
+              <!-- Simple organic shape suggesting warmth -->
+              <ellipse cx="28" cy="32" rx="16" ry="16" fill="none" stroke="#111" stroke-width="2.5"/>
+              <path d="M20 32 Q28 22 36 32 Q28 42 20 32Z" fill="#111"/>
+              <!-- Text -->
+              <text x="52" y="36" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#111" letter-spacing="-0.5">Maggie's</text>
+              <line x1="52" y1="44" x2="180" y2="44" stroke="#111" stroke-width="1"/>
+              <text x="52" y="56" font-family="Arial, sans-serif" font-size="7.5" fill="#555" letter-spacing="1.5">CANCER CARE CENTRES</text>
+            </svg>
           </div>
-          <a href="#" class="project-link">View Case Study →</a>
+          <div class="project-label">Charity — Cancer Care</div>
+          <h3>Maggie's</h3>
+          <p>Functional and regression testing of the centre-finder tool, online support resources and appointment booking journeys across the Maggie's network of UK centres.</p>
+          <div class="project-meta">
+            <span class="meta-tag">Playwright</span>
+            <span class="meta-tag">Regression</span>
+            <span class="meta-tag">Mobile QA</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Bipolar UK -->
+        <div class="project-card client-card" data-reveal>
+          <div class="client-logo-wrap">
+            <svg class="client-wordmark" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg" aria-label="Bipolar UK">
+              <!-- Two arcs suggesting bipolar duality -->
+              <path d="M12 40 Q20 20 28 40" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M28 40 Q36 60 44 40" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="12" cy="40" r="2.5" fill="#111"/>
+              <circle cx="44" cy="40" r="2.5" fill="#111"/>
+              <!-- Text -->
+              <text x="56" y="34" font-family="Arial, sans-serif" font-size="16" font-weight="800" fill="#111" letter-spacing="1">BIPOLAR</text>
+              <text x="56" y="52" font-family="Arial, sans-serif" font-size="16" font-weight="300" fill="#111" letter-spacing="4">UK</text>
+              <line x1="56" y1="57" x2="155" y2="57" stroke="#111" stroke-width="1"/>
+              <text x="56" y="68" font-family="Arial, sans-serif" font-size="7" fill="#555" letter-spacing="1.5">MENTAL HEALTH CHARITY</text>
+            </svg>
+          </div>
+          <div class="project-label">Charity — Mental Health</div>
+          <h3>Bipolar UK</h3>
+          <p>Comprehensive QA of the peer support community platform, eCommunity forums, and crisis resource tools — with a focus on reliability and safe user journeys.</p>
+          <div class="project-meta">
+            <span class="meta-tag">Manual QA</span>
+            <span class="meta-tag">Exploratory</span>
+            <span class="meta-tag">UAT</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Breast Cancer UK -->
+        <div class="project-card client-card" data-reveal>
+          <div class="client-logo-wrap">
+            <svg class="client-wordmark" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg" aria-label="Breast Cancer UK">
+              <!-- Ribbon icon (simplified) -->
+              <path d="M28 14 Q36 14 36 22 Q36 30 28 34 Q20 30 20 22 Q20 14 28 14Z" fill="none" stroke="#111" stroke-width="2.5"/>
+              <path d="M22 32 L18 50 L28 42 L38 50 L34 32" fill="none" stroke="#111" stroke-width="2" stroke-linejoin="round"/>
+              <!-- Text -->
+              <text x="48" y="27" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#111" letter-spacing="0.3">BREAST CANCER</text>
+              <text x="48" y="43" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="#111" letter-spacing="0.3">UK</text>
+              <line x1="48" y1="50" x2="190" y2="50" stroke="#111" stroke-width="1"/>
+              <text x="48" y="62" font-family="Arial, sans-serif" font-size="7.5" fill="#555" letter-spacing="1.5">PREVENTION RESEARCH CHARITY</text>
+            </svg>
+          </div>
+          <div class="project-label">Charity — Healthcare</div>
+          <h3>Breast Cancer UK</h3>
+          <p>QA strategy and execution for the charity's fundraising platform and awareness campaign microsites, ensuring robust performance across all devices and browsers.</p>
+          <div class="project-meta">
+            <span class="meta-tag">Selenium</span>
+            <span class="meta-tag">Cross-browser</span>
+            <span class="meta-tag">Performance</span>
+          </div>
         </div>
 
       </div>

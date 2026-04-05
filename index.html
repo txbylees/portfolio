@@ -915,6 +915,323 @@
       .scroll-hint { display: none; }
       .footer-bar-inner { flex-direction: column; text-align: center; }
     }
+  /* ── About Me Section ─────────────────────────────────────── */
+  .about-me-section {
+    background: var(--off-white);
+    padding: 8rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+ 
+  /* Faint decorative blobs */
+  .about-me-section::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%);
+    top: -200px; right: -150px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .about-me-section::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+ 
+  .about-me-inner {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 6rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+ 
+  /* ── Image side ──────────────────────────────────────────── */
+  .about-me-image-wrap {
+    position: relative;
+  }
+ 
+  /* Tilted card behind the image */
+  .about-me-image-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border: 1.5px solid rgba(124,58,237,0.25);
+    border-radius: 24px;
+    transform: rotate(3deg);
+    transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    z-index: 0;
+  }
+  .about-me-image-wrap:hover::before {
+    transform: rotate(1deg) scale(1.01);
+  }
+ 
+  /* Second decorative card */
+  .about-me-image-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(167,139,250,0.04));
+    border-radius: 22px;
+    transform: rotate(-1.5deg);
+    transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    z-index: 0;
+  }
+  .about-me-image-wrap:hover::after {
+    transform: rotate(-0.5deg) scale(1.005);
+  }
+ 
+  .about-me-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+    position: relative;
+    z-index: 1;
+    filter: grayscale(15%) contrast(1.05);
+    transition: filter 0.5s ease, transform 0.5s ease;
+  }
+  .about-me-image-wrap:hover .about-me-img {
+    filter: grayscale(0%) contrast(1.02);
+    transform: scale(1.01);
+  }
+ 
+  /* Placeholder if no image */
+  .about-me-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #1a1330 0%, #2d1f50 50%, #1a1330 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .about-me-img-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(124,58,237,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,58,237,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .placeholder-initials {
+    font-family: var(--font-display);
+    font-size: 5rem; font-weight: 800;
+    color: rgba(167,139,250,0.4);
+    position: relative; z-index: 1;
+    letter-spacing: -0.03em;
+  }
+  .placeholder-label {
+    font-family: var(--font-display);
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(167,139,250,0.35);
+    position: relative; z-index: 1;
+  }
+ 
+  /* Floating chip on image */
+  .about-me-chip {
+    position: absolute;
+    bottom: 2rem; right: -1.5rem;
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: 50px;
+    padding: 0.6rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 3;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    animation: chipFloat 4s ease-in-out infinite;
+  }
+  @keyframes chipFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .about-me-chip .chip-dot {
+    width: 8px; height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: chipPulse 2s ease-in-out infinite;
+  }
+  @keyframes chipPulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.3); }
+  }
+  .about-me-chip span {
+    font-family: var(--font-display);
+    font-size: 0.75rem; font-weight: 700;
+    color: var(--gray-900);
+    white-space: nowrap;
+  }
+ 
+  /* Second floating chip - top left */
+  .about-me-chip-2 {
+    position: absolute;
+    top: 2rem; left: -1.5rem;
+    background: var(--dark);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    z-index: 3;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    animation: chipFloat 4s ease-in-out infinite;
+    animation-delay: -2s;
+    min-width: 140px;
+  }
+  .chip-2-label {
+    font-family: var(--font-display);
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--purple-light);
+    margin-bottom: 0.3rem;
+  }
+  .chip-2-value {
+    font-family: var(--font-display);
+    font-size: 1.3rem; font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+  .chip-2-sub {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.15rem;
+  }
+ 
+  /* ── Text side ───────────────────────────────────────────── */
+  .about-me-text {
+    position: relative;
+  }
+ 
+  .about-me-text .section-label {
+    font-family: var(--font-display);
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+ 
+  .about-me-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 800;
+    color: var(--gray-900);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+  .about-me-text h2 em {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--purple);
+    font-style: normal;
+  }
+ 
+  /* Paragraphs with a subtle animated left border reveal */
+  .about-me-paragraphs {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--gray-200);
+    margin-bottom: 2.5rem;
+  }
+  .about-me-paragraphs .border-fill {
+    position: absolute;
+    left: -2px; top: 0;
+    width: 2px; height: 0%;
+    background: linear-gradient(to bottom, var(--purple), var(--purple-light));
+    border-radius: 2px;
+    transition: height 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .about-me-paragraphs.border-animated .border-fill {
+    height: 100%;
+  }
+ 
+  .about-me-paragraphs p {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--gray-600);
+    margin-bottom: 1rem;
+  }
+  .about-me-paragraphs p:last-child { margin-bottom: 0; }
+ 
+  /* Fun facts row */
+  .about-me-facts {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .fact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .fact-icon { font-size: 1.3rem; margin-bottom: 0.3rem; }
+  .fact-item strong {
+    font-family: var(--font-display);
+    font-size: 0.88rem; font-weight: 700;
+    color: var(--gray-900);
+  }
+  .fact-item span {
+    font-size: 0.78rem;
+    color: var(--gray-400);
+  }
+ 
+  /* Skills pill track — horizontal scroll */
+  .about-me-pills-label {
+    font-family: var(--font-display);
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 0.75rem;
+  }
+  .about-me-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .about-pill {
+    font-family: var(--font-display);
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--purple);
+    background: rgba(124,58,237,0.07);
+    border: 1px solid rgba(124,58,237,0.18);
+    padding: 0.35rem 0.9rem;
+    border-radius: 50px;
+    transition: background 0.25s, color 0.25s, transform 0.2s;
+    cursor: default;
+  }
+  .about-pill:hover {
+    background: var(--purple);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+ 
+  /* Responsive */
+  @media (max-width: 900px) {
+    .about-me-inner {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+    .about-me-image-wrap {
+      max-width: 340px;
+      margin: 0 auto;
+    }
+    .about-me-chip { right: 0; }
+    .about-me-chip-2 { left: 0; }
+  }
+    
   </style>
 </head>
 <body>
@@ -1026,7 +1343,7 @@
 
         <div class="stats-grid" data-reveal>
           <div class="stat-box">
-            <div class="num"><span class="count" data-count="150">0</span><span style="color:var(--purple)">+</span></div>
+            <div class="num"><span class="count" data-count="100">0</span><span style="color:var(--purple)">+</span></div>
             <p>Projects tested & delivered</p>
           </div>
           <div class="stat-box">
@@ -1062,7 +1379,6 @@
           </div>
           <div class="section-links">
             <a href="#" class="pill-link filled">Case studies</a>
-            <a href="#" class="pill-link">All work</a>
           </div>
         </div>
 
@@ -1073,13 +1389,13 @@
             <div class="project-info">
               <div>
                 <div class="project-client-name">Help for Heroes</div>
-                <h3 class="project-title">Delivering a Zero-Defect Veteran Support Platform in 6 Weeks</h3>
-                <p class="project-desc">End-to-end QA strategy covering 200+ critical user journeys — from benefit applications to account management. Integrated Cypress automation suite into their CI/CD pipeline. Zero P1 bugs shipped post-launch.</p>
+                <h3 class="project-title">Delivering a Zero-Defect Veteran Support Platform</h3>
+                <p class="project-desc">End-to-end QA strategy covering 200+ critical user journeys — from benefit applications to account management. Tested end to end forms and encountered zero P1 bugs shipped post-launch.</p>
                 <div class="project-tags">
-                  <span class="project-tag">Cypress</span>
-                  <span class="project-tag">GitHub Actions</span>
-                  <span class="project-tag">WCAG 2.1</span>
-                  <span class="project-tag">API Testing</span>
+                  <span class="project-tag">Benificiary</span>
+                  <span class="project-tag">User Journeys</span>
+                  <span class="project-tag">Software Testing</span>
+                  <span class="project-tag">Integration testing</span>
                 </div>
               </div>
             </div>
@@ -1111,9 +1427,9 @@
               <div>
                 <div class="project-client-name">Maggie's</div>
                 <h3 class="project-title">QA for a Cancer Care Centre Booking & Resource Platform</h3>
-                <p class="project-desc">Functional and regression testing of the centre-finder, online support resources and appointment booking journeys across the UK-wide Maggie's network. Full cross-browser and mobile coverage.</p>
+                <p class="project-desc">Functional and regression testing of the centre-finder, online support resources and appointment booking journeys across the UK-wide Maggie's network. Full cross-browser and mobile coverage following advance test cases.</p>
                 <div class="project-tags">
-                  <span class="project-tag">Playwright</span>
+                  <span class="project-tag">Test Cases</span>
                   <span class="project-tag">BrowserStack</span>
                   <span class="project-tag">Regression</span>
                   <span class="project-tag">Mobile QA</span>
@@ -1443,6 +1759,94 @@
       </div>
     </section>
 
+    <section class="about-me-section" id="about-me">
+  <div class="wrap">
+    <div class="about-me-inner">
+ 
+      <!-- Image column -->
+      <div class="about-me-image-wrap" data-reveal>
+ 
+        <!--
+          SWAP THIS: Replace the placeholder below with a real <img> tag:
+          <img src="your-photo.jpg" alt="Your Name" class="about-me-img" />
+        -->
+        <div class="about-me-img-placeholder">
+          <div class="placeholder-initials">YN</div>
+          <div class="placeholder-label">Add your photo here</div>
+        </div>
+ 
+        <!-- Floating chip — bottom right -->
+        <div class="about-me-chip">
+          <div class="chip-dot"></div>
+          <span>Open to work</span>
+        </div>
+ 
+        <!-- Floating stat chip — top left -->
+        <div class="about-me-chip-2">
+          <div class="chip-2-label">Experience</div>
+          <div class="chip-2-value">5+ Yrs</div>
+          <div class="chip-2-sub">QA Engineering</div>
+        </div>
+ 
+      </div>
+ 
+      <!-- Text column -->
+      <div class="about-me-text" data-reveal>
+ 
+        <span class="section-label">About Me</span>
+ 
+        <h2>The person behind<br/>the <em>test suite.</em></h2>
+ 
+        <div class="about-me-paragraphs" id="aboutBorderEl">
+          <div class="border-fill"></div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien at risus dapibus, eget facilisis libero varius. Proin dignissim ipsum non nisl tincidunt, vel consequat arcu fermentum. Nullam vehicula justo vel dui convallis, in dictum velit scelerisque.</p>
+          <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur fermentum, risus nec fringilla tincidunt, urna turpis vestibulum orci, a sodales nunc nulla vel enim. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</p>
+        </div>
+ 
+        <!-- Fun facts -->
+        <div class="about-me-facts">
+          <div class="fact-item">
+            <div class="fact-icon">☕</div>
+            <strong>Fuelled by coffee</strong>
+            <span>& edge cases</span>
+          </div>
+          <div class="fact-item">
+            <div class="fact-icon">📍</div>
+            <strong>Based in the UK</strong>
+            <span>Remote-first</span>
+          </div>
+          <div class="fact-item">
+            <div class="fact-icon">🐛</div>
+            <strong>Bug hunter</strong>
+            <span>by trade & nature</span>
+          </div>
+          <div class="fact-item">
+            <div class="fact-icon">🎯</div>
+            <strong>Zero tolerance</strong>
+            <span>for P1s in prod</span>
+          </div>
+        </div>
+ 
+        <!-- Tool pills -->
+        <p class="about-me-pills-label">My toolkit</p>
+        <div class="about-me-pills">
+          <span class="about-pill">Cypress</span>
+          <span class="about-pill">Playwright</span>
+          <span class="about-pill">Selenium</span>
+          <span class="about-pill">Postman</span>
+          <span class="about-pill">Jira</span>
+          <span class="about-pill">TestRail</span>
+          <span class="about-pill">GitHub Actions</span>
+          <span class="about-pill">BrowserStack</span>
+          <span class="about-pill">Appium</span>
+          <span class="about-pill">axe</span>
+        </div>
+ 
+      </div>
+    </div>
+  </div>
+</section>
+
     <!-- ═══════════════════════════════════════ FOOTER CTA -->
     <div class="footer-cta">
       <div class="wrap">
@@ -1478,6 +1882,42 @@
 
   <script>
     'use strict';
+
+    <script>
+  // Animated left border on the paragraph block
+  const aboutBorderObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('border-animated');
+        aboutBorderObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+ 
+  const aboutBorderEl = document.getElementById('aboutBorderEl');
+  if (aboutBorderEl) aboutBorderObs.observe(aboutBorderEl);
+ 
+  // Staggered pill entrance animation
+  const pillObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const pills = e.target.querySelectorAll('.about-pill');
+      pills.forEach((pill, i) => {
+        pill.style.opacity = '0';
+        pill.style.transform = 'translateY(12px)';
+        pill.style.transition = `opacity 0.4s ease ${i * 60}ms, transform 0.4s ease ${i * 60}ms`;
+        setTimeout(() => {
+          pill.style.opacity = '1';
+          pill.style.transform = 'translateY(0)';
+        }, 100 + i * 60);
+      });
+      pillObs.unobserve(e.target);
+    });
+  }, { threshold: 0.3 });
+ 
+  const pillsEl = document.querySelector('.about-me-pills');
+  if (pillsEl) pillObs.observe(pillsEl);
+</script>
 
     // ── Cursor ────────────────────────────────────
     const cursor = document.getElementById('cursor');

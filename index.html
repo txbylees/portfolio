@@ -1882,8 +1882,6 @@
 
   <script>
     'use strict';
-
-    <script>
   // Animated left border on the paragraph block
   const aboutBorderObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -1895,7 +1893,9 @@
   }, { threshold: 0.3 });
  
   const aboutBorderEl = document.getElementById('aboutBorderEl');
-  if (aboutBorderEl) aboutBorderObs.observe(aboutBorderEl);
+  if (aboutBorderEl) aboutBorderObs.observe(abo
+    <script>
+utBorderEl);
  
   // Staggered pill entrance animation
   const pillObs = new IntersectionObserver(entries => {
@@ -1917,7 +1917,6 @@
  
   const pillsEl = document.querySelector('.about-me-pills');
   if (pillsEl) pillObs.observe(pillsEl);
-</script>
 
     // ── Cursor ────────────────────────────────────
     const cursor = document.getElementById('cursor');

@@ -3,455 +3,365 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toby Lees — Quality Assurance</title>
+  <title>Toby Lees — Quality Assurance Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
   <style>
+    /* ============================================================
+       DESIGN TOKENS — Blue / White scheme
+    ============================================================ */
     :root {
-      --purple: #7c3aed;
-      --purple-light: #a78bfa;
-      --purple-dark: #4c1d95;
-      --purple-glow: rgba(124,58,237,0.3);
-      --purple-subtle: rgba(124,58,237,0.07);
-      --white: #ffffff;
-      --off-white: #fafafa;
-      --cream: #f4f3ff;
-      --gray-100: #f1f0ff;
-      --gray-200: #e5e3f5;
-      --gray-400: #9490b0;
-      --gray-600: #5c5880;
-      --gray-900: #0e0b1f;
-      --dark: #0e0b1f;
-      --dark-surface: #16112b;
+      --blue:        #2563eb;
+      --blue-light:  #60a5fa;
+      --blue-mid:    #3b82f6;
+      --blue-dark:   #1e3a8a;
+      --blue-deep:   #0f172a;
+      --blue-glow:   rgba(37,99,235,0.35);
+      --blue-subtle: rgba(37,99,235,0.07);
+      --cyan:        #06b6d4;
+      --cyan-light:  #67e8f9;
+      --white:       #ffffff;
+      --off-white:   #f8faff;
+      --cream:       #eff6ff;
+      --gray-100:    #e0eaff;
+      --gray-200:    #c7d9ff;
+      --gray-400:    #7e9cc7;
+      --gray-600:    #4a6fa5;
+      --gray-900:    #0f172a;
+      --dark:        #0f172a;
+      --dark-mid:    #1e293b;
       --dark-border: rgba(255,255,255,0.07);
       --font-display: 'Syne', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
-      --radius: 18px;
+      --font-body:    'DM Sans', sans-serif;
+      --radius:    18px;
       --radius-sm: 10px;
       --radius-xs: 6px;
       --ease: cubic-bezier(0.4,0,0.2,1);
-      --t: 0.3s;
+      --t:      0.3s;
       --t-slow: 0.7s;
     }
 
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      font-family: var(--font-body);
-      background: var(--white);
-      color: var(--gray-900);
-      overflow-x: hidden;
-      cursor: none;
-    }
+    body { font-family: var(--font-body); background: var(--white); color: var(--gray-900); overflow-x: hidden; cursor: none; }
 
-    .cursor {
-      position: fixed; width: 10px; height: 10px;
-      background: var(--purple); border-radius: 50%;
-      pointer-events: none; z-index: 99999;
-      transform: translate(-50%,-50%);
-      transition: width .2s, height .2s, background .2s;
-    }
-    .cursor-ring {
-      position: fixed; width: 38px; height: 38px;
-      border: 1.5px solid rgba(124,58,237,0.5); border-radius: 50%;
-      pointer-events: none; z-index: 99998;
-      transform: translate(-50%,-50%);
-      transition: left .1s ease, top .1s ease, width .3s, height .3s;
-    }
+    /* ── Cursor ── */
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blue); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; }
+    .cursor-ring { position: fixed; width: 38px; height: 38px; border: 1.5px solid rgba(37,99,235,0.5); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: left .1s ease, top .1s ease; }
 
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 99997;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
+    /* ── Noise overlay ── */
+    body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 99997; opacity: 0.02; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
+    /* ── Typography ── */
     h1,h2,h3,h4,h5 { font-family: var(--font-display); line-height: 1.1; }
     p { line-height: 1.75; color: var(--gray-600); }
-    em { font-style: italic; color: var(--purple); }
+    em { font-style: italic; color: var(--blue); }
     a { text-decoration: none; color: inherit; }
 
+    /* ── Layout ── */
     .wrap { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-    .section { padding: 7rem 0; }
-    .section-sm { padding: 4rem 0; }
-
-    [data-reveal] {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .7s var(--ease), transform .7s var(--ease);
-    }
+    [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
     [data-reveal].on { opacity: 1; transform: none; }
 
+    /* ============================================================
+       SIDEBAR
+    ============================================================ */
     .sidebar {
-      position: fixed;
-      top: 0; left: 0; bottom: 0;
-      width: 220px;
-      background: var(--dark);
-      border-right: 1px solid var(--dark-border);
-      z-index: 900;
-      display: flex;
-      flex-direction: column;
-      padding: 2.5rem 1.8rem;
+      position: fixed; top: 0; left: 0; bottom: 0; width: 220px;
+      background: var(--dark); border-right: 1px solid var(--dark-border);
+      z-index: 900; display: flex; flex-direction: column; padding: 2.5rem 1.8rem;
     }
-    .sidebar-name {
-      font-family: var(--font-display);
-      font-size: 1.15rem; font-weight: 800;
-      color: var(--white); line-height: 1.2;
-      margin-bottom: 2.5rem;
-    }
+    .sidebar-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 2.5rem; }
     .sidebar-name span { display: block; }
-    .sidebar-name em { color: var(--purple-light); font-style: normal; }
+    .sidebar-name em { color: var(--blue-light); font-style: normal; }
     .sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
-    .sidebar-nav a {
-      font-family: var(--font-display);
-      font-size: 0.78rem; font-weight: 600;
-      color: rgba(255,255,255,0.38);
-      padding: 0.55rem 0.8rem;
-      border-radius: var(--radius-xs);
-      letter-spacing: 0.03em;
-      transition: color var(--t), background var(--t);
-      position: relative;
-    }
-    .sidebar-nav a::before {
-      content: '';
-      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-      width: 2px; height: 0;
-      background: var(--purple-light);
-      border-radius: 2px;
-      transition: height var(--t);
-    }
-    .sidebar-nav a:hover, .sidebar-nav a.active {
-      color: rgba(255,255,255,0.9);
-      background: rgba(255,255,255,0.04);
-    }
+    .sidebar-nav a { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.38); padding: 0.55rem 0.8rem; border-radius: var(--radius-xs); letter-spacing: 0.03em; transition: color var(--t), background var(--t); position: relative; }
+    .sidebar-nav a::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 2px; height: 0; background: var(--blue-light); border-radius: 2px; transition: height var(--t); }
+    .sidebar-nav a:hover, .sidebar-nav a.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
     .sidebar-nav a:hover::before, .sidebar-nav a.active::before { height: 70%; }
-    .sidebar-bottom {
-      margin-top: auto;
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.25);
-      font-family: var(--font-display);
-      line-height: 1.6;
-    }
-    .sidebar-dot {
-      display: inline-block;
-      width: 6px; height: 6px;
-      background: #c42339; border-radius: 50%;
-      margin-right: 6px;
-      animation: blinkDot 2s ease-in-out infinite;
-      vertical-align: middle;
-    }
-    @keyframes blinkDot {
-      0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-      50% { opacity:.7; box-shadow: 0 0 0 4px transparent; }
-    }
+    .sidebar-bottom { margin-top: auto; font-size: 0.72rem; color: rgba(255,255,255,0.25); font-family: var(--font-display); line-height: 1.6; }
+    .sidebar-dot { display: inline-block; width: 6px; height: 6px; background: #ef4444; border-radius: 50%; margin-right: 6px; animation: blinkDot 2s ease-in-out infinite; vertical-align: middle; }
+    .sidebar-dot.available { background: #22c55e; }
+    @keyframes blinkDot { 0%,100%{opacity:1;} 50%{opacity:.5;} }
 
-    .mobile-nav {
-      display: none;
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 60px;
-      background: var(--dark);
-      border-bottom: 1px solid var(--dark-border);
-      z-index: 900;
-      align-items: center;
-      padding: 0 1.5rem;
-      justify-content: space-between;
-    }
-    .mobile-nav-name {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 800; color: var(--white);
-    }
-    .mobile-menu-btn {
-      background: none; border: none;
-      display: flex; flex-direction: column;
-      gap: 5px; padding: 4px; cursor: none;
-    }
-    .mobile-menu-btn span {
-      display: block; width: 22px; height: 2px;
-      background: var(--white); border-radius: 2px;
-      transition: var(--t);
-    }
-    .mobile-menu {
-      position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
-      background: var(--dark);
-      z-index: 899;
-      padding: 2rem 1.5rem;
-      display: none; flex-direction: column; gap: 0.5rem;
-    }
+    /* ── Mobile nav ── */
+    .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; height: 60px; background: var(--dark); border-bottom: 1px solid var(--dark-border); z-index: 900; align-items: center; padding: 0 1.5rem; justify-content: space-between; }
+    .mobile-nav-name { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--white); }
+    .mobile-menu-btn { background: none; border: none; display: flex; flex-direction: column; gap: 5px; padding: 4px; cursor: none; }
+    .mobile-menu-btn span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--t); }
+    .mobile-menu { position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: var(--dark); z-index: 899; padding: 2rem 1.5rem; display: none; flex-direction: column; gap: 0.5rem; }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-family: var(--font-display);
-      font-size: 1.1rem; font-weight: 700;
-      color: rgba(255,255,255,0.7);
-      padding: 0.8rem 0;
-      border-bottom: 1px solid var(--dark-border);
-      transition: color var(--t);
-    }
-    .mobile-menu a:hover { color: var(--purple-light); }
+    .mobile-menu a { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.7); padding: 0.8rem 0; border-bottom: 1px solid var(--dark-border); transition: color var(--t); }
+    .mobile-menu a:hover { color: var(--blue-light); }
 
     .main { margin-left: 220px; }
 
+    /* ============================================================
+       HERO — animated test runner
+    ============================================================ */
     .hero {
       min-height: 100vh;
       background: var(--dark);
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 6rem 4rem 4rem;
-      position: relative; overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      padding: 7rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
     }
-    .hero-orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(90px); pointer-events: none;
-      animation: orbDrift 10s ease-in-out infinite;
-    }
-    .hero-orb-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(124,58,237,0.45) 0%, transparent 70%);
-      top: -150px; right: -100px;
-    }
-    .hero-orb-2 {
-      width: 350px; height: 350px;
-      background: radial-gradient(circle, rgba(76,29,149,0.4) 0%, transparent 70%);
-      bottom: -50px; left: 20%; animation-delay: -4s;
-    }
-    @keyframes orbDrift {
-      0%,100% { transform: translate(0,0) scale(1); }
-      33% { transform: translate(20px,-30px) scale(1.04); }
-      66% { transform: translate(-15px,20px) scale(0.96); }
-    }
-    .hero::before {
-      content: '';
+
+    /* Gradient mesh background */
+    .hero-bg {
       position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(124,58,237,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124,58,237,0.05) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
     }
-    .hero-eyebrow {
-      font-family: var(--font-display);
-      font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--purple-light); margin-bottom: 1.8rem;
-      position: relative; z-index: 2;
+    .hero-bg-orb { position: absolute; border-radius: 50%; filter: blur(100px); }
+    .hero-bg-orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(37,99,235,0.4) 0%, transparent 70%); top: -200px; right: -100px; animation: orbDrift 12s ease-in-out infinite; }
+    .hero-bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(6,182,212,0.25) 0%, transparent 70%); bottom: -100px; left: 10%; animation: orbDrift 9s ease-in-out infinite; animation-delay: -4s; }
+    .hero-bg-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(30,58,138,0.5) 0%, transparent 70%); top: 40%; left: -50px; animation: orbDrift 15s ease-in-out infinite; animation-delay: -8s; }
+    @keyframes orbDrift { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(25px,-20px) scale(1.04);} 66%{transform:translate(-15px,25px) scale(0.96);} }
+
+    /* Grid lines */
+    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 70%); }
+
+    /* Scanline sweep */
+    .hero-scanline {
+      position: absolute; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(96,165,250,0.4), transparent);
+      animation: scanline 4s linear infinite;
+      pointer-events: none; z-index: 1;
     }
+    @keyframes scanline { 0%{top:-2px;opacity:0;} 5%{opacity:1;} 95%{opacity:1;} 100%{top:100%;opacity:0;} }
+
+    /* ── Hero Left ── */
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-display); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--blue-light);
+      border: 1px solid rgba(96,165,250,0.25);
+      background: rgba(37,99,235,0.1);
+      padding: 0.4rem 1rem; border-radius: 50px;
+      margin-bottom: 2rem;
+    }
+    .hero-badge-dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: blinkDot 1.5s ease-in-out infinite; }
+
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 800;
-      color: var(--white); line-height: 1.0;
-      margin-bottom: 2.5rem;
-      position: relative; z-index: 2; max-width: 700px;
+      font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 800;
+      color: var(--white); line-height: 1.0; margin-bottom: 1.8rem;
     }
-    .hero-title .outline {
-      -webkit-text-stroke: 2px rgba(167,139,250,0.6);
-      color: transparent;
-    }
-    .hero-sub {
-      font-size: 1.15rem; color: rgba(255,255,255,0.55);
-      line-height: 1.75; max-width: 520px; margin-bottom: 3rem;
-      position: relative; z-index: 2;
-    }
-    .hero-cta-row {
-      display: flex; align-items: center; gap: 1.2rem;
-      position: relative; z-index: 2; flex-wrap: wrap;
-    }
-    .avatar-stack { display: flex; align-items: center; }
-    .avatar-me {
-      width: 46px; height: 46px;
-      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
-      border-radius: 50%; border: 2px solid rgba(255,255,255,0.15);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 0.8rem; font-weight: 800; color: var(--white);
-    }
-    .avatar-plus {
-      width: 28px; height: 28px;
-      background: rgba(255,255,255,0.1);
-      border: 1.5px dashed rgba(255,255,255,0.3);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.9rem; color: rgba(255,255,255,0.5);
-      margin-left: -10px;
-    }
-    .avatar-label {
-      font-family: var(--font-display);
-      font-size: 0.72rem; font-weight: 600;
-      color: rgba(255,255,255,0.4);
-      margin-left: 0.8rem; letter-spacing: 0.02em;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: var(--font-display);
-      font-size: 0.88rem; font-weight: 700;
-      background: var(--purple); color: var(--white);
-      padding: 0.85rem 1.8rem;
-      border-radius: 50px; border: none; cursor: none;
-      transition: transform var(--t), box-shadow var(--t);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px var(--purple-glow); }
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: var(--font-display);
-      font-size: 0.88rem; font-weight: 700;
-      color: rgba(255,255,255,0.75);
-      padding: 0.85rem 1.8rem; border-radius: 50px;
-      border: 1.5px solid rgba(255,255,255,0.15); cursor: none;
-      transition: border-color var(--t), color var(--t), transform var(--t);
-    }
-    .btn-outline:hover { border-color: rgba(255,255,255,0.5); color: var(--white); transform: translateY(-2px); }
-    .scroll-hint {
-      position: absolute; bottom: 2.5rem; left: 4rem;
-      display: flex; align-items: center; gap: 0.75rem;
-      color: rgba(255,255,255,0.3);
-      font-family: var(--font-display);
-      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; z-index: 2;
-    }
-    .scroll-hint-line { width: 36px; height: 1px; background: rgba(255,255,255,0.2); }
-    .hero-ticker {
-      position: absolute; right: 3rem; top: 50%; transform: translateY(-50%);
-      height: 360px; overflow: hidden; width: 180px; z-index: 2;
-      mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-    }
-    .hero-ticker-track {
-      display: flex; flex-direction: column;
-      animation: tickerScroll 18s linear infinite;
-    }
-    @keyframes tickerScroll {
-      from { transform: translateY(0); }
-      to { transform: translateY(-50%); }
-    }
-    .ticker-item { padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .ticker-item .t-name { font-family: var(--font-display); font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.6); }
-    .ticker-item .t-type { font-size: 0.7rem; color: rgba(255,255,255,0.28); margin-top: 1px; }
+    .hero-title .outline { -webkit-text-stroke: 2px rgba(96,165,250,0.7); color: transparent; }
+    .hero-title .gradient-text { background: linear-gradient(135deg, var(--blue-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-    .stats-section { background: var(--off-white); padding: 5rem 0; border-bottom: 1px solid var(--gray-200); }
+    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.55); line-height: 1.75; max-width: 480px; margin-bottom: 2.5rem; }
+
+    .hero-cta-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; background: linear-gradient(135deg, var(--blue), var(--blue-mid)); color: var(--white); padding: 0.85rem 1.8rem; border-radius: 50px; border: none; cursor: none; transition: transform var(--t), box-shadow var(--t); position: relative; overflow: hidden; }
+    .btn-primary::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent); opacity: 0; transition: opacity var(--t); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px var(--blue-glow); }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; color: rgba(255,255,255,0.75); padding: 0.85rem 1.8rem; border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.15); cursor: none; transition: border-color var(--t), color var(--t), transform var(--t); }
+    .btn-outline:hover { border-color: var(--blue-light); color: var(--white); transform: translateY(-2px); }
+
+    /* Hero stats row */
+    .hero-stats { display: flex; gap: 2rem; }
+    .hero-stat .num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .hero-stat .num span { background: linear-gradient(135deg, var(--blue-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-stat p { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin: 0.2rem 0 0; }
+    .hero-stat-divider { width: 1px; background: rgba(255,255,255,0.1); align-self: stretch; }
+
+    /* Scroll hint */
+    .scroll-hint { position: absolute; bottom: 2.5rem; left: 4rem; display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.3); font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; z-index: 2; }
+    .scroll-hint-line { width: 36px; height: 1px; background: rgba(255,255,255,0.2); }
+
+    /* ── Hero Right: Live Test Runner ── */
+    .hero-visual { position: relative; z-index: 2; }
+
+    .test-runner {
+      background: #0a0f1e;
+      border: 1px solid rgba(37,99,235,0.3);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(37,99,235,0.15), inset 0 1px 0 rgba(255,255,255,0.04);
+      animation: floatUp 6s ease-in-out infinite;
+    }
+    @keyframes floatUp { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+
+    .tr-titlebar {
+      background: #111827;
+      padding: 0.7rem 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid rgba(37,99,235,0.15);
+    }
+    .tr-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .tr-dot.r { background: #ff5f57; } .tr-dot.y { background: #febc2e; } .tr-dot.g { background: #28c840; }
+    .tr-title { font-family: 'Courier New', monospace; font-size: 0.72rem; color: rgba(255,255,255,0.3); margin-left: 6px; }
+
+    /* Tab bar */
+    .tr-tabs { display: flex; border-bottom: 1px solid rgba(37,99,235,0.1); background: #0d1321; }
+    .tr-tab { font-family: 'Courier New', monospace; font-size: 0.68rem; padding: 0.5rem 1rem; color: rgba(255,255,255,0.25); border-right: 1px solid rgba(37,99,235,0.1); cursor: default; transition: color var(--t), background var(--t); }
+    .tr-tab.active { color: var(--blue-light); background: rgba(37,99,235,0.08); border-bottom: 1px solid var(--blue); margin-bottom: -1px; }
+
+    .tr-body { padding: 1.2rem; font-family: 'Courier New', monospace; font-size: 0.74rem; line-height: 1.9; min-height: 300px; }
+
+    /* Progress bar */
+    .tr-progress { margin: 0 1rem 0.8rem; }
+    .tr-progress-bar { height: 3px; background: rgba(37,99,235,0.2); border-radius: 3px; overflow: hidden; }
+    .tr-progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--cyan)); border-radius: 3px; width: 0%; transition: width 0.3s ease; }
+    .tr-progress-label { font-family: 'Courier New', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.3); margin-top: 4px; }
+
+    /* Status bar at bottom */
+    .tr-statusbar { background: linear-gradient(90deg, var(--blue-dark), #1e3a5f); padding: 0.4rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+    .tr-status-left { display: flex; align-items: center; gap: 0.8rem; font-family: 'Courier New', monospace; font-size: 0.62rem; }
+    .tr-status-pass { color: #22c55e; } .tr-status-fail { color: #ef4444; } .tr-status-pending { color: #fbbf24; }
+    .tr-status-right { font-family: 'Courier New', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.35); }
+
+    /* Syntax */
+    .c-kw { color: #c084fc; } .c-str { color: #86efac; } .c-fn { color: #67e8f9; }
+    .c-mt { color: #fbbf24; } .c-cm { color: rgba(255,255,255,0.25); font-style: italic; }
+    .c-pass { color: #22c55e; font-weight: bold; } .c-fail { color: #ef4444; }
+    .c-num { color: #f97316; } .c-dim { color: rgba(255,255,255,0.3); }
+    .c-cursor { color: var(--blue-light); animation: curBlink 1s step-end infinite; }
+    @keyframes curBlink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+    .log-line { display: block; opacity: 0; transform: translateX(-4px); }
+    .log-line.visible { opacity: 1; transform: none; transition: opacity 0.2s ease, transform 0.2s ease; }
+
+    /* Floating chips */
+    .tr-chip { position: absolute; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.73rem; font-weight: 700; padding: 0.5rem 1rem; border-radius: 50px; white-space: nowrap; }
+    .tr-chip-1 { top: -1.2rem; right: 1rem; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); color: #4ade80; animation: chipBob 4s ease-in-out infinite; }
+    .tr-chip-2 { bottom: 2rem; left: -1.5rem; background: rgba(37,99,235,0.2); border: 1px solid rgba(96,165,250,0.4); color: var(--blue-light); animation: chipBob 4s ease-in-out infinite; animation-delay: -2s; }
+    @keyframes chipBob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+    .chip-dot-g { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; animation: blinkDot 1.5s ease-in-out infinite; }
+    .chip-dot-b { width: 7px; height: 7px; background: var(--blue); border-radius: 50%; }
+
+    /* Hero ticker (vertical, right side) */
+    .hero-ticker { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 340px; overflow: hidden; width: 160px; z-index: 2; mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); }
+    .hero-ticker-track { display: flex; flex-direction: column; animation: tickerScroll 18s linear infinite; }
+    @keyframes tickerScroll { from{transform:translateY(0);} to{transform:translateY(-50%);} }
+    .ticker-item { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .ticker-item .t-name { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.5); }
+    .ticker-item .t-type { font-size: 0.66rem; color: rgba(255,255,255,0.22); margin-top: 1px; }
+
+    /* ============================================================
+       STATS SECTION
+    ============================================================ */
+    .stats-section { background: var(--off-white); padding: 5rem 0; position: relative; overflow: hidden; }
+    .stats-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--cyan), var(--blue), var(--blue-dark)); }
     .stats-header { margin-bottom: 3rem; }
-    .stats-header p { font-size: 1.5rem; font-family: var(--font-display); font-weight: 700; color: var(--gray-900); max-width: 540px; line-height: 1.4; }
-    .stats-header p em { color: var(--purple); }
+    .stats-header p { font-size: 1.5rem; font-family: var(--font-display); font-weight: 700; color: var(--gray-900); max-width: 560px; line-height: 1.4; }
+    .stats-header p em { color: var(--blue); }
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gray-200); border-radius: var(--radius); overflow: hidden; margin-bottom: 3rem; }
-    .stat-box { background: var(--white); padding: 2.5rem 2rem; }
+    .stat-box { background: var(--white); padding: 2.5rem 2rem; position: relative; overflow: hidden; transition: background var(--t); }
+    .stat-box::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
+    .stat-box:hover::before { transform: scaleX(1); }
+    .stat-box:hover { background: var(--cream); }
     .stat-box .num { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: var(--gray-900); line-height: 1; margin-bottom: 0.5rem; }
-    .stat-box .num span { color: var(--purple); }
+    .stat-box .num span { background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .stat-box p { font-size: 0.9rem; color: var(--gray-400); margin: 0; }
     .industry-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .industry-tag { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--gray-600); background: var(--white); border: 1.5px solid var(--gray-200); padding: 0.4rem 1rem; border-radius: 50px; transition: border-color var(--t), color var(--t); }
-    .industry-tag:hover { border-color: var(--purple-light); color: var(--purple); }
+    .industry-tag { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--gray-600); background: var(--white); border: 1.5px solid var(--gray-200); padding: 0.4rem 1rem; border-radius: 50px; transition: border-color var(--t), color var(--t), background var(--t), transform var(--t); }
+    .industry-tag:hover { border-color: var(--blue); color: var(--blue); background: var(--cream); transform: translateY(-2px); }
 
+    /* ============================================================
+       PROJECTS SECTION
+    ============================================================ */
     .projects-section { background: var(--white); padding: 6rem 0; }
     .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
-    .section-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.6rem; }
+    .section-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; }
     .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--gray-900); }
-    .section-links { display: flex; gap: 0.6rem; }
-    .pill-link { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; color: var(--purple); border: 1.5px solid var(--purple-light); padding: 0.4rem 1rem; border-radius: 50px; transition: background var(--t), color var(--t); }
-    .pill-link:hover { background: var(--purple); color: var(--white); border-color: var(--purple); }
-    .pill-link.filled { background: var(--purple); color: var(--white); border-color: var(--purple); }
+    .pill-link { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; color: var(--blue); border: 1.5px solid var(--blue-light); padding: 0.4rem 1rem; border-radius: 50px; transition: background var(--t), color var(--t); }
+    .pill-link:hover, .pill-link.filled { background: var(--blue); color: var(--white); border-color: var(--blue); }
     .projects-list { display: flex; flex-direction: column; gap: 1px; background: var(--gray-200); border-radius: var(--radius); overflow: hidden; }
     .project-row { background: var(--white); display: grid; grid-template-columns: 1fr 340px; min-height: 260px; cursor: none; position: relative; overflow: hidden; transition: background var(--t); }
     .project-row:hover { background: var(--cream); }
-    .project-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--purple); transform: scaleY(0); transform-origin: bottom; transition: transform var(--t-slow) var(--ease); }
+    .project-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--blue), var(--cyan)); transform: scaleY(0); transform-origin: bottom; transition: transform var(--t-slow) var(--ease); }
     .project-row:hover::before { transform: scaleY(1); }
     .project-info { padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
-    .project-client-name { font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.8rem; }
+    .project-client-name { font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.8rem; }
     .project-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--gray-900); line-height: 1.3; margin-bottom: 0.8rem; max-width: 480px; }
     .project-desc { font-size: 0.9rem; color: var(--gray-400); line-height: 1.65; margin-bottom: 1.5rem; max-width: 440px; }
     .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .project-tag { font-family: var(--font-display); font-size: 0.72rem; font-weight: 600; color: var(--gray-600); background: var(--gray-100); border: 1px solid var(--gray-200); padding: 0.25rem 0.7rem; border-radius: 50px; }
-    .project-visual { position: relative; overflow: hidden; background: var(--gray-100); display: flex; align-items: center; justify-content: center; }
+    .project-visual { position: relative; overflow: hidden; background: linear-gradient(135deg, #0a0f1e, #0d1b3e); display: flex; align-items: center; justify-content: center; }
     .project-visual-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-    .test-visual { width: 100%; background: #12091f; border-radius: var(--radius-sm); padding: 1.2rem; font-family: 'Courier New', monospace; font-size: 0.72rem; line-height: 1.8; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-    .tv-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 0.8rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(124,58,237,0.15); }
+    .test-visual { width: 100%; background: rgba(10,15,30,0.8); border: 1px solid rgba(37,99,235,0.2); border-radius: var(--radius-sm); padding: 1.2rem; font-family: 'Courier New', monospace; font-size: 0.72rem; line-height: 1.8; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .tv-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 0.8rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(37,99,235,0.15); }
     .tv-dot { width: 9px; height: 9px; border-radius: 50%; }
-    .tv-dot.r { background: #ff5f57; } .tv-dot.y { background: #febc2e; } .tv-dot.g { background: #28c840; }
+    .tv-dot.r{background:#ff5f57;} .tv-dot.y{background:#febc2e;} .tv-dot.g{background:#28c840;}
     .tv-file { color: rgba(255,255,255,0.3); font-size: 0.65rem; margin-left: 4px; }
-    .tv-kw { color: #c084fc; } .tv-str { color: #86efac; } .tv-fn { color: #67e8f9; } .tv-mt { color: #fbbf24; }
-    .tv-cm { color: rgba(255,255,255,0.25); font-style: italic; }
-    .tv-pass { color: #22c55e; } .tv-fail { color: #ef4444; }
-    .tv-cursor { color: #a78bfa; animation: cursorBlink 1s step-end infinite; }
-    @keyframes cursorBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .tv-kw{color:#c084fc;} .tv-str{color:#86efac;} .tv-fn{color:#67e8f9;} .tv-mt{color:#fbbf24;}
+    .tv-cm{color:rgba(255,255,255,0.25);font-style:italic;}
+    .tv-pass{color:#22c55e;} .tv-fail{color:#ef4444;}
+    .tv-cursor{color:#60a5fa;animation:cursorBlink 1s step-end infinite;}
+    @keyframes cursorBlink{0%,100%{opacity:1;}50%{opacity:0;}}
 
+    /* ============================================================
+       SKILLS & ABOUT
+    ============================================================ */
     .about-section { background: var(--off-white); padding: 6rem 0; }
     .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; }
     .about-text h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin-bottom: 1.5rem; color: var(--gray-900); }
     .about-text p { margin-bottom: 1rem; font-size: 1rem; }
     .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
-    .about-tag { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--purple); background: var(--purple-subtle); border: 1px solid rgba(124,58,237,0.2); padding: 0.35rem 0.9rem; border-radius: 50px; }
+    .about-tag { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--blue); background: var(--blue-subtle); border: 1px solid rgba(37,99,235,0.2); padding: 0.35rem 0.9rem; border-radius: 50px; }
     .skills-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; }
-    .skill-row { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--gray-200); transition: background var(--t); }
+    .skill-row { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--gray-200); transition: background var(--t); position: relative; overflow: hidden; }
+    .skill-row::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--blue), var(--cyan)); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s var(--ease); }
+    .skill-row:hover::after { transform: scaleY(1); }
     .skill-row:last-child { border-bottom: none; }
     .skill-row:hover { background: var(--cream); }
-    .skill-icon-box { width: 36px; height: 36px; background: var(--purple-subtle); border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .skill-icon-box { width: 36px; height: 36px; background: var(--blue-subtle); border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
     .skill-info strong { display: block; font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; color: var(--gray-900); }
     .skill-info span { font-size: 0.75rem; color: var(--gray-400); }
 
-    .testimonials-section { background: var(--dark); padding: 7rem 0; }
-    .testimonials-section .section-label { color: var(--purple-light); }
-    .testimonials-section .section-title { color: var(--white); }
-    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
-    .testimonial-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius); padding: 2rem; transition: border-color var(--t), background var(--t), transform var(--t); }
-    .testimonial-card:hover { border-color: rgba(124,58,237,0.4); background: rgba(124,58,237,0.05); transform: translateY(-4px); }
-    .t-stars { color: #facc15; font-size: 0.85rem; letter-spacing: 0.05em; margin-bottom: 1rem; }
-    .t-quote { font-size: 0.92rem; line-height: 1.7; color: rgba(255,255,255,0.65); margin-bottom: 1.5rem; }
-    .t-author { display: flex; align-items: center; gap: 0.75rem; }
-    .t-avatar { width: 38px; height: 38px; background: linear-gradient(135deg, var(--purple), var(--purple-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 0.7rem; font-weight: 800; color: var(--white); flex-shrink: 0; }
-    .t-author strong { display: block; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--white); }
-    .t-author span { font-size: 0.75rem; color: rgba(255,255,255,0.38); }
-    .marquee-wrap { margin-top: 5rem; overflow: hidden; position: relative; }
-    .marquee-wrap::before, .marquee-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; }
-    .marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--dark), transparent); }
-    .marquee-wrap::after { right: 0; background: linear-gradient(to left, var(--dark), transparent); }
-    .marquee-track { display: flex; gap: 0; animation: marquee 28s linear infinite; width: max-content; }
-    .marquee-track:hover { animation-play-state: paused; }
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .marquee-item { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.25); padding: 1rem 2.5rem; border-right: 1px solid rgba(255,255,255,0.05); white-space: nowrap; transition: color var(--t); }
-    .marquee-item:hover { color: var(--purple-light); }
-    .marquee-item sub { color: var(--purple-light); font-size: 0.65em; }
-
+    /* ============================================================
+       PROCESS
+    ============================================================ */
     .process-section { background: var(--white); padding: 7rem 0; }
-    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--gray-200); border-radius: var(--radius); overflow: hidden; margin-top: 3rem; margin-bottom: 5rem; }
-    .process-step { background: var(--white); padding: 2.5rem 2rem; transition: background var(--t); }
+    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--gray-200); border-radius: var(--radius); overflow: hidden; margin-top: 3rem; }
+    .process-step { background: var(--white); padding: 2.5rem 2rem; transition: background var(--t); position: relative; overflow: hidden; }
+    .process-step::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
+    .process-step:hover::before { transform: scaleX(1); }
     .process-step:hover { background: var(--cream); }
-    .step-num { font-family: var(--font-display); font-size: 0.72rem; font-weight: 800; color: var(--purple); letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .step-num { font-family: var(--font-display); font-size: 0.72rem; font-weight: 800; color: var(--blue); letter-spacing: 0.1em; margin-bottom: 1rem; }
     .process-step h3 { font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.75rem; }
     .process-step p { font-size: 0.88rem; color: var(--gray-400); line-height: 1.65; }
-    .faq-list { display: flex; flex-direction: column; border-top: 1px solid var(--gray-200); }
-    .faq-item { border-bottom: 1px solid var(--gray-200); overflow: hidden; }
-    .faq-q { width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--gray-900); background: none; border: none; cursor: none; transition: color var(--t); }
-    .faq-q:hover { color: var(--purple); }
-    .faq-q .faq-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; color: var(--gray-600); flex-shrink: 0; transition: background var(--t), transform var(--t); }
-    .faq-q.open .faq-icon { background: var(--purple); color: var(--white); transform: rotate(45deg); }
-    .faq-a { max-height: 0; overflow: hidden; font-size: 0.92rem; color: var(--gray-600); line-height: 1.75; transition: max-height 0.4s var(--ease), padding 0.4s; padding: 0; }
-    .faq-a.open { max-height: 300px; padding-bottom: 1.5rem; }
 
-    /* About Me Section */
-    .about-me-section { background: var(--off-white); padding: 8rem 0; position: relative; overflow: hidden; }
-    .about-me-section::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%); top: -200px; right: -150px; border-radius: 50%; pointer-events: none; }
-    .about-me-section::after { content: ''; position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 70%); bottom: -100px; left: -100px; border-radius: 50%; pointer-events: none; }
+    /* ============================================================
+       ABOUT ME SECTION
+    ============================================================ */
+    .about-me-section { background: linear-gradient(180deg, var(--off-white) 0%, var(--cream) 100%); padding: 8rem 0; position: relative; overflow: hidden; }
+    .about-me-section::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%); top: -200px; right: -150px; border-radius: 50%; pointer-events: none; }
     .about-me-inner { display: grid; grid-template-columns: 420px 1fr; gap: 6rem; align-items: center; position: relative; z-index: 2; }
     .about-me-image-wrap { position: relative; }
-    .about-me-image-wrap::before { content: ''; position: absolute; inset: -12px; border: 1.5px solid rgba(124,58,237,0.25); border-radius: 24px; transform: rotate(3deg); transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); z-index: 0; }
+    .about-me-image-wrap::before { content: ''; position: absolute; inset: -12px; border: 1.5px solid rgba(37,99,235,0.2); border-radius: 24px; transform: rotate(3deg); transition: transform 0.6s var(--ease); z-index: 0; }
     .about-me-image-wrap:hover::before { transform: rotate(1deg) scale(1.01); }
-    .about-me-image-wrap::after { content: ''; position: absolute; inset: -6px; background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(167,139,250,0.04)); border-radius: 22px; transform: rotate(-1.5deg); transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); z-index: 0; }
-    .about-me-image-wrap:hover::after { transform: rotate(-0.5deg) scale(1.005); }
-    .about-me-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; display: block; position: relative; z-index: 1; filter: grayscale(15%) contrast(1.05); transition: filter 0.5s ease, transform 0.5s ease; }
-    .about-me-image-wrap:hover .about-me-img { filter: grayscale(0%) contrast(1.02); transform: scale(1.01); }
-    .about-me-img-placeholder { width: 100%; aspect-ratio: 4/5; border-radius: 20px; background: linear-gradient(145deg, #1a1330 0%, #2d1f50 50%, #1a1330 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; position: relative; z-index: 1; overflow: hidden; }
-    .about-me-img-placeholder::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(124,58,237,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.07) 1px, transparent 1px); background-size: 40px 40px; }
-    .placeholder-initials { font-family: var(--font-display); font-size: 5rem; font-weight: 800; color: rgba(167,139,250,0.4); position: relative; z-index: 1; letter-spacing: -0.03em; }
-    .placeholder-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(167,139,250,0.35); position: relative; z-index: 1; }
-    .about-me-chip { position: absolute; bottom: 2rem; right: -1.5rem; background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 50px; padding: 0.6rem 1.1rem; display: flex; align-items: center; gap: 0.5rem; z-index: 3; box-shadow: 0 8px 32px rgba(0,0,0,0.12); animation: chipFloat 4s ease-in-out infinite; }
-    @keyframes chipFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    .about-me-chip .chip-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: chipPulse 2s ease-in-out infinite; }
-    @keyframes chipPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.3); } }
+    .about-me-image-wrap::after { content: ''; position: absolute; inset: -6px; background: linear-gradient(135deg, rgba(37,99,235,0.07), rgba(6,182,212,0.04)); border-radius: 22px; transform: rotate(-1.5deg); transition: transform 0.6s var(--ease); z-index: 0; }
+    .about-me-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; display: block; position: relative; z-index: 1; filter: grayscale(15%); transition: filter 0.5s ease, transform 0.5s ease; }
+    .about-me-image-wrap:hover .about-me-img { filter: grayscale(0%); transform: scale(1.01); }
+    .about-me-img-placeholder { width: 100%; aspect-ratio: 4/5; border-radius: 20px; background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; position: relative; z-index: 1; overflow: hidden; }
+    .about-me-img-placeholder::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(37,99,235,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.08) 1px, transparent 1px); background-size: 40px 40px; }
+    .placeholder-initials { font-family: var(--font-display); font-size: 5rem; font-weight: 800; color: rgba(96,165,250,0.4); position: relative; z-index: 1; letter-spacing: -0.03em; }
+    .placeholder-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(96,165,250,0.3); position: relative; z-index: 1; }
+    .about-me-chip { position: absolute; bottom: 2rem; right: -1.5rem; background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 50px; padding: 0.6rem 1.1rem; display: flex; align-items: center; gap: 0.5rem; z-index: 3; box-shadow: 0 8px 32px rgba(37,99,235,0.15); animation: chipFloat 4s ease-in-out infinite; }
+    @keyframes chipFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+    .about-me-chip .chip-dot { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; animation: blinkDot 2s ease-in-out infinite; }
     .about-me-chip span { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; color: var(--gray-900); white-space: nowrap; }
-    .about-me-chip-2 { position: absolute; top: 2rem; left: -1.5rem; background: var(--dark); border: 1px solid rgba(124,58,237,0.3); border-radius: 12px; padding: 0.7rem 1rem; z-index: 3; box-shadow: 0 8px 24px rgba(0,0,0,0.3); animation: chipFloat 4s ease-in-out infinite; animation-delay: -2s; min-width: 140px; }
-    .chip-2-label { font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple-light); margin-bottom: 0.3rem; }
+    .about-me-chip-2 { position: absolute; top: 2rem; left: -1.5rem; background: var(--dark); border: 1px solid rgba(37,99,235,0.3); border-radius: 12px; padding: 0.7rem 1rem; z-index: 3; box-shadow: 0 8px 24px rgba(0,0,0,0.3); animation: chipFloat 4s ease-in-out infinite; animation-delay: -2s; min-width: 140px; }
+    .chip-2-label { font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 0.3rem; }
     .chip-2-value { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--white); line-height: 1; }
     .chip-2-sub { font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 0.15rem; }
-    .about-me-text { position: relative; }
-    .about-me-text .section-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.8rem; display: block; }
+    .about-me-text .section-label { display: block; margin-bottom: 0.8rem; }
     .about-me-text h2 { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; color: var(--gray-900); line-height: 1.1; margin-bottom: 2rem; }
-    .about-me-text h2 em { color: transparent; -webkit-text-stroke: 1.5px var(--purple); font-style: normal; }
+    .about-me-text h2 em { color: transparent; -webkit-text-stroke: 1.5px var(--blue); font-style: normal; }
     .about-me-paragraphs { position: relative; padding-left: 1.5rem; border-left: 2px solid var(--gray-200); margin-bottom: 2.5rem; }
-    .about-me-paragraphs .border-fill { position: absolute; left: -2px; top: 0; width: 2px; height: 0%; background: linear-gradient(to bottom, var(--purple), var(--purple-light)); border-radius: 2px; transition: height 1.2s cubic-bezier(0.4,0,0.2,1); }
+    .about-me-paragraphs .border-fill { position: absolute; left: -2px; top: 0; width: 2px; height: 0%; background: linear-gradient(to bottom, var(--blue), var(--cyan)); border-radius: 2px; transition: height 1.2s var(--ease); }
     .about-me-paragraphs.border-animated .border-fill { height: 100%; }
     .about-me-paragraphs p { font-size: 1rem; line-height: 1.85; color: var(--gray-600); margin-bottom: 1rem; }
     .about-me-paragraphs p:last-child { margin-bottom: 0; }
@@ -462,13 +372,22 @@
     .fact-item span { font-size: 0.78rem; color: var(--gray-400); }
     .about-me-pills-label { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.75rem; }
     .about-me-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .about-pill { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--purple); background: rgba(124,58,237,0.07); border: 1px solid rgba(124,58,237,0.18); padding: 0.35rem 0.9rem; border-radius: 50px; transition: background 0.25s, color 0.25s, transform 0.2s; cursor: default; }
-    .about-pill:hover { background: var(--purple); color: var(--white); transform: translateY(-2px); }
+    .about-pill { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--blue); background: rgba(37,99,235,0.07); border: 1px solid rgba(37,99,235,0.18); padding: 0.35rem 0.9rem; border-radius: 50px; transition: background 0.25s, color 0.25s, transform 0.2s; cursor: default; }
+    .about-pill:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
 
-    .footer-cta { background: var(--dark); padding: 7rem 0 4rem; position: relative; overflow: hidden; }
-    .footer-cta::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(124,58,237,0.25) 0%, transparent 70%); }
+    /* ============================================================
+       FOOTER CTA
+    ============================================================ */
+    .footer-cta {
+      background: var(--dark);
+      padding: 7rem 0 4rem;
+      position: relative; overflow: hidden;
+    }
+    .footer-cta::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(37,99,235,0.2) 0%, transparent 70%); }
+    /* Animated gradient line at top */
+    .footer-cta::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), var(--blue), transparent); }
     .footer-cta-inner { text-align: center; position: relative; z-index: 2; }
-    .footer-cta-inner .badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; color: var(--purple-light); border: 1px solid rgba(124,58,237,0.3); background: rgba(124,58,237,0.08); padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 2rem; letter-spacing: 0.08em; }
+    .footer-cta-inner .badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; color: var(--blue-light); border: 1px solid rgba(96,165,250,0.3); background: rgba(37,99,235,0.08); padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 2rem; letter-spacing: 0.08em; }
     .footer-cta-inner h2 { font-size: clamp(2rem, 4vw, 3.5rem); color: var(--white); margin-bottom: 1.2rem; font-weight: 800; }
     .footer-cta-inner p { color: rgba(255,255,255,0.5); font-size: 1rem; margin-bottom: 2.5rem; }
     .footer-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
@@ -476,30 +395,33 @@
     .footer-bar-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: 0.78rem; color: rgba(255,255,255,0.3); font-family: var(--font-display); }
     .footer-bar-inner em { font-style: normal; color: rgba(255,255,255,0.5); }
 
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
     @media (max-width: 1024px) {
       .sidebar { display: none; }
       .main { margin-left: 0; }
       .mobile-nav { display: flex; }
-      .hero { padding-top: 80px; }
+      .hero { grid-template-columns: 1fr; padding-top: 80px; }
+      .hero-visual { display: none; }
       .hero-ticker { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .testimonials-grid { grid-template-columns: 1fr 1fr; }
       .project-row { grid-template-columns: 1fr; }
-      .project-visual { min-height: 200px; }
+      .project-visual { min-height: 220px; }
       .about-me-inner { grid-template-columns: 1fr; gap: 4rem; }
       .about-me-image-wrap { max-width: 340px; margin: 0 auto; }
-      .about-me-chip { right: 0; }
-      .about-me-chip-2 { left: 0; }
+      .about-me-chip { right: 0; } .about-me-chip-2 { left: 0; }
     }
     @media (max-width: 768px) {
       .hero { padding: 80px 1.5rem 3rem; }
       .wrap { padding: 0 1.5rem; }
       .stats-grid { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
       .process-grid { grid-template-columns: 1fr; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .scroll-hint { display: none; }
       .footer-bar-inner { flex-direction: column; text-align: center; }
+      .hero-stats { flex-wrap: wrap; gap: 1rem; }
+      .hero-stat-divider { display: none; }
     }
   </style>
 </head>
@@ -508,57 +430,133 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="sidebar-name">
-      <span>Toby</span>
-      <span><em>Lees</em></span>
-    </div>
+    <div class="sidebar-name"><span>Toby</span><span><em>Lees</em></span></div>
     <nav class="sidebar-nav">
       <a href="#stats" class="active">Stats</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills & About</a>
-      <a href="#process">Processes </a>
-      <a href="#about-me"> About Me </a>
+      <a href="#process">Process</a>
+      <a href="#about-me">About Me</a>
     </nav>
     <div class="sidebar-bottom">
-      <div style="margin-bottom:.6rem">
-        <span class="sidebar-dot"></span> Unavaliable
-      </div>
+      <div style="margin-bottom:.6rem"><span class="sidebar-dot"></span>Unavailable</div>
       QA Engineer<br/>UK Based
     </div>
   </aside>
 
+  <!-- MOBILE NAV -->
   <nav class="mobile-nav">
     <div class="mobile-nav-name">Toby Lees</div>
-    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#stats" onclick="closeMobileMenu()">Stats</a>
     <a href="#projects" onclick="closeMobileMenu()">Projects</a>
     <a href="#skills" onclick="closeMobileMenu()">Skills & About</a>
-    <a href="#process" onclick="closeMobileMenu()">Processes</a>
-    <a href="#about-me" onclick="closeMobileMenu()"> About Me </a>
+    <a href="#process" onclick="closeMobileMenu()">Process</a>
+    <a href="#about-me" onclick="closeMobileMenu()">About Me</a>
   </div>
 
   <div class="main">
 
+    <!-- ═══════ HERO ═══════ -->
     <section class="hero" id="hero">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
-      <p class="hero-eyebrow" data-reveal>QA Engineer — Software Quality Specialist</p>
-      <h1 class="hero-title" data-reveal>
-        Toby<br/><span class="outline">Lees</span>
-      </h1>
-      <p class="hero-sub" data-reveal>I break things professionally — so your users don't have to.</p>
-      <div class="hero-cta-row" data-reveal>
-        <div class="avatar-stack">
-          <div class="avatar-me">TL</div>
-        </div>
-        <a href="#projects" class="btn-primary">View My Work</a>
-        <a href="#skills" class="btn-outline">Learn More</a>
+      <div class="hero-bg">
+        <div class="hero-bg-orb hero-bg-orb-1"></div>
+        <div class="hero-bg-orb hero-bg-orb-2"></div>
+        <div class="hero-bg-orb hero-bg-orb-3"></div>
       </div>
+      <div class="hero-scanline"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge" data-reveal>
+          <div class="hero-badge-dot"></div>
+          QA Engineer — Software Quality Specialist
+        </div>
+        <h1 class="hero-title" data-reveal>
+          Toby<br/>
+          <span class="gradient-text">Lees</span>
+        </h1>
+        <p class="hero-sub" data-reveal>
+          I break things professionally — so your users don't have to.
+          Precision testing, automation &amp; flawless software delivery.
+        </p>
+        <div class="hero-cta-row" data-reveal>
+          <a href="#projects" class="btn-primary">View My Work</a>
+          <a href="#skills" class="btn-outline">Learn More</a>
+        </div>
+        <div class="hero-stats" data-reveal>
+          <div class="hero-stat">
+            <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
+            <p>Projects Tested</p>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <div class="num"><span class="count" data-count="3000">0</span><span>+</span></div>
+            <p>Test Cases Run</p>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <div class="num"><span class="count" data-count="98">0</span><span>%</span></div>
+            <p>Bug Detection Rate</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Animated test runner -->
+      <div class="hero-visual" data-reveal>
+        <div class="test-runner">
+          <div class="tr-titlebar">
+            <div class="tr-dot r"></div><div class="tr-dot y"></div><div class="tr-dot g"></div>
+            <div class="tr-title">cypress — test runner</div>
+          </div>
+          <div class="tr-tabs">
+            <div class="tr-tab active">suite.spec.js</div>
+            <div class="tr-tab">api.spec.ts</div>
+            <div class="tr-tab">mobile.spec.js</div>
+          </div>
+          <div class="tr-progress">
+            <div class="tr-progress-bar"><div class="tr-progress-fill" id="trProgress"></div></div>
+            <div class="tr-progress-label" id="trProgressLabel">Running test suite...</div>
+          </div>
+          <div class="tr-body" id="trBody">
+            <span class="log-line"><span class="c-cm">// QA Suite — Toby Lees</span></span>
+            <span class="log-line"><span class="c-kw">describe</span>(<span class="c-str">'User Auth Flow'</span>) {</span>
+            <span class="log-line">&nbsp;&nbsp;<span class="c-kw">it</span>(<span class="c-str">'logs in successfully'</span>) {</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">visit</span>(<span class="c-str">'/login'</span>)</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'#email'</span>).<span class="c-mt">type</span>(<span class="c-str">'test@qa.com'</span>)</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'#password'</span>).<span class="c-mt">type</span>(<span class="c-str">'••••••••'</span>)</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'.btn-login'</span>).<span class="c-mt">click</span>()</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">url</span>().<span class="c-mt">should</span>(<span class="c-str">'include'</span>, <span class="c-str">'/dashboard'</span>)</span>
+            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">✓ PASSED</span> <span class="c-dim">(1.2s)</span></span>
+            <span class="log-line">&nbsp;&nbsp;<span class="c-kw">it</span>(<span class="c-str">'validates API response schema'</span>) {</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">request</span>(<span class="c-str">'GET'</span>, <span class="c-str">'/api/user'</span>)</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;.<span class="c-mt">its</span>(<span class="c-str">'status'</span>).<span class="c-mt">should</span>(<span class="c-str">'eq'</span>, <span class="c-num">200</span>)</span>
+            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">✓ PASSED</span> <span class="c-dim">(0.3s)</span></span>
+            <span class="log-line">&nbsp;&nbsp;<span class="c-kw">it</span>(<span class="c-str">'blocks invalid credentials'</span>) {</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'.error-msg'</span>).<span class="c-mt">should</span>(<span class="c-str">'be.visible'</span>)</span>
+            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">✓ PASSED</span> <span class="c-dim">(0.8s)</span></span>
+            <span class="log-line">}</span>
+            <span class="log-line" style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem">
+              <span class="c-pass">✓ 14 passing</span>&nbsp;&nbsp;<span class="c-fail">0 failing</span>&nbsp;&nbsp;<span class="c-dim">(4.1s)</span>
+            </span>
+            <span class="log-line"><span class="c-cursor">▋</span></span>
+          </div>
+          <div class="tr-statusbar">
+            <div class="tr-status-left">
+              <span class="tr-status-pass" id="trPassCount">✓ 0 passing</span>
+              <span class="tr-status-fail">✗ 0 failing</span>
+              <span class="tr-status-pending" id="trPending">⏳ running...</span>
+            </div>
+            <div class="tr-status-right" id="trTime">0.0s</div>
+          </div>
+        </div>
+        <div class="tr-chip tr-chip-1"><div class="chip-dot-g"></div>All Tests Passing</div>
+        <div class="tr-chip tr-chip-2"><div class="chip-dot-b"></div>14 Test Cases</div>
+      </div>
+
       <div class="hero-ticker">
         <div class="hero-ticker-track">
           <div class="ticker-item"><div class="t-name">Help for Heroes</div><div class="t-type">Veterans Charity</div></div>
@@ -577,12 +575,14 @@
           <div class="ticker-item"><div class="t-name">The Daily Mile</div><div class="t-type">Kids Charity</div></div>
         </div>
       </div>
+
       <div class="scroll-hint">
         <div class="scroll-hint-line"></div>
         Scroll to explore
       </div>
     </section>
 
+    <!-- ═══════ STATS ═══════ -->
     <section class="stats-section section" id="stats">
       <div class="wrap">
         <div class="stats-header" data-reveal>
@@ -590,16 +590,16 @@
         </div>
         <div class="stats-grid" data-reveal>
           <div class="stat-box">
-            <div class="num"><span class="count" data-count="100">0</span><span style="color:var(--purple)">+</span></div>
-            <p>Projects tested & delivered</p>
+            <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
+            <p>Projects tested &amp; delivered</p>
           </div>
           <div class="stat-box">
-            <div class="num"><span class="count" data-count="100">0</span><span style="color:var(--purple)">+</span></div>
-            <p>Validated end-to-end functionality across 100+ applications</p>
+            <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
+            <p>Validated end-to-end across 100+ applications</p>
           </div>
           <div class="stat-box">
-            <div class="num"><span class="count" data-count="3,000">3,000</span><span style="color:var(--purple)">+</span></div>
-            <p>Executed 3,000+ test cases across web and mobile platforms</p>
+            <div class="num"><span class="count" data-count="3000">0</span><span>+</span></div>
+            <p>Test cases executed across web &amp; mobile</p>
           </div>
         </div>
         <div class="industry-tags" data-reveal>
@@ -615,150 +615,105 @@
       </div>
     </section>
 
+    <!-- ═══════ PROJECTS ═══════ -->
     <section class="projects-section" id="projects">
       <div class="wrap">
         <div class="section-header" data-reveal>
-          <div>
-            <p class="section-label">Recent Work</p>
-            <h2 class="section-title">Selected projects</h2>
-          </div>
-          <div class="section-links">
-            <a href="#" class="pill-link filled">Case studies</a>
-          </div>
+          <div><p class="section-label">Recent Work</p><h2 class="section-title">Selected projects</h2></div>
+          <div><a href="#" class="pill-link filled">Case studies</a></div>
         </div>
         <div class="projects-list">
+
           <div class="project-row" data-reveal>
-            <div class="project-info">
-              <div>
-                <div class="project-client-name">Help for Heroes</div>
-                <h3 class="project-title">Delivering a Zero-Defect Veteran Support Platform</h3>
-                <p class="project-desc">End-to-end QA strategy covering 200+ critical user journeys — from benefit applications to account management. Tested end to end forms and encountered zero P1 bugs shipped post-launch.</p>
-                <div class="project-tags">
-                  <span class="project-tag">Beneficiary</span>
-                  <span class="project-tag">User Journeys</span>
-                  <span class="project-tag">Software Testing</span>
-                  <span class="project-tag">Integration Testing</span>
-                </div>
-              </div>
-            </div>
-            <div class="project-visual">
-              <div class="project-visual-inner">
-                <div class="test-visual">
-                  <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">h4h.spec.js</span></div>
-                  <div><span class="tv-kw">describe</span>(<span class="tv-str">'Benefit Application'</span>) {</div>
-                  <div>&nbsp;&nbsp;<span class="tv-kw">it</span>(<span class="tv-str">'submits form successfully'</span>) {</div>
-                  <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">visit</span>(<span class="tv-str">'/apply'</span>)</div>
-                  <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'form'</span>).<span class="tv-mt">submit</span>()</div>
-                  <div>&nbsp;&nbsp;} <span class="tv-pass">✓ PASSED</span></div>
-                  <div>}</div>
-                  <div style="margin-top:.5rem;border-top:1px solid rgba(124,58,237,.15);padding-top:.5rem"><span class="tv-pass">✓ 47 passing</span> <span class="tv-fail">0 failing</span></div>
-                  <div><span class="tv-cursor">▋</span></div>
-                </div>
-              </div>
-            </div>
+            <div class="project-info"><div>
+              <div class="project-client-name">Help for Heroes</div>
+              <h3 class="project-title">Delivering a Zero-Defect Veteran Support Platform</h3>
+              <p class="project-desc">End-to-end QA strategy covering 200+ critical user journeys — from benefit applications to account management. Zero P1 bugs shipped post-launch.</p>
+              <div class="project-tags"><span class="project-tag">Beneficiary</span><span class="project-tag">User Journeys</span><span class="project-tag">Software Testing</span><span class="project-tag">Integration Testing</span></div>
+            </div></div>
+            <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
+              <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">h4h.spec.js</span></div>
+              <div><span class="tv-kw">describe</span>(<span class="tv-str">'Benefit Application'</span>) {</div>
+              <div>&nbsp;&nbsp;<span class="tv-kw">it</span>(<span class="tv-str">'submits form successfully'</span>) {</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">visit</span>(<span class="tv-str">'/apply'</span>)</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'form'</span>).<span class="tv-mt">submit</span>()</div>
+              <div>&nbsp;&nbsp;} <span class="tv-pass">✓ PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem"><span class="tv-pass">✓ 47 passing</span> <span class="tv-fail">0 failing</span></div>
+              <div><span class="tv-cursor">▋</span></div>
+            </div></div></div>
           </div>
+
           <div class="project-row" data-reveal>
-            <div class="project-info">
-              <div>
-                <div class="project-client-name">Maggie's</div>
-                <h3 class="project-title">QA for a Cancer Care Centre Booking & Resource Platform</h3>
-                <p class="project-desc">Functional and regression testing of the centre-finder, online support resources and appointment booking journeys across the UK-wide Maggie's network. Full cross-browser and mobile coverage following advance test cases.</p>
-                <div class="project-tags">
-                  <span class="project-tag">Test Cases</span>
-                  <span class="project-tag">BrowserStack</span>
-                  <span class="project-tag">Regression</span>
-                  <span class="project-tag">Mobile QA</span>
-                </div>
-              </div>
-            </div>
-            <div class="project-visual">
-              <div class="project-visual-inner">
-                <div class="test-visual">
-                  <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">maggies.spec.ts</span></div>
-                  <div><span class="tv-kw">test</span>(<span class="tv-str">'centre finder works'</span>, <span class="tv-kw">async</span> () => {</div>
-                  <div>&nbsp;&nbsp;<span class="tv-kw">await</span> <span class="tv-fn">page</span>.<span class="tv-mt">goto</span>(<span class="tv-str">'/centres'</span>)</div>
-                  <div>&nbsp;&nbsp;<span class="tv-kw">await</span> <span class="tv-fn">page</span>.<span class="tv-mt">fill</span>(<span class="tv-str">'#postcode'</span>, <span class="tv-str">'M1 1AE'</span>)</div>
-                  <div>&nbsp;&nbsp;<span class="tv-kw">await</span> expect(<span class="tv-fn">page</span>).<span class="tv-mt">toHaveURL</span>(<span class="tv-str">/results/</span>)</div>
-                  <div>}) <span class="tv-pass">✓ PASSED</span></div>
-                  <div style="margin-top:.5rem;border-top:1px solid rgba(124,58,237,.15);padding-top:.5rem"><span class="tv-pass">✓ 31 passing</span> <span class="tv-fail">0 failing</span></div>
-                  <div><span class="tv-cursor">▋</span></div>
-                </div>
-              </div>
-            </div>
+            <div class="project-info"><div>
+              <div class="project-client-name">Maggie's</div>
+              <h3 class="project-title">QA for a Cancer Care Centre Booking &amp; Resource Platform</h3>
+              <p class="project-desc">Functional and regression testing of the centre-finder, online support resources and appointment booking journeys. Full cross-browser and mobile coverage.</p>
+              <div class="project-tags"><span class="project-tag">Test Cases</span><span class="project-tag">BrowserStack</span><span class="project-tag">Regression</span><span class="project-tag">Mobile QA</span></div>
+            </div></div>
+            <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
+              <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">maggies.spec.ts</span></div>
+              <div><span class="tv-kw">test</span>(<span class="tv-str">'centre finder works'</span>, <span class="tv-kw">async</span> () => {</div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">page</span>.<span class="tv-mt">goto</span>(<span class="tv-str">'/centres'</span>)</div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">page</span>.<span class="tv-mt">fill</span>(<span class="tv-str">'#postcode'</span>, <span class="tv-str">'M1 1AE'</span>)</div>
+              <div>&nbsp;&nbsp;expect(<span class="tv-fn">page</span>).<span class="tv-mt">toHaveURL</span>(<span class="tv-str">/results/</span>)</div>
+              <div>}) <span class="tv-pass">✓ PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem"><span class="tv-pass">✓ 31 passing</span> <span class="tv-fail">0 failing</span></div>
+              <div><span class="tv-cursor">▋</span></div>
+            </div></div></div>
           </div>
+
           <div class="project-row" data-reveal>
-            <div class="project-info">
-              <div>
-                <div class="project-client-name">Bipolar UK</div>
-                <h3 class="project-title">Ensuring Reliability of Bipolar UK Website and Bipolar UK Assessment Form</h3>
-                <p class="project-desc">Comprehensive QA of the Bipolar UK Assessment Form and onboarding flows with a focus on safe, reliable user journeys for a sensitive mental health audience.</p>
-                <div class="project-tags">
-                  <span class="project-tag">Manual QA</span>
-                  <span class="project-tag">Exploratory</span>
-                  <span class="project-tag">UAT</span>
-                  <span class="project-tag">Accessibility</span>
-                </div>
-              </div>
-            </div>
-            <div class="project-visual">
-              <div class="project-visual-inner">
-                <div class="test-visual">
-                  <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">community.spec.js</span></div>
-                  <div><span class="tv-cm">// Crisis resource accessibility</span></div>
-                  <div><span class="tv-kw">describe</span>(<span class="tv-str">'Support Forum'</span>) {</div>
-                  <div>&nbsp;&nbsp;<span class="tv-kw">it</span>(<span class="tv-str">'loads for screen readers'</span>) {</div>
-                  <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">axe</span>.<span class="tv-mt">run</span>(<span class="tv-str">'#forum'</span>)</div>
-                  <div>&nbsp;&nbsp;} <span class="tv-pass">✓ PASSED</span></div>
-                  <div>}</div>
-                  <div style="margin-top:.5rem;border-top:1px solid rgba(124,58,237,.15);padding-top:.5rem"><span class="tv-pass">✓ 28 passing</span> <span class="tv-fail">0 failing</span></div>
-                  <div><span class="tv-cursor">▋</span></div>
-                </div>
-              </div>
-            </div>
+            <div class="project-info"><div>
+              <div class="project-client-name">Bipolar UK</div>
+              <h3 class="project-title">Ensuring Reliability of Bipolar UK Website &amp; Assessment Form</h3>
+              <p class="project-desc">Comprehensive QA of the Bipolar UK Assessment Form and onboarding flows with a focus on safe, reliable user journeys for a sensitive mental health audience.</p>
+              <div class="project-tags"><span class="project-tag">Manual QA</span><span class="project-tag">Exploratory</span><span class="project-tag">UAT</span><span class="project-tag">Accessibility</span></div>
+            </div></div>
+            <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
+              <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">bipolar.spec.js</span></div>
+              <div><span class="tv-kw">describe</span>(<span class="tv-str">'Assessment Form'</span>) {</div>
+              <div>&nbsp;&nbsp;<span class="tv-kw">it</span>(<span class="tv-str">'loads for screen readers'</span>) {</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">axe</span>.<span class="tv-mt">run</span>(<span class="tv-str">'#assessment'</span>)</div>
+              <div>&nbsp;&nbsp;} <span class="tv-pass">✓ PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem"><span class="tv-pass">✓ 28 passing</span> <span class="tv-fail">0 failing</span></div>
+              <div><span class="tv-cursor">▋</span></div>
+            </div></div></div>
           </div>
+
           <div class="project-row" data-reveal>
-            <div class="project-info">
-              <div>
-                <div class="project-client-name">Breast Cancer UK</div>
-                <h3 class="project-title">QA Strategy for the Breast Cancer Assessment Form and Sitewide QA</h3>
-                <p class="project-desc">Full QA execution for the charity's Website and Assessment form. Cross-browser testing across 18 device/browser combinations, ensuring robust performance flawless UI/UX exprience.</p>
-                <div class="project-tags">
-                  <span class="project-tag">Form Testing</span>
-                  <span class="project-tag">Cross-browser</span>
-                  <span class="project-tag">Responsiveness</span>
-                  <span class="project-tag">API </span>
-                </div>
-              </div>
-            </div>
-            <div class="project-visual">
-              <div class="project-visual-inner">
-                <div class="test-visual">
-                  <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">donation.spec.java</span></div>
-                  <div><span class="tv-cm">// Donation flow - multi browser</span></div>
-                  <div><span class="tv-fn">driver</span>.<span class="tv-mt">get</span>(<span class="tv-str">"/donate"</span>);</div>
-                  <div><span class="tv-fn">driver</span>.<span class="tv-mt">findElement</span>(By.<span class="tv-mt">id</span>(<span class="tv-str">"amount"</span>))</div>
-                  <div>&nbsp;&nbsp;.<span class="tv-mt">sendKeys</span>(<span class="tv-str">"25"</span>);</div>
-                  <div><span class="tv-fn">Assert</span>.<span class="tv-mt">assertTrue</span>(result);</div>
-                  <div style="margin-top:.5rem;border-top:1px solid rgba(124,58,237,.15);padding-top:.5rem"><span class="tv-pass">✓ 52 passing</span> <span class="tv-fail">0 failing</span></div>
-                  <div><span class="tv-cursor">▋</span></div>
-                </div>
-              </div>
-            </div>
+            <div class="project-info"><div>
+              <div class="project-client-name">Breast Cancer UK</div>
+              <h3 class="project-title">QA Strategy for Assessment Form &amp; Sitewide Testing</h3>
+              <p class="project-desc">Full QA execution for the charity's website and assessment form. Cross-browser testing across 18 device/browser combinations, ensuring robust performance and flawless UI/UX.</p>
+              <div class="project-tags"><span class="project-tag">Form Testing</span><span class="project-tag">Cross-browser</span><span class="project-tag">Responsiveness</span><span class="project-tag">API</span></div>
+            </div></div>
+            <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
+              <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">bcuk.spec.js</span></div>
+              <div><span class="tv-kw">describe</span>(<span class="tv-str">'Donation Flow'</span>) {</div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">intercept</span>(<span class="tv-str">'POST'</span>, <span class="tv-str">'/api/donate'</span>)</div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'#amount'</span>).<span class="tv-mt">type</span>(<span class="tv-str">'25'</span>)</div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'.submit'</span>).<span class="tv-mt">click</span>()</div>
+              <div>} <span class="tv-pass">✓ PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem"><span class="tv-pass">✓ 52 passing</span> <span class="tv-fail">0 failing</span></div>
+              <div><span class="tv-cursor">▋</span></div>
+            </div></div></div>
           </div>
+
         </div>
       </div>
     </section>
 
+    <!-- ═══════ SKILLS ═══════ -->
     <section class="about-section section" id="skills">
       <div class="wrap">
         <div class="about-grid">
           <div class="about-text" data-reveal>
-            <p class="section-label">About</p>
+            <p class="section-label">Skills</p>
             <h2>I find bugs <em>before</em> your customers do.</h2>
             <p>With a meticulous eye for detail and a genuine passion for software quality, I specialise in manual and automated testing across web and mobile platforms.</p>
-            <p>From exploratory testing to building robust Cypress & Playwright suites, I partner with development teams to ship with total confidence. Whether you're a startup pushing a first release or a growing team managing complex regression — I make sure every launch is something to be proud of.</p>
+            <p>From exploratory testing to building robust Cypress &amp; Playwright suites, I partner with development teams to ship with total confidence.</p>
             <div class="about-tags">
-              <span class="about-tag">Agile & Scrum</span>
+              <span class="about-tag">Agile &amp; Scrum</span>
               <span class="about-tag">CI/CD Pipelines</span>
               <span class="about-tag">API Testing</span>
               <span class="about-tag">Test Strategy</span>
@@ -769,26 +724,31 @@
           <div data-reveal>
             <div class="skills-card">
               <div class="skill-row"><div class="skill-icon-box">⚡</div><div class="skill-info"><strong>Test Automation</strong><span>Cypress · Playwright · Selenium · Jest</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">🔍</div><div class="skill-info"><strong>Manual & Exploratory</strong><span>Regression · Smoke · UAT · Edge cases</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">🔍</div><div class="skill-info"><strong>Manual &amp; Exploratory</strong><span>Regression · Smoke · UAT · Edge cases</span></div></div>
               <div class="skill-row"><div class="skill-icon-box">🌐</div><div class="skill-info"><strong>API Testing</strong><span>Postman · REST · GraphQL · Insomnia</span></div></div>
               <div class="skill-row"><div class="skill-icon-box">📱</div><div class="skill-info"><strong>Mobile QA</strong><span>iOS · Android · Appium · BrowserStack</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">🚀</div><div class="skill-info"><strong>CI/CD & DevOps</strong><span>GitHub Actions · Jenkins · Docker · CircleCI</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">📋</div><div class="skill-info"><strong>Tools & Management</strong><span>Jira · TestRail · Confluence · Zephyr</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">🚀</div><div class="skill-info"><strong>CI/CD &amp; DevOps</strong><span>GitHub Actions · Jenkins · Docker · CircleCI</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">📋</div><div class="skill-info"><strong>Tools &amp; Management</strong><span>Jira · TestRail · Confluence · Zephyr</span></div></div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- ═══════ PROCESS ═══════ -->
     <section class="process-section" id="process">
       <div class="wrap">
-        <p class="section-label" data-reveal>How I work</p>
+        <p class="section-label" data-reveal>How I Work</p>
         <h2 class="section-title" data-reveal>A clear, collaborative process designed to remove ambiguity and protect quality.</h2>
         <div class="process-grid" data-reveal>
-          <div class="process-step"><div class="step-num">01</div><h3>Discovery & Alignment</h3><p>We start with a call to understand your product, your users, and your biggest quality concerns. As much about fit as it is about scope.</p></div>
-          <div class="process-step"><div class="step-num">02</div><h3>Test Planning & Strategy</h3><p>I map out coverage, define test cases, and agree on tooling before a single test runs. Clear strategy means no surprises mid-sprint.</p></div>
-          <div class="process-step"><div class="step-num">03</div><h3>Execute, Report & Ship</h3><p>Testing runs in focused loops with clear, actionable bug reports. We iterate quickly and sign off with confidence.</p></div>
+          <div class="process-step"><div class="step-num">01</div><h3>Discovery &amp; Alignment</h3><p>We start by understanding your product, your users, and your biggest quality concerns. As much about fit as scope.</p></div>
+          <div class="process-step"><div class="step-num">02</div><h3>Test Planning &amp; Strategy</h3><p>I map out coverage, define test cases, and agree on tooling before a single test runs. Clear strategy means no surprises mid-sprint.</p></div>
+          <div class="process-step"><div class="step-num">03</div><h3>Execute, Report &amp; Ship</h3><p>Testing runs in focused loops with clear, actionable bug reports. We iterate quickly and sign off with confidence.</p></div>
         </div>
+      </div>
     </section>
+
+    <!-- ═══════ ABOUT ME ═══════ -->
     <section class="about-me-section" id="about-me">
       <div class="wrap">
         <div class="about-me-inner">
@@ -797,10 +757,7 @@
               <div class="placeholder-initials">TL</div>
               <div class="placeholder-label">Add your photo here</div>
             </div>
-            <div class="about-me-chip">
-              <div class="chip-dot"></div>
-              <span>Open to work</span>
-            </div>
+            <div class="about-me-chip"><div class="chip-dot"></div><span>Unavailable</span></div>
             <div class="about-me-chip-2">
               <div class="chip-2-label">Experience</div>
               <div class="chip-2-value">5+ Yrs</div>
@@ -816,29 +773,24 @@
               <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur fermentum, risus nec fringilla tincidunt, urna turpis vestibulum orci, a sodales nunc nulla vel enim. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</p>
             </div>
             <div class="about-me-facts">
-              <div class="fact-item"><div class="fact-icon">☕</div><strong>Fuelled by coffee</strong><span>& edge cases</span></div>
+              <div class="fact-item"><div class="fact-icon">☕</div><strong>Fuelled by coffee</strong><span>&amp; edge cases</span></div>
               <div class="fact-item"><div class="fact-icon">📍</div><strong>Based in the UK</strong><span>Remote-first</span></div>
-              <div class="fact-item"><div class="fact-icon">🐛</div><strong>Bug hunter</strong><span>by trade & nature</span></div>
+              <div class="fact-item"><div class="fact-icon">🐛</div><strong>Bug hunter</strong><span>by trade &amp; nature</span></div>
               <div class="fact-item"><div class="fact-icon">🎯</div><strong>Zero tolerance</strong><span>for P1s in prod</span></div>
             </div>
             <p class="about-me-pills-label">My toolkit</p>
             <div class="about-me-pills">
-              <span class="about-pill">Cypress</span>
-              <span class="about-pill">Playwright</span>
-              <span class="about-pill">Selenium</span>
-              <span class="about-pill">Postman</span>
-              <span class="about-pill">Jira</span>
-              <span class="about-pill">TestRail</span>
-              <span class="about-pill">GitHub Actions</span>
-              <span class="about-pill">BrowserStack</span>
-              <span class="about-pill">Appium</span>
-              <span class="about-pill">axe</span>
+              <span class="about-pill">Cypress</span><span class="about-pill">Playwright</span><span class="about-pill">Selenium</span>
+              <span class="about-pill">Postman</span><span class="about-pill">Jira</span><span class="about-pill">TestRail</span>
+              <span class="about-pill">GitHub Actions</span><span class="about-pill">BrowserStack</span>
+              <span class="about-pill">Appium</span><span class="about-pill">axe</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ═══════ FOOTER CTA ═══════ -->
     <div class="footer-cta">
       <div class="wrap">
         <div class="footer-cta-inner" data-reveal>
@@ -846,9 +798,6 @@
           <h2>Let's build something <em>bulletproof.</em></h2>
           <p>A quick conversation to understand your project, your quality goals, and whether we're the right fit.</p>
           <div class="footer-cta-btns">
-            <div class="avatar-stack" style="justify-content:center">
-              <div class="avatar-me">TL</div>
-            </div>
             <a href="mailto:leestoby31@gmail.com" class="btn-primary">Get in touch →</a>
           </div>
         </div>
@@ -869,29 +818,23 @@
   <script>
     'use strict';
 
-    // ── Cursor ────────────────────────────────────
+    /* ── Cursor ── */
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
     let mx = 0, my = 0, rx = 0, ry = 0;
-
     document.addEventListener('mousemove', e => {
       mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
     });
-
-    (function animateRing() {
-      rx += (mx - rx) * 0.1;
-      ry += (my - ry) * 0.1;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-      requestAnimationFrame(animateRing);
+    (function animRing() {
+      rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
     })();
-
     document.addEventListener('mouseleave', () => { cursor.style.opacity = 0; ring.style.opacity = 0; });
     document.addEventListener('mouseenter', () => { cursor.style.opacity = 1; ring.style.opacity = 1; });
 
-    // ── Scroll Reveal ─────────────────────────────
+    /* ── Scroll Reveal ── */
     const revealObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
@@ -901,28 +844,24 @@
         revealObs.unobserve(e.target);
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
     document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
-
     setTimeout(() => {
       document.querySelectorAll('.hero [data-reveal]').forEach((el, i) => {
-        setTimeout(() => el.classList.add('on'), 300 + i * 160);
+        setTimeout(() => el.classList.add('on'), 200 + i * 140);
       });
     }, 100);
 
-    // ── Counters ─────────────────────────────────
+    /* ── Counters ── */
     const countObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
-        const el = e.target;
-        const target = +el.dataset.count;
+        const el = e.target, target = +el.dataset.count;
         let start = null;
         const step = ts => {
           if (!start) start = ts;
           const p = Math.min((ts - start) / 1800, 1);
           el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3)));
-          if (p < 1) requestAnimationFrame(step);
-          else el.textContent = target;
+          if (p < 1) requestAnimationFrame(step); else el.textContent = target;
         };
         requestAnimationFrame(step);
         countObs.unobserve(el);
@@ -930,68 +869,43 @@
     }, { threshold: 0.5 });
     document.querySelectorAll('.count').forEach(el => countObs.observe(el));
 
-    // ── Active sidebar link on scroll ─────────────
-    const sections = document.querySelectorAll('section[id], div[id]');
+    /* ── Active sidebar ── */
+    const allSections = document.querySelectorAll('section[id], div[id]');
     const sideLinks = document.querySelectorAll('.sidebar-nav a');
-
     window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(s => {
-        if (window.scrollY >= s.offsetTop - 200) current = s.id;
-      });
-      sideLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
+      let cur = '';
+      allSections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
+      sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
     }, { passive: true });
 
-    // ── FAQ ───────────────────────────────────────
-    function toggleFaq(btn) {
-      const answer = btn.nextElementSibling;
-      const isOpen = answer.classList.contains('open');
-      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
-      document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
-      if (!isOpen) {
-        answer.classList.add('open');
-        btn.classList.add('open');
-      }
-    }
-
-    // ── Mobile menu ───────────────────────────────
+    /* ── Mobile menu ── */
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     let menuOpen = false;
-
     mobileMenuBtn.addEventListener('click', () => {
       menuOpen = !menuOpen;
       mobileMenu.classList.toggle('open', menuOpen);
       const spans = mobileMenuBtn.querySelectorAll('span');
-      if (menuOpen) {
-        spans[0].style.transform = 'translateY(7px) rotate(45deg)';
-        spans[1].style.opacity = '0';
-        spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-      } else {
-        spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
-      }
+      if (menuOpen) { spans[0].style.transform='translateY(7px) rotate(45deg)'; spans[1].style.opacity='0'; spans[2].style.transform='translateY(-7px) rotate(-45deg)'; }
+      else { spans.forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
     });
-
     function closeMobileMenu() {
-      menuOpen = false;
-      mobileMenu.classList.remove('open');
-      mobileMenuBtn.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      menuOpen = false; mobileMenu.classList.remove('open');
+      mobileMenuBtn.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; });
     }
 
-    // ── Project row tilt ─────────────────────────
+    /* ── Project row tilt ── */
     document.querySelectorAll('.project-row').forEach(row => {
       row.addEventListener('mousemove', e => {
         const r = row.getBoundingClientRect();
-        const x = (e.clientX - r.left - r.width / 2) / r.width;
-        const y = (e.clientY - r.top - r.height / 2) / r.height;
-        row.style.transform = `perspective(1000px) rotateX(${-y * 1.5}deg) rotateY(${x * 1.5}deg)`;
+        const x = (e.clientX - r.left - r.width/2) / r.width;
+        const y = (e.clientY - r.top - r.height/2) / r.height;
+        row.style.transform = `perspective(1000px) rotateX(${-y*1.5}deg) rotateY(${x*1.5}deg)`;
       });
       row.addEventListener('mouseleave', () => { row.style.transform = ''; });
     });
 
-    // ── Smooth scroll ─────────────────────────────
+    /* ── Smooth scroll ── */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const t = document.querySelector(a.getAttribute('href'));
@@ -999,38 +913,106 @@
       });
     });
 
-    // ── About Me: animated border ─────────────────
+    /* ── About Me: animated border ── */
     const aboutBorderObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('border-animated');
-          aboutBorderObs.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('border-animated'); aboutBorderObs.unobserve(e.target); }
       });
     }, { threshold: 0.3 });
-
     const aboutBorderEl = document.getElementById('aboutBorderEl');
     if (aboutBorderEl) aboutBorderObs.observe(aboutBorderEl);
 
-    // ── About Me: staggered pills ─────────────────
+    /* ── About Me: staggered pills ── */
     const pillObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
         e.target.querySelectorAll('.about-pill').forEach((pill, i) => {
-          pill.style.opacity = '0';
-          pill.style.transform = 'translateY(12px)';
-          pill.style.transition = `opacity 0.4s ease ${i * 60}ms, transform 0.4s ease ${i * 60}ms`;
-          setTimeout(() => {
-            pill.style.opacity = '1';
-            pill.style.transform = 'translateY(0)';
-          }, 100 + i * 60);
+          pill.style.opacity = '0'; pill.style.transform = 'translateY(12px)';
+          pill.style.transition = `opacity 0.4s ease ${i*60}ms, transform 0.4s ease ${i*60}ms`;
+          setTimeout(() => { pill.style.opacity = '1'; pill.style.transform = 'translateY(0)'; }, 100 + i*60);
         });
         pillObs.unobserve(e.target);
       });
     }, { threshold: 0.3 });
-
     const pillsEl = document.querySelector('.about-me-pills');
     if (pillsEl) pillObs.observe(pillsEl);
+
+    /* ── Hero Test Runner animation ── */
+    (function heroTestRunner() {
+      const lines = document.querySelectorAll('#trBody .log-line');
+      const progress = document.getElementById('trProgress');
+      const progressLabel = document.getElementById('trProgressLabel');
+      const passCount = document.getElementById('trPassCount');
+      const pending = document.getElementById('trPending');
+      const timer = document.getElementById('trTime');
+
+      let lineIdx = 0, passing = 0, elapsed = 0;
+      const totalLines = lines.length;
+      const passLines = [8, 10, 12]; // indices that show PASSED
+
+      // Start after a delay
+      setTimeout(() => {
+        const lineInterval = setInterval(() => {
+          if (lineIdx < totalLines) {
+            lines[lineIdx].classList.add('visible');
+            if (passLines.includes(lineIdx)) {
+              passing++;
+              passCount.textContent = `✓ ${passing} passing`;
+              progress.style.width = `${(passing / 3) * 100}%`;
+            }
+            lineIdx++;
+          } else {
+            clearInterval(lineInterval);
+            progressLabel.textContent = 'All tests complete ✓';
+            pending.textContent = '✓ complete';
+            pending.style.color = '#22c55e';
+          }
+        }, 280);
+
+        const timeInterval = setInterval(() => {
+          elapsed += 0.1;
+          timer.textContent = elapsed.toFixed(1) + 's';
+          if (elapsed >= 4.1) clearInterval(timeInterval);
+        }, 100);
+      }, 1200);
+
+      // Loop the animation every 12 seconds
+      setInterval(() => {
+        lines.forEach(l => l.classList.remove('visible'));
+        lineIdx = 0; passing = 0; elapsed = 0;
+        passCount.textContent = '✓ 0 passing';
+        pending.textContent = '⏳ running...';
+        pending.style.color = '#fbbf24';
+        timer.textContent = '0.0s';
+        progress.style.width = '0%';
+        progressLabel.textContent = 'Running test suite...';
+
+        setTimeout(() => {
+          const lineInterval = setInterval(() => {
+            if (lineIdx < totalLines) {
+              lines[lineIdx].classList.add('visible');
+              if (passLines.includes(lineIdx)) {
+                passing++;
+                passCount.textContent = `✓ ${passing} passing`;
+                progress.style.width = `${(passing / 3) * 100}%`;
+              }
+              lineIdx++;
+            } else {
+              clearInterval(lineInterval);
+              progressLabel.textContent = 'All tests complete ✓';
+              pending.textContent = '✓ complete';
+              pending.style.color = '#22c55e';
+            }
+          }, 280);
+
+          const timeInterval = setInterval(() => {
+            elapsed += 0.1;
+            timer.textContent = elapsed.toFixed(1) + 's';
+            if (elapsed >= 4.1) clearInterval(timeInterval);
+          }, 100);
+        }, 500);
+      }, 12000);
+    })();
 
   </script>
 </body>

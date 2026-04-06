@@ -3,20 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toby Lees — Quality Assurance Engineer</title>
+  <title>Toby Lees — QA Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet" />
   <style>
-    /* ============================================================
-       DESIGN TOKENS — Blue / White scheme
-    ============================================================ */
     :root {
       --blue:        #2563eb;
       --blue-light:  #60a5fa;
       --blue-mid:    #3b82f6;
       --blue-dark:   #1e3a8a;
-      --blue-deep:   #0f172a;
       --blue-glow:   rgba(37,99,235,0.35);
       --blue-subtle: rgba(37,99,235,0.07);
       --cyan:        #06b6d4;
@@ -29,11 +25,12 @@
       --gray-400:    #7e9cc7;
       --gray-600:    #4a6fa5;
       --gray-900:    #0f172a;
-      --dark:        #0f172a;
-      --dark-mid:    #1e293b;
+      --dark:        #0a0f1e;
+      --dark-mid:    #111827;
       --dark-border: rgba(255,255,255,0.07);
       --font-display: 'Syne', sans-serif;
-      --font-body:    'DM Sans', sans-serif;
+      --font-body:    'Space Grotesk', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
       --radius:    18px;
       --radius-sm: 10px;
       --radius-xs: 6px;
@@ -46,60 +43,49 @@
     html { scroll-behavior: smooth; font-size: 16px; }
     body { font-family: var(--font-body); background: var(--white); color: var(--gray-900); overflow-x: hidden; cursor: none; }
 
-    /* ── Cursor ── */
-    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blue); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; }
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blue); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; mix-blend-mode: difference; }
     .cursor-ring { position: fixed; width: 38px; height: 38px; border: 1.5px solid rgba(37,99,235,0.5); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: left .1s ease, top .1s ease; }
 
-    /* ── Noise overlay ── */
     body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 99997; opacity: 0.02; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-    /* ── Typography ── */
     h1,h2,h3,h4,h5 { font-family: var(--font-display); line-height: 1.1; }
-    p { line-height: 1.75; color: var(--gray-600); }
+    p { line-height: 1.75; color: var(--gray-600); font-family: var(--font-body); }
     em { font-style: italic; color: var(--blue); }
     a { text-decoration: none; color: inherit; }
+    code, .mono { font-family: var(--font-mono); }
 
-    /* ── Layout ── */
     .wrap { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
     [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
     [data-reveal].on { opacity: 1; transform: none; }
 
-    /* ============================================================
-       SIDEBAR
-    ============================================================ */
-    .sidebar {
-      position: fixed; top: 0; left: 0; bottom: 0; width: 220px;
-      background: var(--dark); border-right: 1px solid var(--dark-border);
-      z-index: 900; display: flex; flex-direction: column; padding: 2.5rem 1.8rem;
-    }
+    /* ── SIDEBAR ── */
+    .sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 220px; background: var(--dark); border-right: 1px solid var(--dark-border); z-index: 900; display: flex; flex-direction: column; padding: 2.5rem 1.8rem; }
     .sidebar-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 2.5rem; }
     .sidebar-name span { display: block; }
     .sidebar-name em { color: var(--blue-light); font-style: normal; }
     .sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
-    .sidebar-nav a { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.38); padding: 0.55rem 0.8rem; border-radius: var(--radius-xs); letter-spacing: 0.03em; transition: color var(--t), background var(--t); position: relative; }
+    .sidebar-nav a { font-family: var(--font-body); font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.38); padding: 0.55rem 0.8rem; border-radius: var(--radius-xs); letter-spacing: 0.02em; transition: color var(--t), background var(--t); position: relative; }
     .sidebar-nav a::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 2px; height: 0; background: var(--blue-light); border-radius: 2px; transition: height var(--t); }
     .sidebar-nav a:hover, .sidebar-nav a.active { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
     .sidebar-nav a:hover::before, .sidebar-nav a.active::before { height: 70%; }
-    .sidebar-bottom { margin-top: auto; font-size: 0.72rem; color: rgba(255,255,255,0.25); font-family: var(--font-display); line-height: 1.6; }
+    .sidebar-bottom { margin-top: auto; font-size: 0.72rem; color: rgba(255,255,255,0.25); font-family: var(--font-mono); line-height: 1.6; }
     .sidebar-dot { display: inline-block; width: 6px; height: 6px; background: #ef4444; border-radius: 50%; margin-right: 6px; animation: blinkDot 2s ease-in-out infinite; vertical-align: middle; }
-    .sidebar-dot.available { background: #22c55e; }
-    @keyframes blinkDot { 0%,100%{opacity:1;} 50%{opacity:.5;} }
+    @keyframes blinkDot { 0%,100%{opacity:1;} 50%{opacity:.4;} }
 
-    /* ── Mobile nav ── */
     .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; height: 60px; background: var(--dark); border-bottom: 1px solid var(--dark-border); z-index: 900; align-items: center; padding: 0 1.5rem; justify-content: space-between; }
     .mobile-nav-name { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--white); }
     .mobile-menu-btn { background: none; border: none; display: flex; flex-direction: column; gap: 5px; padding: 4px; cursor: none; }
     .mobile-menu-btn span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--t); }
     .mobile-menu { position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: var(--dark); z-index: 899; padding: 2rem 1.5rem; display: none; flex-direction: column; gap: 0.5rem; }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.7); padding: 0.8rem 0; border-bottom: 1px solid var(--dark-border); transition: color var(--t); }
+    .mobile-menu a { font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; color: rgba(255,255,255,0.7); padding: 0.8rem 0; border-bottom: 1px solid var(--dark-border); transition: color var(--t); }
     .mobile-menu a:hover { color: var(--blue-light); }
 
     .main { margin-left: 220px; }
 
-    /* ============================================================
-       HERO — animated test runner
-    ============================================================ */
+    /* ═══════════════════════════════════════════
+       HERO — particle canvas + test runner
+    ═══════════════════════════════════════════ */
     .hero {
       min-height: 100vh;
       background: var(--dark);
@@ -112,170 +98,145 @@
       overflow: hidden;
     }
 
-    /* Gradient mesh background */
-    .hero-bg {
-      position: absolute; inset: 0; pointer-events: none;
-    }
-    .hero-bg-orb { position: absolute; border-radius: 50%; filter: blur(100px); }
-    .hero-bg-orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(37,99,235,0.4) 0%, transparent 70%); top: -200px; right: -100px; animation: orbDrift 12s ease-in-out infinite; }
-    .hero-bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(6,182,212,0.25) 0%, transparent 70%); bottom: -100px; left: 10%; animation: orbDrift 9s ease-in-out infinite; animation-delay: -4s; }
-    .hero-bg-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(30,58,138,0.5) 0%, transparent 70%); top: 40%; left: -50px; animation: orbDrift 15s ease-in-out infinite; animation-delay: -8s; }
-    @keyframes orbDrift { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(25px,-20px) scale(1.04);} 66%{transform:translate(-15px,25px) scale(0.96);} }
+    #particleCanvas { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 
-    /* Grid lines */
-    .hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 70%); }
+    .hero-bg-orb { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+    .hero-bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(37,99,235,0.3) 0%, transparent 70%); top: -150px; right: -50px; animation: orbDrift 12s ease-in-out infinite; }
+    .hero-bg-orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%); bottom: -80px; left: 10%; animation: orbDrift 9s ease-in-out infinite; animation-delay: -4s; }
+    @keyframes orbDrift { 0%,100%{transform:translate(0,0);} 33%{transform:translate(20px,-15px);} 66%{transform:translate(-12px,20px);} }
 
-    /* Scanline sweep */
-    .hero-scanline {
-      position: absolute; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(96,165,250,0.4), transparent);
-      animation: scanline 4s linear infinite;
-      pointer-events: none; z-index: 1;
-    }
-    @keyframes scanline { 0%{top:-2px;opacity:0;} 5%{opacity:1;} 95%{opacity:1;} 100%{top:100%;opacity:0;} }
+    .hero-scanline { position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(96,165,250,0.3), transparent); animation: scanline 5s linear infinite; pointer-events: none; z-index: 1; }
+    @keyframes scanline { 0%{top:-1px;opacity:0;} 5%{opacity:1;} 95%{opacity:1;} 100%{top:100%;opacity:0;} }
 
-    /* ── Hero Left ── */
     .hero-content { position: relative; z-index: 2; }
 
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: var(--font-display); font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--blue-light);
-      border: 1px solid rgba(96,165,250,0.25);
-      background: rgba(37,99,235,0.1);
-      padding: 0.4rem 1rem; border-radius: 50px;
-      margin-bottom: 2rem;
-    }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.06em; color: var(--blue-light); border: 1px solid rgba(96,165,250,0.2); background: rgba(37,99,235,0.08); padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 2rem; }
     .hero-badge-dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: blinkDot 1.5s ease-in-out infinite; }
 
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 800;
-      color: var(--white); line-height: 1.0; margin-bottom: 1.8rem;
-    }
-    .hero-title .outline { -webkit-text-stroke: 2px rgba(96,165,250,0.7); color: transparent; }
+    .hero-title { font-family: var(--font-display); font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 800; color: var(--white); line-height: 1.0; margin-bottom: 1.8rem; }
     .hero-title .gradient-text { background: linear-gradient(135deg, var(--blue-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.55); line-height: 1.75; max-width: 480px; margin-bottom: 2.5rem; }
+    .hero-sub { font-family: var(--font-body); font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.8; max-width: 480px; margin-bottom: 2.5rem; }
 
     .hero-cta-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
 
-    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; background: linear-gradient(135deg, var(--blue), var(--blue-mid)); color: var(--white); padding: 0.85rem 1.8rem; border-radius: 50px; border: none; cursor: none; transition: transform var(--t), box-shadow var(--t); position: relative; overflow: hidden; }
-    .btn-primary::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent); opacity: 0; transition: opacity var(--t); }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; background: linear-gradient(135deg, var(--blue), var(--blue-mid)); color: var(--white); padding: 0.85rem 1.8rem; border-radius: 50px; border: none; cursor: none; transition: transform var(--t), box-shadow var(--t); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px var(--blue-glow); }
-    .btn-primary:hover::before { opacity: 1; }
-    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; color: rgba(255,255,255,0.75); padding: 0.85rem 1.8rem; border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.15); cursor: none; transition: border-color var(--t), color var(--t), transform var(--t); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.7); padding: 0.85rem 1.8rem; border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.12); cursor: none; transition: border-color var(--t), color var(--t), transform var(--t); }
     .btn-outline:hover { border-color: var(--blue-light); color: var(--white); transform: translateY(-2px); }
 
-    /* Hero stats row */
     .hero-stats { display: flex; gap: 2rem; }
-    .hero-stat .num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .hero-stat .num { font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; color: var(--white); line-height: 1; }
     .hero-stat .num span { background: linear-gradient(135deg, var(--blue-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-stat p { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin: 0.2rem 0 0; }
-    .hero-stat-divider { width: 1px; background: rgba(255,255,255,0.1); align-self: stretch; }
+    .hero-stat p { font-size: 0.72rem; font-family: var(--font-mono); color: rgba(255,255,255,0.35); margin: 0.3rem 0 0; letter-spacing: 0.03em; }
+    .hero-stat-divider { width: 1px; background: rgba(255,255,255,0.08); align-self: stretch; }
 
-    /* Scroll hint */
-    .scroll-hint { position: absolute; bottom: 2.5rem; left: 4rem; display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.3); font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; z-index: 2; }
-    .scroll-hint-line { width: 36px; height: 1px; background: rgba(255,255,255,0.2); }
+    .scroll-hint { position: absolute; bottom: 2.5rem; left: 4rem; display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.25); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; z-index: 2; }
+    .scroll-hint-line { width: 36px; height: 1px; background: rgba(255,255,255,0.15); }
 
-    /* ── Hero Right: Live Test Runner ── */
+    /* Test runner */
     .hero-visual { position: relative; z-index: 2; }
-
-    .test-runner {
-      background: #0a0f1e;
-      border: 1px solid rgba(37,99,235,0.3);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(37,99,235,0.15), inset 0 1px 0 rgba(255,255,255,0.04);
-      animation: floatUp 6s ease-in-out infinite;
-    }
+    .test-runner { background: #050c1a; border: 1px solid rgba(37,99,235,0.25); border-radius: var(--radius); overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(37,99,235,0.1); animation: floatUp 6s ease-in-out infinite; }
     @keyframes floatUp { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
-
-    .tr-titlebar {
-      background: #111827;
-      padding: 0.7rem 1rem;
-      display: flex; align-items: center; gap: 0.5rem;
-      border-bottom: 1px solid rgba(37,99,235,0.15);
-    }
+    .tr-titlebar { background: #0a1628; padding: 0.7rem 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid rgba(37,99,235,0.12); }
     .tr-dot { width: 11px; height: 11px; border-radius: 50%; }
-    .tr-dot.r { background: #ff5f57; } .tr-dot.y { background: #febc2e; } .tr-dot.g { background: #28c840; }
-    .tr-title { font-family: 'Courier New', monospace; font-size: 0.72rem; color: rgba(255,255,255,0.3); margin-left: 6px; }
+    .tr-dot.r{background:#ff5f57;} .tr-dot.y{background:#febc2e;} .tr-dot.g{background:#28c840;}
+    .tr-title { font-family: var(--font-mono); font-size: 0.68rem; color: rgba(255,255,255,0.25); margin-left: 6px; font-weight: 400; }
+    .tr-tabs { display: flex; border-bottom: 1px solid rgba(37,99,235,0.1); background: #080e1d; }
+    .tr-tab { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.5rem 1rem; color: rgba(255,255,255,0.2); border-right: 1px solid rgba(37,99,235,0.08); cursor: default; }
+    .tr-tab.active { color: var(--blue-light); background: rgba(37,99,235,0.07); border-bottom: 1px solid var(--blue); margin-bottom: -1px; }
+    .tr-progress { margin: 0 1rem 0.8rem; padding-top: 0.8rem; }
+    .tr-progress-bar { height: 2px; background: rgba(37,99,235,0.15); border-radius: 2px; overflow: hidden; }
+    .tr-progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--cyan)); border-radius: 2px; width: 0%; transition: width 0.3s ease; }
+    .tr-progress-label { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(255,255,255,0.25); margin-top: 4px; font-weight: 300; }
+    .tr-body { padding: 1.2rem; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.9; min-height: 280px; font-weight: 400; }
+    .tr-statusbar { background: linear-gradient(90deg, #0e2047, #0a1a3a); padding: 0.4rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+    .tr-status-left { display: flex; align-items: center; gap: 0.8rem; font-family: var(--font-mono); font-size: 0.6rem; }
+    .tr-status-pass{color:#22c55e;} .tr-status-fail{color:#ef4444;} .tr-status-pending{color:#fbbf24;}
+    .tr-status-right { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(255,255,255,0.3); }
+    .c-kw{color:#c084fc;} .c-str{color:#86efac;} .c-fn{color:#67e8f9;} .c-mt{color:#fbbf24;}
+    .c-cm{color:rgba(255,255,255,0.22);font-style:italic;} .c-pass{color:#22c55e;font-weight:700;} .c-fail{color:#ef4444;}
+    .c-num{color:#f97316;} .c-dim{color:rgba(255,255,255,0.28);}
+    .c-cursor{color:var(--blue-light);animation:curBlink 1s step-end infinite;}
+    @keyframes curBlink{0%,100%{opacity:1;}50%{opacity:0;}}
+    .log-line{display:block;opacity:0;transform:translateX(-4px);}
+    .log-line.visible{opacity:1;transform:none;transition:opacity 0.2s ease,transform 0.2s ease;}
+    .tr-chip{position:absolute;display:flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.65rem;font-weight:500;padding:0.45rem 0.9rem;border-radius:50px;white-space:nowrap;}
+    .tr-chip-1{top:-1rem;right:1rem;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.35);color:#4ade80;animation:chipBob 4s ease-in-out infinite;}
+    .tr-chip-2{bottom:2rem;left:-1.5rem;background:rgba(37,99,235,0.15);border:1px solid rgba(96,165,250,0.35);color:var(--blue-light);animation:chipBob 4s ease-in-out infinite;animation-delay:-2s;}
+    @keyframes chipBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+    .chip-dot-g{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:blinkDot 1.5s ease-in-out infinite;}
+    .chip-dot-b{width:6px;height:6px;background:var(--blue);border-radius:50%;}
+    .hero-ticker{position:absolute;right:0;top:50%;transform:translateY(-50%);height:320px;overflow:hidden;width:155px;z-index:2;mask-image:linear-gradient(to bottom,transparent,black 20%,black 80%,transparent);}
+    .hero-ticker-track{display:flex;flex-direction:column;animation:tickerScroll 18s linear infinite;}
+    @keyframes tickerScroll{from{transform:translateY(0);}to{transform:translateY(-50%);}}
+    .ticker-item{padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+    .ticker-item .t-name{font-family:var(--font-mono);font-size:0.72rem;font-weight:500;color:rgba(255,255,255,0.45);}
+    .ticker-item .t-type{font-size:0.62rem;font-family:var(--font-mono);color:rgba(255,255,255,0.2);margin-top:1px;}
 
-    /* Tab bar */
-    .tr-tabs { display: flex; border-bottom: 1px solid rgba(37,99,235,0.1); background: #0d1321; }
-    .tr-tab { font-family: 'Courier New', monospace; font-size: 0.68rem; padding: 0.5rem 1rem; color: rgba(255,255,255,0.25); border-right: 1px solid rgba(37,99,235,0.1); cursor: default; transition: color var(--t), background var(--t); }
-    .tr-tab.active { color: var(--blue-light); background: rgba(37,99,235,0.08); border-bottom: 1px solid var(--blue); margin-bottom: -1px; }
+    /* ═══════════════════════════════════════════
+       MANIFESTO STRIP
+    ═══════════════════════════════════════════ */
+    .manifesto {
+      background: var(--blue);
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .manifesto-track {
+      display: flex;
+      animation: manifestoScroll 25s linear infinite;
+      width: max-content;
+      padding: 1.2rem 0;
+    }
+    .manifesto-track:hover { animation-play-state: paused; }
+    @keyframes manifestoScroll { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+    .manifesto-item {
+      display: flex; align-items: center; gap: 1.2rem;
+      padding: 0 2.5rem;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      white-space: nowrap;
+    }
+    .manifesto-item span {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .manifesto-item .sep {
+      width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; flex-shrink: 0;
+    }
 
-    .tr-body { padding: 1.2rem; font-family: 'Courier New', monospace; font-size: 0.74rem; line-height: 1.9; min-height: 300px; }
-
-    /* Progress bar */
-    .tr-progress { margin: 0 1rem 0.8rem; }
-    .tr-progress-bar { height: 3px; background: rgba(37,99,235,0.2); border-radius: 3px; overflow: hidden; }
-    .tr-progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--cyan)); border-radius: 3px; width: 0%; transition: width 0.3s ease; }
-    .tr-progress-label { font-family: 'Courier New', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.3); margin-top: 4px; }
-
-    /* Status bar at bottom */
-    .tr-statusbar { background: linear-gradient(90deg, var(--blue-dark), #1e3a5f); padding: 0.4rem 1rem; display: flex; align-items: center; justify-content: space-between; }
-    .tr-status-left { display: flex; align-items: center; gap: 0.8rem; font-family: 'Courier New', monospace; font-size: 0.62rem; }
-    .tr-status-pass { color: #22c55e; } .tr-status-fail { color: #ef4444; } .tr-status-pending { color: #fbbf24; }
-    .tr-status-right { font-family: 'Courier New', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.35); }
-
-    /* Syntax */
-    .c-kw { color: #c084fc; } .c-str { color: #86efac; } .c-fn { color: #67e8f9; }
-    .c-mt { color: #fbbf24; } .c-cm { color: rgba(255,255,255,0.25); font-style: italic; }
-    .c-pass { color: #22c55e; font-weight: bold; } .c-fail { color: #ef4444; }
-    .c-num { color: #f97316; } .c-dim { color: rgba(255,255,255,0.3); }
-    .c-cursor { color: var(--blue-light); animation: curBlink 1s step-end infinite; }
-    @keyframes curBlink { 0%,100%{opacity:1;} 50%{opacity:0;} }
-
-    .log-line { display: block; opacity: 0; transform: translateX(-4px); }
-    .log-line.visible { opacity: 1; transform: none; transition: opacity 0.2s ease, transform 0.2s ease; }
-
-    /* Floating chips */
-    .tr-chip { position: absolute; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.73rem; font-weight: 700; padding: 0.5rem 1rem; border-radius: 50px; white-space: nowrap; }
-    .tr-chip-1 { top: -1.2rem; right: 1rem; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); color: #4ade80; animation: chipBob 4s ease-in-out infinite; }
-    .tr-chip-2 { bottom: 2rem; left: -1.5rem; background: rgba(37,99,235,0.2); border: 1px solid rgba(96,165,250,0.4); color: var(--blue-light); animation: chipBob 4s ease-in-out infinite; animation-delay: -2s; }
-    @keyframes chipBob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
-    .chip-dot-g { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; animation: blinkDot 1.5s ease-in-out infinite; }
-    .chip-dot-b { width: 7px; height: 7px; background: var(--blue); border-radius: 50%; }
-
-    /* Hero ticker (vertical, right side) */
-    .hero-ticker { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 340px; overflow: hidden; width: 160px; z-index: 2; mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); }
-    .hero-ticker-track { display: flex; flex-direction: column; animation: tickerScroll 18s linear infinite; }
-    @keyframes tickerScroll { from{transform:translateY(0);} to{transform:translateY(-50%);} }
-    .ticker-item { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .ticker-item .t-name { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.5); }
-    .ticker-item .t-type { font-size: 0.66rem; color: rgba(255,255,255,0.22); margin-top: 1px; }
-
-    /* ============================================================
-       STATS SECTION
-    ============================================================ */
-    .stats-section { background: var(--off-white); padding: 5rem 0; position: relative; overflow: hidden; }
+    /* ═══════════════════════════════════════════
+       STATS
+    ═══════════════════════════════════════════ */
+    .stats-section { background: var(--off-white); padding: 5rem 0; position: relative; overflow: hidden; border-bottom: 1px solid var(--gray-100); }
     .stats-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--cyan), var(--blue), var(--blue-dark)); }
     .stats-header { margin-bottom: 3rem; }
-    .stats-header p { font-size: 1.5rem; font-family: var(--font-display); font-weight: 700; color: var(--gray-900); max-width: 560px; line-height: 1.4; }
-    .stats-header p em { color: var(--blue); }
+    .stats-header p { font-size: 1.45rem; font-family: var(--font-body); font-weight: 600; color: var(--gray-900); max-width: 560px; line-height: 1.45; }
+    .stats-header p em { color: var(--blue); font-style: normal; }
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gray-200); border-radius: var(--radius); overflow: hidden; margin-bottom: 3rem; }
     .stat-box { background: var(--white); padding: 2.5rem 2rem; position: relative; overflow: hidden; transition: background var(--t); }
-    .stat-box::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
-    .stat-box:hover::before { transform: scaleX(1); }
+    .stat-box::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
+    .stat-box:hover::after { transform: scaleX(1); }
     .stat-box:hover { background: var(--cream); }
-    .stat-box .num { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: var(--gray-900); line-height: 1; margin-bottom: 0.5rem; }
+    .stat-box .num { font-family: var(--font-mono); font-size: 3rem; font-weight: 700; color: var(--gray-900); line-height: 1; margin-bottom: 0.5rem; }
     .stat-box .num span { background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .stat-box p { font-size: 0.9rem; color: var(--gray-400); margin: 0; }
+    .stat-box p { font-size: 0.88rem; color: var(--gray-400); margin: 0; font-family: var(--font-body); font-weight: 400; }
     .industry-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .industry-tag { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--gray-600); background: var(--white); border: 1.5px solid var(--gray-200); padding: 0.4rem 1rem; border-radius: 50px; transition: border-color var(--t), color var(--t), background var(--t), transform var(--t); }
+    .industry-tag { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--gray-600); background: var(--white); border: 1.5px solid var(--gray-200); padding: 0.4rem 1rem; border-radius: 50px; transition: border-color var(--t), color var(--t), background var(--t), transform var(--t); }
     .industry-tag:hover { border-color: var(--blue); color: var(--blue); background: var(--cream); transform: translateY(-2px); }
 
-    /* ============================================================
-       PROJECTS SECTION
-    ============================================================ */
+    /* ═══════════════════════════════════════════
+       PROJECTS
+    ═══════════════════════════════════════════ */
     .projects-section { background: var(--white); padding: 6rem 0; }
     .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
-    .section-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; }
+    .section-label { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; }
     .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--gray-900); }
-    .pill-link { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; color: var(--blue); border: 1.5px solid var(--blue-light); padding: 0.4rem 1rem; border-radius: 50px; transition: background var(--t), color var(--t); }
+    .pill-link { font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; color: var(--blue); border: 1.5px solid var(--blue-light); padding: 0.4rem 1rem; border-radius: 50px; transition: background var(--t), color var(--t); }
     .pill-link:hover, .pill-link.filled { background: var(--blue); color: var(--white); border-color: var(--blue); }
     .projects-list { display: flex; flex-direction: column; gap: 1px; background: var(--gray-200); border-radius: var(--radius); overflow: hidden; }
     .project-row { background: var(--white); display: grid; grid-template-columns: 1fr 340px; min-height: 260px; cursor: none; position: relative; overflow: hidden; transition: background var(--t); }
@@ -283,145 +244,261 @@
     .project-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--blue), var(--cyan)); transform: scaleY(0); transform-origin: bottom; transition: transform var(--t-slow) var(--ease); }
     .project-row:hover::before { transform: scaleY(1); }
     .project-info { padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
-    .project-client-name { font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.8rem; }
-    .project-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--gray-900); line-height: 1.3; margin-bottom: 0.8rem; max-width: 480px; }
-    .project-desc { font-size: 0.9rem; color: var(--gray-400); line-height: 1.65; margin-bottom: 1.5rem; max-width: 440px; }
+    .project-client-name { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.8rem; }
+    .project-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--gray-900); line-height: 1.3; margin-bottom: 0.8rem; max-width: 480px; }
+    .project-desc { font-size: 0.88rem; color: var(--gray-400); line-height: 1.7; margin-bottom: 1.5rem; max-width: 440px; font-weight: 400; }
     .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .project-tag { font-family: var(--font-display); font-size: 0.72rem; font-weight: 600; color: var(--gray-600); background: var(--gray-100); border: 1px solid var(--gray-200); padding: 0.25rem 0.7rem; border-radius: 50px; }
-    .project-visual { position: relative; overflow: hidden; background: linear-gradient(135deg, #0a0f1e, #0d1b3e); display: flex; align-items: center; justify-content: center; }
+    .project-tag { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 400; color: var(--gray-600); background: var(--gray-100); border: 1px solid var(--gray-200); padding: 0.25rem 0.65rem; border-radius: 50px; }
+    .project-visual { position: relative; overflow: hidden; background: linear-gradient(135deg, #050c1a, #0a1835); display: flex; align-items: center; justify-content: center; }
     .project-visual-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-    .test-visual { width: 100%; background: rgba(10,15,30,0.8); border: 1px solid rgba(37,99,235,0.2); border-radius: var(--radius-sm); padding: 1.2rem; font-family: 'Courier New', monospace; font-size: 0.72rem; line-height: 1.8; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
-    .tv-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 0.8rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(37,99,235,0.15); }
-    .tv-dot { width: 9px; height: 9px; border-radius: 50%; }
-    .tv-dot.r{background:#ff5f57;} .tv-dot.y{background:#febc2e;} .tv-dot.g{background:#28c840;}
-    .tv-file { color: rgba(255,255,255,0.3); font-size: 0.65rem; margin-left: 4px; }
+    .test-visual { width: 100%; background: rgba(5,12,26,0.9); border: 1px solid rgba(37,99,235,0.18); border-radius: var(--radius-sm); padding: 1.2rem; font-family: var(--font-mono); font-size: 0.7rem; line-height: 1.85; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+    .tv-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 0.8rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(37,99,235,0.12); }
+    .tv-dot{width:9px;height:9px;border-radius:50%;} .tv-dot.r{background:#ff5f57;} .tv-dot.y{background:#febc2e;} .tv-dot.g{background:#28c840;}
+    .tv-file{color:rgba(255,255,255,0.25);font-size:0.62rem;margin-left:4px;}
     .tv-kw{color:#c084fc;} .tv-str{color:#86efac;} .tv-fn{color:#67e8f9;} .tv-mt{color:#fbbf24;}
-    .tv-cm{color:rgba(255,255,255,0.25);font-style:italic;}
-    .tv-pass{color:#22c55e;} .tv-fail{color:#ef4444;}
+    .tv-cm{color:rgba(255,255,255,0.2);font-style:italic;} .tv-pass{color:#22c55e;} .tv-fail{color:#ef4444;}
     .tv-cursor{color:#60a5fa;animation:cursorBlink 1s step-end infinite;}
     @keyframes cursorBlink{0%,100%{opacity:1;}50%{opacity:0;}}
 
-    /* ============================================================
-       SKILLS & ABOUT
-    ============================================================ */
+    /* ═══════════════════════════════════════════
+       COVERAGE BARS — new section
+    ═══════════════════════════════════════════ */
+    .coverage-section {
+      background: var(--dark);
+      padding: 6rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .coverage-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(37,99,235,0.12), transparent); pointer-events: none; }
+    .coverage-section .section-label { color: var(--blue-light); }
+    .coverage-section .section-title { color: var(--white); margin-bottom: 3rem; }
+
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .coverage-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      transition: border-color var(--t), background var(--t);
+    }
+    .coverage-card:hover { border-color: rgba(37,99,235,0.4); background: rgba(37,99,235,0.04); }
+
+    .coverage-card-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .coverage-card-title {
+      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
+      color: rgba(255,255,255,0.7);
+    }
+    .coverage-pct {
+      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+      color: var(--blue-light);
+    }
+    .coverage-bar-track {
+      height: 6px; background: rgba(255,255,255,0.07);
+      border-radius: 6px; overflow: hidden; margin-bottom: 0.5rem;
+    }
+    .coverage-bar-fill {
+      height: 100%; border-radius: 6px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      width: 0%;
+      transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .coverage-meta {
+      font-family: var(--font-mono); font-size: 0.62rem; font-weight: 300;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ═══════════════════════════════════════════
+       BUG TRACKER — interactive section
+    ═══════════════════════════════════════════ */
+    .bug-tracker-section {
+      background: var(--off-white);
+      padding: 6rem 0;
+    }
+
+    .bug-tracker-ui {
+      background: var(--white);
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 40px rgba(37,99,235,0.06);
+    }
+
+    .bt-toolbar {
+      background: var(--off-white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 1rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .bt-toolbar-title {
+      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
+      color: var(--gray-600); margin-right: auto;
+    }
+    .bt-filter-btn {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500;
+      padding: 0.3rem 0.8rem; border-radius: 50px; border: 1.5px solid var(--gray-200);
+      background: var(--white); color: var(--gray-600); cursor: none;
+      transition: border-color var(--t), color var(--t), background var(--t);
+    }
+    .bt-filter-btn:hover, .bt-filter-btn.active { border-color: var(--blue); color: var(--blue); background: var(--cream); }
+    .bt-stats { display: flex; gap: 1.5rem; }
+    .bt-stat { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.65rem; color: var(--gray-400); }
+    .bt-stat-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+    .bt-list { display: flex; flex-direction: column; }
+    .bt-row {
+      display: grid; grid-template-columns: 80px 1fr 120px 110px 100px 80px;
+      padding: 0.9rem 1.5rem; border-bottom: 1px solid var(--gray-100);
+      align-items: center; gap: 1rem;
+      transition: background var(--t);
+    }
+    .bt-row:hover { background: var(--cream); }
+    .bt-row.resolved { opacity: 0.45; }
+    .bt-row.resolved .bt-title { text-decoration: line-through; }
+
+    .bt-id { font-family: var(--font-mono); font-size: 0.65rem; color: var(--blue); font-weight: 500; }
+    .bt-title { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bt-severity { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 50px; }
+    .sev-critical { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+    .sev-high { background: rgba(249,115,22,0.1); color: #f97316; border: 1px solid rgba(249,115,22,0.2); }
+    .sev-medium { background: rgba(234,179,8,0.1); color: #ca8a04; border: 1px solid rgba(234,179,8,0.2); }
+    .sev-low { background: rgba(34,197,94,0.1); color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
+    .bt-status { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; color: var(--gray-400); }
+    .st-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .bt-client { font-family: var(--font-mono); font-size: 0.62rem; color: var(--gray-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bt-action-btn {
+      font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+      padding: 0.3rem 0.75rem; border-radius: 50px;
+      border: 1px solid var(--blue-light); color: var(--blue); background: none;
+      cursor: none; transition: background var(--t), color var(--t); white-space: nowrap;
+    }
+    .bt-action-btn:hover { background: var(--blue); color: var(--white); border-color: var(--blue); }
+    .bt-action-btn.resolved-btn { border-color: var(--gray-200); color: var(--gray-400); }
+
+    .bt-header { background: var(--gray-100); }
+    .bt-header .bt-title, .bt-header .bt-id { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ═══════════════════════════════════════════
+       SKILLS
+    ═══════════════════════════════════════════ */
     .about-section { background: var(--off-white); padding: 6rem 0; }
     .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; }
     .about-text h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin-bottom: 1.5rem; color: var(--gray-900); }
-    .about-text p { margin-bottom: 1rem; font-size: 1rem; }
+    .about-text p { margin-bottom: 1rem; font-size: 0.95rem; font-weight: 400; }
     .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
-    .about-tag { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--blue); background: var(--blue-subtle); border: 1px solid rgba(37,99,235,0.2); padding: 0.35rem 0.9rem; border-radius: 50px; }
+    .about-tag { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--blue); background: var(--blue-subtle); border: 1px solid rgba(37,99,235,0.18); padding: 0.35rem 0.9rem; border-radius: 50px; }
     .skills-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; }
     .skill-row { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--gray-200); transition: background var(--t); position: relative; overflow: hidden; }
     .skill-row::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--blue), var(--cyan)); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s var(--ease); }
     .skill-row:hover::after { transform: scaleY(1); }
     .skill-row:last-child { border-bottom: none; }
     .skill-row:hover { background: var(--cream); }
-    .skill-icon-box { width: 36px; height: 36px; background: var(--blue-subtle); border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-    .skill-info strong { display: block; font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; color: var(--gray-900); }
-    .skill-info span { font-size: 0.75rem; color: var(--gray-400); }
+    .skill-icon-box { width: 36px; height: 36px; background: var(--blue-subtle); border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .skill-info strong { display: block; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; color: var(--gray-900); }
+    .skill-info span { font-size: 0.72rem; color: var(--gray-400); font-family: var(--font-mono); }
 
-    /* ============================================================
+    /* ═══════════════════════════════════════════
        PROCESS
-    ============================================================ */
+    ═══════════════════════════════════════════ */
     .process-section { background: var(--white); padding: 7rem 0; }
     .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--gray-200); border-radius: var(--radius); overflow: hidden; margin-top: 3rem; }
     .process-step { background: var(--white); padding: 2.5rem 2rem; transition: background var(--t); position: relative; overflow: hidden; }
     .process-step::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease); }
     .process-step:hover::before { transform: scaleX(1); }
     .process-step:hover { background: var(--cream); }
-    .step-num { font-family: var(--font-display); font-size: 0.72rem; font-weight: 800; color: var(--blue); letter-spacing: 0.1em; margin-bottom: 1rem; }
-    .process-step h3 { font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.75rem; }
-    .process-step p { font-size: 0.88rem; color: var(--gray-400); line-height: 1.65; }
+    .step-num { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--blue); letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .process-step h3 { font-size: 0.95rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.75rem; font-family: var(--font-body); }
+    .process-step p { font-size: 0.85rem; color: var(--gray-400); line-height: 1.7; font-weight: 400; }
 
-    /* ============================================================
-       ABOUT ME SECTION
-    ============================================================ */
+    /* ═══════════════════════════════════════════
+       ABOUT ME
+    ═══════════════════════════════════════════ */
     .about-me-section { background: linear-gradient(180deg, var(--off-white) 0%, var(--cream) 100%); padding: 8rem 0; position: relative; overflow: hidden; }
-    .about-me-section::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%); top: -200px; right: -150px; border-radius: 50%; pointer-events: none; }
+    .about-me-section::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%); top: -200px; right: -150px; border-radius: 50%; pointer-events: none; }
     .about-me-inner { display: grid; grid-template-columns: 420px 1fr; gap: 6rem; align-items: center; position: relative; z-index: 2; }
     .about-me-image-wrap { position: relative; }
-    .about-me-image-wrap::before { content: ''; position: absolute; inset: -12px; border: 1.5px solid rgba(37,99,235,0.2); border-radius: 24px; transform: rotate(3deg); transition: transform 0.6s var(--ease); z-index: 0; }
+    .about-me-image-wrap::before { content: ''; position: absolute; inset: -12px; border: 1.5px solid rgba(37,99,235,0.18); border-radius: 24px; transform: rotate(3deg); transition: transform 0.6s var(--ease); z-index: 0; }
     .about-me-image-wrap:hover::before { transform: rotate(1deg) scale(1.01); }
-    .about-me-image-wrap::after { content: ''; position: absolute; inset: -6px; background: linear-gradient(135deg, rgba(37,99,235,0.07), rgba(6,182,212,0.04)); border-radius: 22px; transform: rotate(-1.5deg); transition: transform 0.6s var(--ease); z-index: 0; }
+    .about-me-image-wrap::after { content: ''; position: absolute; inset: -6px; background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(6,182,212,0.03)); border-radius: 22px; transform: rotate(-1.5deg); transition: transform 0.6s var(--ease); z-index: 0; }
     .about-me-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; display: block; position: relative; z-index: 1; filter: grayscale(15%); transition: filter 0.5s ease, transform 0.5s ease; }
     .about-me-image-wrap:hover .about-me-img { filter: grayscale(0%); transform: scale(1.01); }
-    .about-me-img-placeholder { width: 100%; aspect-ratio: 4/5; border-radius: 20px; background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; position: relative; z-index: 1; overflow: hidden; }
-    .about-me-img-placeholder::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(37,99,235,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.08) 1px, transparent 1px); background-size: 40px 40px; }
-    .placeholder-initials { font-family: var(--font-display); font-size: 5rem; font-weight: 800; color: rgba(96,165,250,0.4); position: relative; z-index: 1; letter-spacing: -0.03em; }
-    .placeholder-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(96,165,250,0.3); position: relative; z-index: 1; }
-    .about-me-chip { position: absolute; bottom: 2rem; right: -1.5rem; background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 50px; padding: 0.6rem 1.1rem; display: flex; align-items: center; gap: 0.5rem; z-index: 3; box-shadow: 0 8px 32px rgba(37,99,235,0.15); animation: chipFloat 4s ease-in-out infinite; }
+    .about-me-img-placeholder { width: 100%; aspect-ratio: 4/5; border-radius: 20px; background: linear-gradient(145deg, #0a0f1e 0%, #1e3a8a 50%, #0a0f1e 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; position: relative; z-index: 1; overflow: hidden; }
+    .about-me-img-placeholder::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(37,99,235,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.07) 1px, transparent 1px); background-size: 40px 40px; }
+    .placeholder-initials { font-family: var(--font-mono); font-size: 5rem; font-weight: 700; color: rgba(96,165,250,0.35); position: relative; z-index: 1; }
+    .placeholder-label { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(96,165,250,0.28); position: relative; z-index: 1; }
+    .about-me-chip { position: absolute; bottom: 2rem; right: -1.5rem; background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 50px; padding: 0.6rem 1.1rem; display: flex; align-items: center; gap: 0.5rem; z-index: 3; box-shadow: 0 8px 32px rgba(37,99,235,0.12); animation: chipFloat 4s ease-in-out infinite; }
     @keyframes chipFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
     .about-me-chip .chip-dot { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; animation: blinkDot 2s ease-in-out infinite; }
-    .about-me-chip span { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; color: var(--gray-900); white-space: nowrap; }
-    .about-me-chip-2 { position: absolute; top: 2rem; left: -1.5rem; background: var(--dark); border: 1px solid rgba(37,99,235,0.3); border-radius: 12px; padding: 0.7rem 1rem; z-index: 3; box-shadow: 0 8px 24px rgba(0,0,0,0.3); animation: chipFloat 4s ease-in-out infinite; animation-delay: -2s; min-width: 140px; }
-    .chip-2-label { font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 0.3rem; }
-    .chip-2-value { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--white); line-height: 1; }
-    .chip-2-sub { font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 0.15rem; }
+    .about-me-chip span { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; color: var(--gray-900); white-space: nowrap; }
+    .about-me-chip-2 { position: absolute; top: 2rem; left: -1.5rem; background: var(--dark); border: 1px solid rgba(37,99,235,0.25); border-radius: 12px; padding: 0.7rem 1rem; z-index: 3; box-shadow: 0 8px 24px rgba(0,0,0,0.3); animation: chipFloat 4s ease-in-out infinite; animation-delay: -2s; min-width: 140px; }
+    .chip-2-label { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 0.3rem; }
+    .chip-2-value { font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .chip-2-sub { font-size: 0.65rem; font-family: var(--font-mono); color: rgba(255,255,255,0.35); margin-top: 0.15rem; }
     .about-me-text .section-label { display: block; margin-bottom: 0.8rem; }
     .about-me-text h2 { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; color: var(--gray-900); line-height: 1.1; margin-bottom: 2rem; }
     .about-me-text h2 em { color: transparent; -webkit-text-stroke: 1.5px var(--blue); font-style: normal; }
     .about-me-paragraphs { position: relative; padding-left: 1.5rem; border-left: 2px solid var(--gray-200); margin-bottom: 2.5rem; }
     .about-me-paragraphs .border-fill { position: absolute; left: -2px; top: 0; width: 2px; height: 0%; background: linear-gradient(to bottom, var(--blue), var(--cyan)); border-radius: 2px; transition: height 1.2s var(--ease); }
     .about-me-paragraphs.border-animated .border-fill { height: 100%; }
-    .about-me-paragraphs p { font-size: 1rem; line-height: 1.85; color: var(--gray-600); margin-bottom: 1rem; }
+    .about-me-paragraphs p { font-size: 0.95rem; line-height: 1.85; color: var(--gray-600); margin-bottom: 1rem; font-weight: 400; }
     .about-me-paragraphs p:last-child { margin-bottom: 0; }
     .about-me-facts { display: flex; gap: 2rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
     .fact-item { display: flex; flex-direction: column; gap: 0.2rem; }
-    .fact-icon { font-size: 1.3rem; margin-bottom: 0.3rem; }
-    .fact-item strong { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; color: var(--gray-900); }
-    .fact-item span { font-size: 0.78rem; color: var(--gray-400); }
-    .about-me-pills-label { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.75rem; }
+    .fact-icon { font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .fact-item strong { font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; color: var(--gray-900); }
+    .fact-item span { font-size: 0.75rem; color: var(--gray-400); font-family: var(--font-mono); }
+    .about-me-pills-label { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.75rem; }
     .about-me-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .about-pill { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--blue); background: rgba(37,99,235,0.07); border: 1px solid rgba(37,99,235,0.18); padding: 0.35rem 0.9rem; border-radius: 50px; transition: background 0.25s, color 0.25s, transform 0.2s; cursor: default; }
+    .about-pill { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--blue); background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.15); padding: 0.35rem 0.9rem; border-radius: 50px; transition: background 0.25s, color 0.25s, transform 0.2s; cursor: default; }
     .about-pill:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
 
-    /* ============================================================
-       FOOTER CTA
-    ============================================================ */
-    .footer-cta {
-      background: var(--dark);
-      padding: 7rem 0 4rem;
-      position: relative; overflow: hidden;
-    }
-    .footer-cta::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(37,99,235,0.2) 0%, transparent 70%); }
-    /* Animated gradient line at top */
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    .footer-cta { background: var(--dark); padding: 7rem 0 4rem; position: relative; overflow: hidden; }
+    .footer-cta::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(37,99,235,0.18), transparent); }
     .footer-cta::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), var(--blue), transparent); }
     .footer-cta-inner { text-align: center; position: relative; z-index: 2; }
-    .footer-cta-inner .badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; color: var(--blue-light); border: 1px solid rgba(96,165,250,0.3); background: rgba(37,99,235,0.08); padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 2rem; letter-spacing: 0.08em; }
+    .footer-cta-inner .badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; color: var(--blue-light); border: 1px solid rgba(96,165,250,0.25); background: rgba(37,99,235,0.07); padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 2rem; letter-spacing: 0.06em; }
     .footer-cta-inner h2 { font-size: clamp(2rem, 4vw, 3.5rem); color: var(--white); margin-bottom: 1.2rem; font-weight: 800; }
-    .footer-cta-inner p { color: rgba(255,255,255,0.5); font-size: 1rem; margin-bottom: 2.5rem; }
+    .footer-cta-inner p { color: rgba(255,255,255,0.45); font-size: 0.95rem; margin-bottom: 2.5rem; font-weight: 300; }
     .footer-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .footer-bar { background: var(--dark); border-top: 1px solid var(--dark-border); padding: 1.5rem 0; }
-    .footer-bar-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: 0.78rem; color: rgba(255,255,255,0.3); font-family: var(--font-display); }
-    .footer-bar-inner em { font-style: normal; color: rgba(255,255,255,0.5); }
+    .footer-bar-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: 0.72rem; color: rgba(255,255,255,0.25); font-family: var(--font-mono); }
+    .footer-bar-inner em { font-style: normal; color: rgba(255,255,255,0.45); }
 
-    /* ============================================================
+    /* ═══════════════════════════════════════════
        RESPONSIVE
-    ============================================================ */
+    ═══════════════════════════════════════════ */
     @media (max-width: 1024px) {
-      .sidebar { display: none; }
-      .main { margin-left: 0; }
-      .mobile-nav { display: flex; }
-      .hero { grid-template-columns: 1fr; padding-top: 80px; }
-      .hero-visual { display: none; }
-      .hero-ticker { display: none; }
+      .sidebar { display: none; } .main { margin-left: 0; } .mobile-nav { display: flex; }
+      .hero { grid-template-columns: 1fr; padding-top: 80px; } .hero-visual { display: none; } .hero-ticker { display: none; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .project-row { grid-template-columns: 1fr; }
-      .project-visual { min-height: 220px; }
+      .project-row { grid-template-columns: 1fr; } .project-visual { min-height: 220px; }
       .about-me-inner { grid-template-columns: 1fr; gap: 4rem; }
       .about-me-image-wrap { max-width: 340px; margin: 0 auto; }
       .about-me-chip { right: 0; } .about-me-chip-2 { left: 0; }
+      .coverage-grid { grid-template-columns: 1fr; }
+      .bt-row { grid-template-columns: 60px 1fr 90px 80px; }
+      .bt-row > :nth-child(5), .bt-row > :nth-child(6) { display: none; }
     }
     @media (max-width: 768px) {
-      .hero { padding: 80px 1.5rem 3rem; }
-      .wrap { padding: 0 1.5rem; }
-      .stats-grid { grid-template-columns: 1fr; }
-      .process-grid { grid-template-columns: 1fr; }
+      .hero { padding: 80px 1.5rem 3rem; } .wrap { padding: 0 1.5rem; }
+      .stats-grid { grid-template-columns: 1fr; } .process-grid { grid-template-columns: 1fr; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .scroll-hint { display: none; }
-      .footer-bar-inner { flex-direction: column; text-align: center; }
-      .hero-stats { flex-wrap: wrap; gap: 1rem; }
-      .hero-stat-divider { display: none; }
+      .scroll-hint { display: none; } .footer-bar-inner { flex-direction: column; text-align: center; }
+      .hero-stats { flex-wrap: wrap; gap: 1rem; } .hero-stat-divider { display: none; }
+      .bt-row { grid-template-columns: 1fr 80px 80px; }
+      .bt-row > :nth-child(1), .bt-row > :nth-child(4), .bt-row > :nth-child(5), .bt-row > :nth-child(6) { display: none; }
+      .manifesto-item span { font-size: 0.68rem; }
     }
   </style>
 </head>
@@ -430,23 +507,23 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-name"><span>Toby</span><span><em>Lees</em></span></div>
     <nav class="sidebar-nav">
       <a href="#stats" class="active">Stats</a>
       <a href="#projects">Projects</a>
-      <a href="#skills">Skills & About</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#bugs">Bug Tracker</a>
+      <a href="#skills">Skills</a>
       <a href="#process">Process</a>
       <a href="#about-me">About Me</a>
     </nav>
     <div class="sidebar-bottom">
-      <div style="margin-bottom:.6rem"><span class="sidebar-dot"></span>Unavailable</div>
-      QA Engineer<br/>UK Based
+      <div style="margin-bottom:.6rem"><span class="sidebar-dot"></span>unavailable</div>
+      qa_engineer<br/>uk_based
     </div>
   </aside>
 
-  <!-- MOBILE NAV -->
   <nav class="mobile-nav">
     <div class="mobile-nav-name">Toby Lees</div>
     <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -454,26 +531,26 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#stats" onclick="closeMobileMenu()">Stats</a>
     <a href="#projects" onclick="closeMobileMenu()">Projects</a>
-    <a href="#skills" onclick="closeMobileMenu()">Skills & About</a>
+    <a href="#coverage" onclick="closeMobileMenu()">Coverage</a>
+    <a href="#bugs" onclick="closeMobileMenu()">Bug Tracker</a>
+    <a href="#skills" onclick="closeMobileMenu()">Skills</a>
     <a href="#process" onclick="closeMobileMenu()">Process</a>
     <a href="#about-me" onclick="closeMobileMenu()">About Me</a>
   </div>
 
   <div class="main">
 
-    <!-- ═══════ HERO ═══════ -->
+    <!-- ════ HERO ════ -->
     <section class="hero" id="hero">
-      <div class="hero-bg">
-        <div class="hero-bg-orb hero-bg-orb-1"></div>
-        <div class="hero-bg-orb hero-bg-orb-2"></div>
-        <div class="hero-bg-orb hero-bg-orb-3"></div>
-      </div>
+      <canvas id="particleCanvas"></canvas>
+      <div class="hero-bg-orb hero-bg-orb-1"></div>
+      <div class="hero-bg-orb hero-bg-orb-2"></div>
       <div class="hero-scanline"></div>
 
       <div class="hero-content">
         <div class="hero-badge" data-reveal>
           <div class="hero-badge-dot"></div>
-          QA Engineer — Software Quality Specialist
+          QA_ENGINEER / SOFTWARE_QUALITY
         </div>
         <h1 class="hero-title" data-reveal>
           Toby<br/>
@@ -481,7 +558,7 @@
         </h1>
         <p class="hero-sub" data-reveal>
           I break things professionally — so your users don't have to.
-          Precision testing, automation &amp; flawless software delivery.
+          Precision testing, automation & flawless software delivery.
         </p>
         <div class="hero-cta-row" data-reveal>
           <a href="#projects" class="btn-primary">View My Work</a>
@@ -490,22 +567,21 @@
         <div class="hero-stats" data-reveal>
           <div class="hero-stat">
             <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
-            <p>Projects Tested</p>
+            <p>// projects_tested</p>
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
             <div class="num"><span class="count" data-count="3000">0</span><span>+</span></div>
-            <p>Test Cases Run</p>
+            <p>// test_cases_run</p>
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
             <div class="num"><span class="count" data-count="98">0</span><span>%</span></div>
-            <p>Bug Detection Rate</p>
+            <p>// bug_detection</p>
           </div>
         </div>
       </div>
 
-      <!-- Animated test runner -->
       <div class="hero-visual" data-reveal>
         <div class="test-runner">
           <div class="tr-titlebar">
@@ -539,7 +615,7 @@
             <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'.error-msg'</span>).<span class="c-mt">should</span>(<span class="c-str">'be.visible'</span>)</span>
             <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">✓ PASSED</span> <span class="c-dim">(0.8s)</span></span>
             <span class="log-line">}</span>
-            <span class="log-line" style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem">
+            <span class="log-line" style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem">
               <span class="c-pass">✓ 14 passing</span>&nbsp;&nbsp;<span class="c-fail">0 failing</span>&nbsp;&nbsp;<span class="c-dim">(4.1s)</span>
             </span>
             <span class="log-line"><span class="c-cursor">▋</span></span>
@@ -562,27 +638,46 @@
           <div class="ticker-item"><div class="t-name">Help for Heroes</div><div class="t-type">Veterans Charity</div></div>
           <div class="ticker-item"><div class="t-name">Maggie's</div><div class="t-type">Cancer Care</div></div>
           <div class="ticker-item"><div class="t-name">Bipolar UK</div><div class="t-type">Mental Health</div></div>
-          <div class="ticker-item"><div class="t-name">Breast Cancer UK</div><div class="t-type">Healthcare Charity</div></div>
+          <div class="ticker-item"><div class="t-name">Breast Cancer UK</div><div class="t-type">Healthcare</div></div>
           <div class="ticker-item"><div class="t-name">Whizz Kidz</div><div class="t-type">Kids Charity</div></div>
-          <div class="ticker-item"><div class="t-name">Perennial</div><div class="t-type">Horticultural Charity</div></div>
+          <div class="ticker-item"><div class="t-name">Perennial</div><div class="t-type">Horticultural</div></div>
           <div class="ticker-item"><div class="t-name">The Daily Mile</div><div class="t-type">Kids Charity</div></div>
           <div class="ticker-item"><div class="t-name">Help for Heroes</div><div class="t-type">Veterans Charity</div></div>
           <div class="ticker-item"><div class="t-name">Maggie's</div><div class="t-type">Cancer Care</div></div>
           <div class="ticker-item"><div class="t-name">Bipolar UK</div><div class="t-type">Mental Health</div></div>
-          <div class="ticker-item"><div class="t-name">Breast Cancer UK</div><div class="t-type">Healthcare Charity</div></div>
+          <div class="ticker-item"><div class="t-name">Breast Cancer UK</div><div class="t-type">Healthcare</div></div>
           <div class="ticker-item"><div class="t-name">Whizz Kidz</div><div class="t-type">Kids Charity</div></div>
-          <div class="ticker-item"><div class="t-name">Perennial</div><div class="t-type">Horticultural Charity</div></div>
+          <div class="ticker-item"><div class="t-name">Perennial</div><div class="t-type">Horticultural</div></div>
           <div class="ticker-item"><div class="t-name">The Daily Mile</div><div class="t-type">Kids Charity</div></div>
         </div>
       </div>
-
-      <div class="scroll-hint">
-        <div class="scroll-hint-line"></div>
-        Scroll to explore
-      </div>
+      <div class="scroll-hint"><div class="scroll-hint-line"></div>scroll_to_explore</div>
     </section>
 
-    <!-- ═══════ STATS ═══════ -->
+    <!-- ════ MANIFESTO STRIP ════ -->
+    <div class="manifesto">
+      <div class="manifesto-track">
+        <div class="manifesto-item"><div class="sep"></div><span>If it can break, it will break</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Quality is not a phase</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Every bug has a story</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Test early, ship confidently</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Your users are your test suite</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Zero P1s in production</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Automation is a force multiplier</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Edge cases are features in disguise</span></div>
+        <!-- duplicate for loop -->
+        <div class="manifesto-item"><div class="sep"></div><span>If it can break, it will break</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Quality is not a phase</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Every bug has a story</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Test early, ship confidently</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Your users are your test suite</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Zero P1s in production</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Automation is a force multiplier</span></div>
+        <div class="manifesto-item"><div class="sep"></div><span>Edge cases are features in disguise</span></div>
+      </div>
+    </div>
+
+    <!-- ════ STATS ════ -->
     <section class="stats-section section" id="stats">
       <div class="wrap">
         <div class="stats-header" data-reveal>
@@ -591,64 +686,62 @@
         <div class="stats-grid" data-reveal>
           <div class="stat-box">
             <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
-            <p>Projects tested &amp; delivered</p>
+            <p>Projects tested & delivered</p>
           </div>
           <div class="stat-box">
             <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
-            <p>Validated end-to-end across 100+ applications</p>
+            <p>Applications validated end-to-end</p>
           </div>
           <div class="stat-box">
             <div class="num"><span class="count" data-count="3000">0</span><span>+</span></div>
-            <p>Test cases executed across web &amp; mobile</p>
+            <p>Test cases executed across web & mobile</p>
           </div>
         </div>
         <div class="industry-tags" data-reveal>
-          <span class="industry-tag">Stress Testing</span>
-          <span class="industry-tag">Django CMS4 Testing</span>
-          <span class="industry-tag">FE Rendering Testing</span>
-          <span class="industry-tag">Specification Testing</span>
-          <span class="industry-tag">Donation Testing</span>
-          <span class="industry-tag">SEO Testing</span>
-          <span class="industry-tag">Mobile Apps</span>
-          <span class="industry-tag">Accessibility</span>
+          <span class="industry-tag">stress_testing</span>
+          <span class="industry-tag">django_cms4</span>
+          <span class="industry-tag">fe_rendering</span>
+          <span class="industry-tag">specification_testing</span>
+          <span class="industry-tag">donation_flows</span>
+          <span class="industry-tag">seo_testing</span>
+          <span class="industry-tag">mobile_apps</span>
+          <span class="industry-tag">accessibility</span>
         </div>
       </div>
     </section>
 
-    <!-- ═══════ PROJECTS ═══════ -->
+    <!-- ════ PROJECTS ════ -->
     <section class="projects-section" id="projects">
       <div class="wrap">
         <div class="section-header" data-reveal>
-          <div><p class="section-label">Recent Work</p><h2 class="section-title">Selected projects</h2></div>
+          <div><p class="section-label">// recent_work</p><h2 class="section-title">Selected projects</h2></div>
           <div><a href="#" class="pill-link filled">Case studies</a></div>
         </div>
         <div class="projects-list">
-
           <div class="project-row" data-reveal>
             <div class="project-info"><div>
               <div class="project-client-name">Help for Heroes</div>
               <h3 class="project-title">Delivering a Zero-Defect Veteran Support Platform</h3>
               <p class="project-desc">End-to-end QA strategy covering 200+ critical user journeys — from benefit applications to account management. Zero P1 bugs shipped post-launch.</p>
-              <div class="project-tags"><span class="project-tag">Beneficiary</span><span class="project-tag">User Journeys</span><span class="project-tag">Software Testing</span><span class="project-tag">Integration Testing</span></div>
+              <div class="project-tags"><span class="project-tag">beneficiary_journeys</span><span class="project-tag">software_testing</span><span class="project-tag">integration</span></div>
             </div></div>
             <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
               <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">h4h.spec.js</span></div>
               <div><span class="tv-kw">describe</span>(<span class="tv-str">'Benefit Application'</span>) {</div>
-              <div>&nbsp;&nbsp;<span class="tv-kw">it</span>(<span class="tv-str">'submits form successfully'</span>) {</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">visit</span>(<span class="tv-str">'/apply'</span>)</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'form'</span>).<span class="tv-mt">submit</span>()</div>
-              <div>&nbsp;&nbsp;} <span class="tv-pass">✓ PASSED</span></div>
-              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem"><span class="tv-pass">✓ 47 passing</span> <span class="tv-fail">0 failing</span></div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">visit</span>(<span class="tv-str">'/apply'</span>)</div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'form'</span>).<span class="tv-mt">submit</span>()</div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">url</span>().<span class="tv-mt">should</span>(<span class="tv-str">'include'</span>, <span class="tv-str">'/confirm'</span>)</div>
+              <div>} <span class="tv-pass">✓ PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">✓ 47 passing</span> <span class="tv-fail">0 failing</span></div>
               <div><span class="tv-cursor">▋</span></div>
             </div></div></div>
           </div>
-
           <div class="project-row" data-reveal>
             <div class="project-info"><div>
               <div class="project-client-name">Maggie's</div>
-              <h3 class="project-title">QA for a Cancer Care Centre Booking &amp; Resource Platform</h3>
+              <h3 class="project-title">QA for a Cancer Care Centre Booking & Resource Platform</h3>
               <p class="project-desc">Functional and regression testing of the centre-finder, online support resources and appointment booking journeys. Full cross-browser and mobile coverage.</p>
-              <div class="project-tags"><span class="project-tag">Test Cases</span><span class="project-tag">BrowserStack</span><span class="project-tag">Regression</span><span class="project-tag">Mobile QA</span></div>
+              <div class="project-tags"><span class="project-tag">test_cases</span><span class="project-tag">browserstack</span><span class="project-tag">regression</span><span class="project-tag">mobile_qa</span></div>
             </div></div>
             <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
               <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">maggies.spec.ts</span></div>
@@ -657,35 +750,33 @@
               <div>&nbsp;&nbsp;<span class="tv-fn">page</span>.<span class="tv-mt">fill</span>(<span class="tv-str">'#postcode'</span>, <span class="tv-str">'M1 1AE'</span>)</div>
               <div>&nbsp;&nbsp;expect(<span class="tv-fn">page</span>).<span class="tv-mt">toHaveURL</span>(<span class="tv-str">/results/</span>)</div>
               <div>}) <span class="tv-pass">✓ PASSED</span></div>
-              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem"><span class="tv-pass">✓ 31 passing</span> <span class="tv-fail">0 failing</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">✓ 31 passing</span> <span class="tv-fail">0 failing</span></div>
               <div><span class="tv-cursor">▋</span></div>
             </div></div></div>
           </div>
-
           <div class="project-row" data-reveal>
             <div class="project-info"><div>
               <div class="project-client-name">Bipolar UK</div>
-              <h3 class="project-title">Ensuring Reliability of Bipolar UK Website &amp; Assessment Form</h3>
+              <h3 class="project-title">Ensuring Reliability of Website & Assessment Form</h3>
               <p class="project-desc">Comprehensive QA of the Bipolar UK Assessment Form and onboarding flows with a focus on safe, reliable user journeys for a sensitive mental health audience.</p>
-              <div class="project-tags"><span class="project-tag">Manual QA</span><span class="project-tag">Exploratory</span><span class="project-tag">UAT</span><span class="project-tag">Accessibility</span></div>
+              <div class="project-tags"><span class="project-tag">manual_qa</span><span class="project-tag">exploratory</span><span class="project-tag">uat</span><span class="project-tag">accessibility</span></div>
             </div></div>
             <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
               <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">bipolar.spec.js</span></div>
               <div><span class="tv-kw">describe</span>(<span class="tv-str">'Assessment Form'</span>) {</div>
-              <div>&nbsp;&nbsp;<span class="tv-kw">it</span>(<span class="tv-str">'loads for screen readers'</span>) {</div>
-              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tv-fn">axe</span>.<span class="tv-mt">run</span>(<span class="tv-str">'#assessment'</span>)</div>
-              <div>&nbsp;&nbsp;} <span class="tv-pass">✓ PASSED</span></div>
-              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem"><span class="tv-pass">✓ 28 passing</span> <span class="tv-fail">0 failing</span></div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">axe</span>.<span class="tv-mt">run</span>(<span class="tv-str">'#assessment'</span>)</div>
+              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'.result'</span>).<span class="tv-mt">should</span>(<span class="tv-str">'exist'</span>)</div>
+              <div>} <span class="tv-pass">✓ PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">✓ 28 passing</span> <span class="tv-fail">0 failing</span></div>
               <div><span class="tv-cursor">▋</span></div>
             </div></div></div>
           </div>
-
           <div class="project-row" data-reveal>
             <div class="project-info"><div>
               <div class="project-client-name">Breast Cancer UK</div>
-              <h3 class="project-title">QA Strategy for Assessment Form &amp; Sitewide Testing</h3>
-              <p class="project-desc">Full QA execution for the charity's website and assessment form. Cross-browser testing across 18 device/browser combinations, ensuring robust performance and flawless UI/UX.</p>
-              <div class="project-tags"><span class="project-tag">Form Testing</span><span class="project-tag">Cross-browser</span><span class="project-tag">Responsiveness</span><span class="project-tag">API</span></div>
+              <h3 class="project-title">QA Strategy for Assessment Form & Sitewide Testing</h3>
+              <p class="project-desc">Full QA execution across the charity's website and assessment form. Cross-browser testing on 18 device/browser combinations, robust performance and flawless UI/UX.</p>
+              <div class="project-tags"><span class="project-tag">form_testing</span><span class="project-tag">cross_browser</span><span class="project-tag">responsiveness</span><span class="project-tag">api</span></div>
             </div></div>
             <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
               <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">bcuk.spec.js</span></div>
@@ -694,78 +785,150 @@
               <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'#amount'</span>).<span class="tv-mt">type</span>(<span class="tv-str">'25'</span>)</div>
               <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'.submit'</span>).<span class="tv-mt">click</span>()</div>
               <div>} <span class="tv-pass">✓ PASSED</span></div>
-              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.15);padding-top:.5rem"><span class="tv-pass">✓ 52 passing</span> <span class="tv-fail">0 failing</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">✓ 52 passing</span> <span class="tv-fail">0 failing</span></div>
               <div><span class="tv-cursor">▋</span></div>
             </div></div></div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- ═══════ SKILLS ═══════ -->
+    <!-- ════ COVERAGE BARS ════ -->
+    <section class="coverage-section" id="coverage">
+      <div class="wrap">
+        <p class="section-label" data-reveal>// test_coverage</p>
+        <h2 class="section-title" data-reveal>Coverage by discipline</h2>
+        <div class="coverage-grid" data-reveal>
+          <div class="coverage-card">
+            <div class="coverage-card-header"><span class="coverage-card-title">Functional Testing</span><span class="coverage-pct">96%</span></div>
+            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="96"></div></div>
+            <div class="coverage-meta">847 / 882 test cases passing</div>
+          </div>
+          <div class="coverage-card">
+            <div class="coverage-card-header"><span class="coverage-card-title">API & Integration</span><span class="coverage-pct">91%</span></div>
+            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="91"></div></div>
+            <div class="coverage-meta">312 / 343 endpoints validated</div>
+          </div>
+          <div class="coverage-card">
+            <div class="coverage-card-header"><span class="coverage-card-title">Accessibility (WCAG 2.1)</span><span class="coverage-pct">88%</span></div>
+            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="88"></div></div>
+            <div class="coverage-meta">220 / 250 criteria audited</div>
+          </div>
+          <div class="coverage-card">
+            <div class="coverage-card-header"><span class="coverage-card-title">Cross-browser & Device</span><span class="coverage-pct">94%</span></div>
+            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="94"></div></div>
+            <div class="coverage-meta">18 device/browser combinations</div>
+          </div>
+          <div class="coverage-card">
+            <div class="coverage-card-header"><span class="coverage-card-title">Regression Automation</span><span class="coverage-pct">78%</span></div>
+            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="78"></div></div>
+            <div class="coverage-meta">Cypress + Playwright suites</div>
+          </div>
+          <div class="coverage-card">
+            <div class="coverage-card-header"><span class="coverage-card-title">Performance & Load</span><span class="coverage-pct">82%</span></div>
+            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="82"></div></div>
+            <div class="coverage-meta">Core Web Vitals monitored</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ BUG TRACKER ════ -->
+    <section class="bug-tracker-section" id="bugs">
+      <div class="wrap">
+        <p class="section-label" data-reveal>// live_bug_tracker</p>
+        <h2 class="section-title" data-reveal>Sample bug report — click to resolve</h2>
+        <p style="margin-bottom:2rem;font-size:0.88rem;" data-reveal>A snapshot of the kind of bugs I catch. Click "Resolve" to mark them fixed — just like the real thing.</p>
+
+        <div class="bug-tracker-ui" data-reveal>
+          <div class="bt-toolbar">
+            <span class="bt-toolbar-title">OPEN ISSUES — Sprint 14</span>
+            <button class="bt-filter-btn active" onclick="filterBugs('all', this)">All</button>
+            <button class="bt-filter-btn" onclick="filterBugs('open', this)">Open</button>
+            <button class="bt-filter-btn" onclick="filterBugs('resolved', this)">Resolved</button>
+            <div class="bt-stats">
+              <div class="bt-stat"><div class="bt-stat-dot" style="background:#ef4444"></div><span id="openCount">8 open</span></div>
+              <div class="bt-stat"><div class="bt-stat-dot" style="background:#22c55e"></div><span id="resolvedCount">0 resolved</span></div>
+            </div>
+          </div>
+          <div class="bt-list">
+            <div class="bt-row bt-header">
+              <div class="bt-id">ID</div>
+              <div class="bt-title">Title</div>
+              <div class="bt-severity">Severity</div>
+              <div class="bt-status">Status</div>
+              <div class="bt-client">Client</div>
+              <div></div>
+            </div>
+            <!-- Bugs injected by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ SKILLS ════ -->
     <section class="about-section section" id="skills">
       <div class="wrap">
         <div class="about-grid">
           <div class="about-text" data-reveal>
-            <p class="section-label">Skills</p>
+            <p class="section-label">// skills</p>
             <h2>I find bugs <em>before</em> your customers do.</h2>
             <p>With a meticulous eye for detail and a genuine passion for software quality, I specialise in manual and automated testing across web and mobile platforms.</p>
-            <p>From exploratory testing to building robust Cypress &amp; Playwright suites, I partner with development teams to ship with total confidence.</p>
+            <p>From exploratory testing to building robust Cypress & Playwright suites, I partner with development teams to ship with total confidence.</p>
             <div class="about-tags">
-              <span class="about-tag">Agile &amp; Scrum</span>
-              <span class="about-tag">CI/CD Pipelines</span>
-              <span class="about-tag">API Testing</span>
-              <span class="about-tag">Test Strategy</span>
-              <span class="about-tag">WCAG Compliance</span>
-              <span class="about-tag">Risk-Based Testing</span>
+              <span class="about-tag">agile_scrum</span>
+              <span class="about-tag">ci_cd_pipelines</span>
+              <span class="about-tag">api_testing</span>
+              <span class="about-tag">test_strategy</span>
+              <span class="about-tag">wcag_compliance</span>
+              <span class="about-tag">risk_based_testing</span>
             </div>
           </div>
           <div data-reveal>
             <div class="skills-card">
-              <div class="skill-row"><div class="skill-icon-box">⚡</div><div class="skill-info"><strong>Test Automation</strong><span>Cypress · Playwright · Selenium · Jest</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">🔍</div><div class="skill-info"><strong>Manual &amp; Exploratory</strong><span>Regression · Smoke · UAT · Edge cases</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">🌐</div><div class="skill-info"><strong>API Testing</strong><span>Postman · REST · GraphQL · Insomnia</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">📱</div><div class="skill-info"><strong>Mobile QA</strong><span>iOS · Android · Appium · BrowserStack</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">🚀</div><div class="skill-info"><strong>CI/CD &amp; DevOps</strong><span>GitHub Actions · Jenkins · Docker · CircleCI</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">📋</div><div class="skill-info"><strong>Tools &amp; Management</strong><span>Jira · TestRail · Confluence · Zephyr</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">⚡</div><div class="skill-info"><strong>Test Automation</strong><span>cypress · playwright · selenium · jest</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">🔍</div><div class="skill-info"><strong>Manual & Exploratory</strong><span>regression · smoke · uat · edge_cases</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">🌐</div><div class="skill-info"><strong>API Testing</strong><span>postman · rest · graphql · insomnia</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">📱</div><div class="skill-info"><strong>Mobile QA</strong><span>ios · android · appium · browserstack</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">🚀</div><div class="skill-info"><strong>CI/CD & DevOps</strong><span>github_actions · jenkins · docker · circleci</span></div></div>
+              <div class="skill-row"><div class="skill-icon-box">📋</div><div class="skill-info"><strong>Tools & Management</strong><span>jira · testrail · confluence · zephyr</span></div></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════ PROCESS ═══════ -->
+    <!-- ════ PROCESS ════ -->
     <section class="process-section" id="process">
       <div class="wrap">
-        <p class="section-label" data-reveal>How I Work</p>
+        <p class="section-label" data-reveal>// how_i_work</p>
         <h2 class="section-title" data-reveal>A clear, collaborative process designed to remove ambiguity and protect quality.</h2>
         <div class="process-grid" data-reveal>
-          <div class="process-step"><div class="step-num">01</div><h3>Discovery &amp; Alignment</h3><p>We start by understanding your product, your users, and your biggest quality concerns. As much about fit as scope.</p></div>
-          <div class="process-step"><div class="step-num">02</div><h3>Test Planning &amp; Strategy</h3><p>I map out coverage, define test cases, and agree on tooling before a single test runs. Clear strategy means no surprises mid-sprint.</p></div>
-          <div class="process-step"><div class="step-num">03</div><h3>Execute, Report &amp; Ship</h3><p>Testing runs in focused loops with clear, actionable bug reports. We iterate quickly and sign off with confidence.</p></div>
+          <div class="process-step"><div class="step-num">01</div><h3>Discovery & Alignment</h3><p>We start by understanding your product, your users, and your biggest quality concerns. As much about fit as scope.</p></div>
+          <div class="process-step"><div class="step-num">02</div><h3>Test Planning & Strategy</h3><p>I map out coverage, define test cases, and agree on tooling before a single test runs. No surprises mid-sprint.</p></div>
+          <div class="process-step"><div class="step-num">03</div><h3>Execute, Report & Ship</h3><p>Testing runs in focused loops with clear, actionable bug reports. We iterate quickly and sign off with confidence.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════ ABOUT ME ═══════ -->
+    <!-- ════ ABOUT ME ════ -->
     <section class="about-me-section" id="about-me">
       <div class="wrap">
         <div class="about-me-inner">
           <div class="about-me-image-wrap" data-reveal>
             <div class="about-me-img-placeholder">
               <div class="placeholder-initials">TL</div>
-              <div class="placeholder-label">Add your photo here</div>
+              <div class="placeholder-label">// add_photo_here</div>
             </div>
-            <div class="about-me-chip"><div class="chip-dot"></div><span>Unavailable</span></div>
+            <div class="about-me-chip"><div class="chip-dot"></div><span>unavailable</span></div>
             <div class="about-me-chip-2">
-              <div class="chip-2-label">Experience</div>
+              <div class="chip-2-label">experience</div>
               <div class="chip-2-value">5+ Yrs</div>
-              <div class="chip-2-sub">QA Engineering</div>
+              <div class="chip-2-sub">qa_engineering</div>
             </div>
           </div>
           <div class="about-me-text" data-reveal>
-            <span class="section-label">About Me</span>
+            <span class="section-label">// about_me</span>
             <h2>The person behind<br/>the <em>test suite.</em></h2>
             <div class="about-me-paragraphs" id="aboutBorderEl">
               <div class="border-fill"></div>
@@ -773,28 +936,28 @@
               <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur fermentum, risus nec fringilla tincidunt, urna turpis vestibulum orci, a sodales nunc nulla vel enim. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</p>
             </div>
             <div class="about-me-facts">
-              <div class="fact-item"><div class="fact-icon">☕</div><strong>Fuelled by coffee</strong><span>&amp; edge cases</span></div>
-              <div class="fact-item"><div class="fact-icon">📍</div><strong>Based in the UK</strong><span>Remote-first</span></div>
-              <div class="fact-item"><div class="fact-icon">🐛</div><strong>Bug hunter</strong><span>by trade &amp; nature</span></div>
-              <div class="fact-item"><div class="fact-icon">🎯</div><strong>Zero tolerance</strong><span>for P1s in prod</span></div>
+              <div class="fact-item"><div class="fact-icon">☕</div><strong>Fuelled by coffee</strong><span>& edge_cases</span></div>
+              <div class="fact-item"><div class="fact-icon">📍</div><strong>Based in the UK</strong><span>remote_first</span></div>
+              <div class="fact-item"><div class="fact-icon">🐛</div><strong>Bug hunter</strong><span>by_trade & nature</span></div>
+              <div class="fact-item"><div class="fact-icon">🎯</div><strong>Zero tolerance</strong><span>p1s_in_prod</span></div>
             </div>
-            <p class="about-me-pills-label">My toolkit</p>
+            <p class="about-me-pills-label">// my_toolkit</p>
             <div class="about-me-pills">
-              <span class="about-pill">Cypress</span><span class="about-pill">Playwright</span><span class="about-pill">Selenium</span>
-              <span class="about-pill">Postman</span><span class="about-pill">Jira</span><span class="about-pill">TestRail</span>
-              <span class="about-pill">GitHub Actions</span><span class="about-pill">BrowserStack</span>
-              <span class="about-pill">Appium</span><span class="about-pill">axe</span>
+              <span class="about-pill">cypress</span><span class="about-pill">playwright</span><span class="about-pill">selenium</span>
+              <span class="about-pill">postman</span><span class="about-pill">jira</span><span class="about-pill">testrail</span>
+              <span class="about-pill">github_actions</span><span class="about-pill">browserstack</span>
+              <span class="about-pill">appium</span><span class="about-pill">axe</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════ FOOTER CTA ═══════ -->
+    <!-- ════ FOOTER CTA ════ -->
     <div class="footer-cta">
       <div class="wrap">
         <div class="footer-cta-inner" data-reveal>
-          <div class="badge"><span class="sidebar-dot"></span>Unavailable</div>
+          <div class="badge"><span class="sidebar-dot"></span>status: unavailable</div>
           <h2>Let's build something <em>bulletproof.</em></h2>
           <p>A quick conversation to understand your project, your quality goals, and whether we're the right fit.</p>
           <div class="footer-cta-btns">
@@ -808,7 +971,7 @@
       <div class="wrap">
         <div class="footer-bar-inner">
           <span>© 2026 <em>Toby Lees</em>. All rights reserved.</span>
-          <span>QA Engineer · UK Based</span>
+          <span>qa_engineer · uk_based</span>
         </div>
       </div>
     </div>
@@ -822,19 +985,12 @@
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
     let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    });
-    (function animRing() {
-      rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
-      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-      requestAnimationFrame(animRing);
-    })();
-    document.addEventListener('mouseleave', () => { cursor.style.opacity = 0; ring.style.opacity = 0; });
-    document.addEventListener('mouseenter', () => { cursor.style.opacity = 1; ring.style.opacity = 1; });
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+    (function animRing() { rx += (mx-rx)*.1; ry += (my-ry)*.1; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); })();
+    document.addEventListener('mouseleave', () => { cursor.style.opacity=0; ring.style.opacity=0; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity=1; ring.style.opacity=1; });
 
-    /* ── Scroll Reveal ── */
+    /* ── Reveal ── */
     const revealObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
@@ -845,26 +1001,15 @@
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
-    setTimeout(() => {
-      document.querySelectorAll('.hero [data-reveal]').forEach((el, i) => {
-        setTimeout(() => el.classList.add('on'), 200 + i * 140);
-      });
-    }, 100);
+    setTimeout(() => { document.querySelectorAll('.hero [data-reveal]').forEach((el,i) => setTimeout(() => el.classList.add('on'), 200+i*140)); }, 100);
 
     /* ── Counters ── */
     const countObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
-        const el = e.target, target = +el.dataset.count;
-        let start = null;
-        const step = ts => {
-          if (!start) start = ts;
-          const p = Math.min((ts - start) / 1800, 1);
-          el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3)));
-          if (p < 1) requestAnimationFrame(step); else el.textContent = target;
-        };
-        requestAnimationFrame(step);
-        countObs.unobserve(el);
+        const el = e.target, target = +el.dataset.count; let start = null;
+        const step = ts => { if (!start) start = ts; const p = Math.min((ts-start)/1800,1); el.textContent = Math.floor(target*(1-Math.pow(1-p,3))); if (p<1) requestAnimationFrame(step); else el.textContent = target; };
+        requestAnimationFrame(step); countObs.unobserve(el);
       });
     }, { threshold: 0.5 });
     document.querySelectorAll('.count').forEach(el => countObs.observe(el));
@@ -883,61 +1028,29 @@
     const mobileMenu = document.getElementById('mobileMenu');
     let menuOpen = false;
     mobileMenuBtn.addEventListener('click', () => {
-      menuOpen = !menuOpen;
-      mobileMenu.classList.toggle('open', menuOpen);
+      menuOpen = !menuOpen; mobileMenu.classList.toggle('open', menuOpen);
       const spans = mobileMenuBtn.querySelectorAll('span');
       if (menuOpen) { spans[0].style.transform='translateY(7px) rotate(45deg)'; spans[1].style.opacity='0'; spans[2].style.transform='translateY(-7px) rotate(-45deg)'; }
-      else { spans.forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
+      else spans.forEach(s => { s.style.transform=''; s.style.opacity=''; });
     });
-    function closeMobileMenu() {
-      menuOpen = false; mobileMenu.classList.remove('open');
-      mobileMenuBtn.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; });
-    }
+    function closeMobileMenu() { menuOpen=false; mobileMenu.classList.remove('open'); mobileMenuBtn.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
 
-    /* ── Project row tilt ── */
+    /* ── Project tilt ── */
     document.querySelectorAll('.project-row').forEach(row => {
-      row.addEventListener('mousemove', e => {
-        const r = row.getBoundingClientRect();
-        const x = (e.clientX - r.left - r.width/2) / r.width;
-        const y = (e.clientY - r.top - r.height/2) / r.height;
-        row.style.transform = `perspective(1000px) rotateX(${-y*1.5}deg) rotateY(${x*1.5}deg)`;
-      });
-      row.addEventListener('mouseleave', () => { row.style.transform = ''; });
+      row.addEventListener('mousemove', e => { const r=row.getBoundingClientRect(); const x=(e.clientX-r.left-r.width/2)/r.width; const y=(e.clientY-r.top-r.height/2)/r.height; row.style.transform=`perspective(1000px) rotateX(${-y*1.5}deg) rotateY(${x*1.5}deg)`; });
+      row.addEventListener('mouseleave', () => { row.style.transform=''; });
     });
 
     /* ── Smooth scroll ── */
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
-      });
-    });
+    document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { const t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});} }); });
 
-    /* ── About Me: animated border ── */
-    const aboutBorderObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('border-animated'); aboutBorderObs.unobserve(e.target); }
-      });
-    }, { threshold: 0.3 });
-    const aboutBorderEl = document.getElementById('aboutBorderEl');
-    if (aboutBorderEl) aboutBorderObs.observe(aboutBorderEl);
+    /* ── About Me border + pills ── */
+    const abObs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('border-animated');abObs.unobserve(e.target);} }); }, {threshold:0.3});
+    const abEl = document.getElementById('aboutBorderEl'); if(abEl) abObs.observe(abEl);
+    const pillObs = new IntersectionObserver(entries => { entries.forEach(e => { if(!e.isIntersecting)return; e.target.querySelectorAll('.about-pill').forEach((pill,i) => { pill.style.opacity='0'; pill.style.transform='translateY(12px)'; pill.style.transition=`opacity 0.4s ease ${i*60}ms,transform 0.4s ease ${i*60}ms`; setTimeout(()=>{pill.style.opacity='1';pill.style.transform='translateY(0)';},100+i*60); }); pillObs.unobserve(e.target); }); }, {threshold:0.3});
+    const pillsEl = document.querySelector('.about-me-pills'); if(pillsEl) pillObs.observe(pillsEl);
 
-    /* ── About Me: staggered pills ── */
-    const pillObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.querySelectorAll('.about-pill').forEach((pill, i) => {
-          pill.style.opacity = '0'; pill.style.transform = 'translateY(12px)';
-          pill.style.transition = `opacity 0.4s ease ${i*60}ms, transform 0.4s ease ${i*60}ms`;
-          setTimeout(() => { pill.style.opacity = '1'; pill.style.transform = 'translateY(0)'; }, 100 + i*60);
-        });
-        pillObs.unobserve(e.target);
-      });
-    }, { threshold: 0.3 });
-    const pillsEl = document.querySelector('.about-me-pills');
-    if (pillsEl) pillObs.observe(pillsEl);
-
-    /* ── Hero Test Runner animation ── */
+    /* ── Hero test runner ── */
     (function heroTestRunner() {
       const lines = document.querySelectorAll('#trBody .log-line');
       const progress = document.getElementById('trProgress');
@@ -945,73 +1058,182 @@
       const passCount = document.getElementById('trPassCount');
       const pending = document.getElementById('trPending');
       const timer = document.getElementById('trTime');
+      const passLines = [8,10,12];
 
-      let lineIdx = 0, passing = 0, elapsed = 0;
-      const totalLines = lines.length;
-      const passLines = [8, 10, 12]; // indices that show PASSED
+      function runAnimation() {
+        let lineIdx=0, passing=0, elapsed=0;
+        lines.forEach(l => l.classList.remove('visible'));
+        passCount.textContent='✓ 0 passing'; pending.textContent='⏳ running...'; pending.style.color='#fbbf24';
+        timer.textContent='0.0s'; progress.style.width='0%'; progressLabel.textContent='Running test suite...';
 
-      // Start after a delay
-      setTimeout(() => {
-        const lineInterval = setInterval(() => {
-          if (lineIdx < totalLines) {
+        const lineInt = setInterval(() => {
+          if (lineIdx < lines.length) {
             lines[lineIdx].classList.add('visible');
-            if (passLines.includes(lineIdx)) {
-              passing++;
-              passCount.textContent = `✓ ${passing} passing`;
-              progress.style.width = `${(passing / 3) * 100}%`;
-            }
+            if (passLines.includes(lineIdx)) { passing++; passCount.textContent=`✓ ${passing} passing`; progress.style.width=`${(passing/3)*100}%`; }
             lineIdx++;
-          } else {
-            clearInterval(lineInterval);
-            progressLabel.textContent = 'All tests complete ✓';
-            pending.textContent = '✓ complete';
-            pending.style.color = '#22c55e';
-          }
+          } else { clearInterval(lineInt); progressLabel.textContent='All tests complete ✓'; pending.textContent='✓ complete'; pending.style.color='#22c55e'; }
         }, 280);
 
-        const timeInterval = setInterval(() => {
-          elapsed += 0.1;
-          timer.textContent = elapsed.toFixed(1) + 's';
-          if (elapsed >= 4.1) clearInterval(timeInterval);
-        }, 100);
-      }, 1200);
+        const timeInt = setInterval(() => { elapsed+=0.1; timer.textContent=elapsed.toFixed(1)+'s'; if(elapsed>=4.1) clearInterval(timeInt); }, 100);
+      }
 
-      // Loop the animation every 12 seconds
-      setInterval(() => {
-        lines.forEach(l => l.classList.remove('visible'));
-        lineIdx = 0; passing = 0; elapsed = 0;
-        passCount.textContent = '✓ 0 passing';
-        pending.textContent = '⏳ running...';
-        pending.style.color = '#fbbf24';
-        timer.textContent = '0.0s';
-        progress.style.width = '0%';
-        progressLabel.textContent = 'Running test suite...';
+      setTimeout(runAnimation, 1200);
+      setInterval(runAnimation, 14000);
+    })();
 
-        setTimeout(() => {
-          const lineInterval = setInterval(() => {
-            if (lineIdx < totalLines) {
-              lines[lineIdx].classList.add('visible');
-              if (passLines.includes(lineIdx)) {
-                passing++;
-                passCount.textContent = `✓ ${passing} passing`;
-                progress.style.width = `${(passing / 3) * 100}%`;
-              }
-              lineIdx++;
-            } else {
-              clearInterval(lineInterval);
-              progressLabel.textContent = 'All tests complete ✓';
-              pending.textContent = '✓ complete';
-              pending.style.color = '#22c55e';
+    /* ── Coverage bars ── */
+    const coverageObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll('.coverage-bar-fill').forEach((bar, i) => {
+          const pct = bar.dataset.pct;
+          setTimeout(() => { bar.style.width = pct + '%'; }, i * 150);
+        });
+        coverageObs.unobserve(e.target);
+      });
+    }, { threshold: 0.3 });
+    const coverageGrid = document.querySelector('.coverage-grid');
+    if (coverageGrid) coverageObs.observe(coverageGrid);
+
+    /* ── Bug tracker ── */
+    const bugs = [
+      { id:'QA-001', title:'Form submit triggers 500 on empty optional fields', sev:'critical', status:'open', client:'Help for Heroes', statusColor:'#ef4444' },
+      { id:'QA-002', title:'Postcode autocomplete fails on iOS Safari 16', sev:'high', status:'open', client:"Maggie's", statusColor:'#f97316' },
+      { id:'QA-003', title:'Assessment form skips required validation on back-navigate', sev:'critical', status:'open', client:'Bipolar UK', statusColor:'#ef4444' },
+      { id:'QA-004', title:'Donation amount resets after browser back button', sev:'high', status:'open', client:'Breast Cancer UK', statusColor:'#f97316' },
+      { id:'QA-005', title:'Screen reader misses aria-label on modal close button', sev:'medium', status:'open', client:'Bipolar UK', statusColor:'#ca8a04' },
+      { id:'QA-006', title:'Progress bar animation not visible on Chrome Android', sev:'medium', status:'open', client:"Maggie's", statusColor:'#ca8a04' },
+      { id:'QA-007', title:'Footer links 404 in staging environment', sev:'low', status:'open', client:'Breast Cancer UK', statusColor:'#16a34a' },
+      { id:'QA-008', title:'Tab order breaks after modal dismissal on Firefox', sev:'low', status:'open', client:'Help for Heroes', statusColor:'#16a34a' },
+    ];
+
+    let currentFilter = 'all';
+    let resolvedIds = new Set();
+
+    function renderBugs() {
+      const list = document.querySelector('.bt-list');
+      const header = list.querySelector('.bt-header');
+      list.innerHTML = '';
+      list.appendChild(header);
+
+      let shown = bugs.filter(b => {
+        if (currentFilter === 'open') return !resolvedIds.has(b.id);
+        if (currentFilter === 'resolved') return resolvedIds.has(b.id);
+        return true;
+      });
+
+      shown.forEach(bug => {
+        const resolved = resolvedIds.has(bug.id);
+        const row = document.createElement('div');
+        row.className = 'bt-row' + (resolved ? ' resolved' : '');
+        row.innerHTML = `
+          <div class="bt-id">${bug.id}</div>
+          <div class="bt-title">${bug.title}</div>
+          <div><span class="bt-severity sev-${bug.sev}">${bug.sev}</span></div>
+          <div class="bt-status"><div class="st-dot" style="background:${bug.statusColor}"></div>${resolved ? 'resolved' : bug.status}</div>
+          <div class="bt-client">${bug.client}</div>
+          <div><button class="bt-action-btn${resolved ? ' resolved-btn' : ''}" onclick="toggleBug('${bug.id}')">${resolved ? '✓ Resolved' : 'Resolve'}</button></div>
+        `;
+        list.appendChild(row);
+      });
+
+      document.getElementById('openCount').textContent = `${bugs.length - resolvedIds.size} open`;
+      document.getElementById('resolvedCount').textContent = `${resolvedIds.size} resolved`;
+    }
+
+    function toggleBug(id) {
+      if (resolvedIds.has(id)) resolvedIds.delete(id);
+      else resolvedIds.add(id);
+      renderBugs();
+    }
+
+    function filterBugs(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.bt-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderBugs();
+    }
+
+    renderBugs();
+
+    /* ── Particle canvas ── */
+    (function initParticles() {
+      const canvas = document.getElementById('particleCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w, h, particles = [], mouse = { x: -9999, y: -9999 };
+      const COUNT = 80;
+
+      function resize() {
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      canvas.parentElement.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+      canvas.parentElement.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+      for (let i = 0; i < COUNT; i++) {
+        particles.push({
+          x: Math.random() * 2000,
+          y: Math.random() * 1000,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          r: Math.random() * 1.5 + 0.5,
+          alpha: Math.random() * 0.4 + 0.1,
+        });
+      }
+
+      function draw() {
+        if (w === 0) { w = canvas.width = canvas.offsetWidth; h = canvas.height = canvas.offsetHeight; }
+        ctx.clearRect(0, 0, w, h);
+
+        particles.forEach(p => {
+          // Mouse repulsion
+          const dx = p.x - mouse.x, dy = p.y - mouse.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 120) {
+            const force = (120 - dist) / 120 * 0.8;
+            p.vx += (dx / dist) * force;
+            p.vy += (dy / dist) * force;
+          }
+
+          p.vx *= 0.98; p.vy *= 0.98;
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(96,165,250,${p.alpha})`;
+          ctx.fill();
+        });
+
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i+1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < 100) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(37,99,235,${0.12 * (1 - dist/100)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
             }
-          }, 280);
+          }
+        }
 
-          const timeInterval = setInterval(() => {
-            elapsed += 0.1;
-            timer.textContent = elapsed.toFixed(1) + 's';
-            if (elapsed >= 4.1) clearInterval(timeInterval);
-          }, 100);
-        }, 500);
-      }, 12000);
+        requestAnimationFrame(draw);
+      }
+      draw();
     })();
 
   </script>

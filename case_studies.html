@@ -1,1 +1,985 @@
-<a href="index.html">← Back</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Studies — Toby Lees QA Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:        #212842;
+      --blue-light:  #8b97b8;
+      --blue-mid:    #2e3d5c;
+      --blue-dark:   #151c30;
+      --blue-glow:   rgba(33,40,66,0.55);
+      --blue-subtle: rgba(240,231,213,0.12);
+      --cyan:        #c4b49a;
+      --cyan-light:  #d4c8b0;
+      --white:       #F0E7D5;
+      --off-white:   #f7f3ec;
+      --cream:       #ede3d0;
+      --gray-100:    #e8e0d0;
+      --gray-200:    #d4c8b0;
+      --gray-400:    #8b8070;
+      --gray-600:    #5a5045;
+      --gray-900:    #1a1520;
+      --dark:        #212842;
+      --dark-mid:    #2a3050;
+      --dark-border: rgba(240,231,213,0.08);
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'Space Grotesk', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
+      --radius:    18px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+      --ease: cubic-bezier(0.4,0,0.2,1);
+      --t:      0.3s;
+      --t-slow: 0.7s;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-body); background: var(--off-white); color: var(--gray-900); overflow-x: hidden; cursor: none; }
+
+    /* ── Cursor ── */
+    .cursor { position: fixed; width: 10px; height: 10px; background: #212842; border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+    .cursor-ring { position: fixed; width: 38px; height: 38px; border: 1.5px solid rgba(33,40,66,0.4); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: left .1s ease, top .1s ease; }
+
+    /* ── Noise ── */
+    body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 99997; opacity: 0.02; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+    h1,h2,h3,h4,h5 { font-family: var(--font-display); line-height: 1.1; }
+    p { line-height: 1.75; color: var(--gray-600); font-family: var(--font-body); }
+    em { font-style: italic; color: var(--blue); }
+    a { text-decoration: none; color: inherit; }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+
+    [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    [data-reveal].on { opacity: 1; transform: none; }
+
+    /* ── SIDEBAR ── */
+    .sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 220px; background: var(--dark); border-right: 1px solid var(--dark-border); z-index: 900; display: flex; flex-direction: column; padding: 2.5rem 1.8rem; }
+    .sidebar-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 2.5rem; }
+    .sidebar-name span { display: block; }
+    .sidebar-name em { color: var(--cyan-light); font-style: normal; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
+    .sidebar-nav a { font-family: var(--font-body); font-size: 0.78rem; font-weight: 500; color: rgba(240,231,213,0.38); padding: 0.55rem 0.8rem; border-radius: var(--radius-xs); letter-spacing: 0.02em; transition: color var(--t), background var(--t); position: relative; }
+    .sidebar-nav a::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 0; background: #F0E7D5; border-radius: 2px; transition: height 0.3s ease; }
+    .sidebar-nav a:hover { color: rgba(240,231,213,0.7); background: rgba(240,231,213,0.05); }
+    .sidebar-nav a.active { color: #F0E7D5; background: rgba(240,231,213,0.1); font-weight: 600; }
+    .sidebar-nav a.active::before { height: 70%; }
+    .sidebar-nav a.back-link { color: rgba(240,231,213,0.5); border: 1px solid rgba(240,231,213,0.1); border-radius: var(--radius-xs); margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.68rem; }
+    .sidebar-nav a.back-link:hover { color: #F0E7D5; background: rgba(240,231,213,0.06); border-color: rgba(240,231,213,0.2); }
+    .sidebar-divider { height: 1px; background: rgba(240,231,213,0.08); margin: 0.8rem 0; }
+    .sidebar-bottom { margin-top: auto; font-size: 0.72rem; color: rgba(240,231,213,0.25); font-family: var(--font-mono); line-height: 1.6; }
+    .sidebar-dot { display: inline-block; width: 6px; height: 6px; background: #ef4444; border-radius: 50%; margin-right: 6px; animation: blinkDot 2s ease-in-out infinite; vertical-align: middle; }
+    @keyframes blinkDot { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+
+    /* ── Mobile nav ── */
+    .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; height: 60px; background: var(--dark); border-bottom: 1px solid var(--dark-border); z-index: 900; align-items: center; padding: 0 1.5rem; justify-content: space-between; }
+    .mobile-nav-name { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--white); }
+    .mobile-menu-btn { background: none; border: none; display: flex; flex-direction: column; gap: 5px; padding: 4px; cursor: none; }
+    .mobile-menu-btn span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--t); }
+    .mobile-menu { position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: var(--dark); z-index: 899; padding: 2rem 1.5rem; display: none; flex-direction: column; gap: 0.5rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--font-body); font-size: 1rem; font-weight: 600; color: rgba(240,231,213,0.7); padding: 0.8rem 0; border-bottom: 1px solid var(--dark-border); }
+
+    .main { margin-left: 220px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: var(--dark);
+      padding: 6rem 4rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 0% 50%, rgba(240,231,213,0.04), transparent);
+      pointer-events: none;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(196,180,154,0.5), rgba(240,231,213,0.7), rgba(196,180,154,0.5), transparent);
+    }
+    .page-hero-inner { position: relative; z-index: 2; }
+    .page-breadcrumb {
+      font-family: var(--font-mono); font-size: 0.68rem; font-weight: 400;
+      color: rgba(240,231,213,0.4); letter-spacing: 0.08em;
+      margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .page-breadcrumb a { color: rgba(240,231,213,0.4); transition: color var(--t); }
+    .page-breadcrumb a:hover { color: #F0E7D5; }
+    .page-breadcrumb span { opacity: 0.3; }
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800; color: var(--white);
+      line-height: 1.05; margin-bottom: 1.2rem;
+    }
+    .page-hero h1 em { color: transparent; -webkit-text-stroke: 2px rgba(196,180,154,0.7); font-style: normal; }
+    .page-hero-sub {
+      font-size: 1rem; font-weight: 300;
+      color: rgba(240,231,213,0.5); line-height: 1.8;
+      max-width: 560px; margin-bottom: 2.5rem;
+    }
+    .page-hero-stats {
+      display: flex; gap: 2.5rem; flex-wrap: wrap;
+    }
+    .page-hero-stat .label {
+      font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500;
+      color: rgba(240,231,213,0.3); letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .page-hero-stat .value {
+      font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700;
+      color: var(--white);
+    }
+    .page-hero-stat .value span { color: var(--cyan); }
+
+    /* ── CASE STUDY CARDS ── */
+    .cases-section { padding: 5rem 0; }
+
+    .case-card {
+      background: var(--white);
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 2rem;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    .case-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 8px 40px rgba(33,40,66,0.1);
+    }
+
+    /* Card header band */
+    .case-header {
+      background: var(--dark);
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .case-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 100% 50%, rgba(240,231,213,0.04), transparent);
+      pointer-events: none;
+    }
+    .case-number {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600;
+      color: rgba(240,231,213,0.3); letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .case-client {
+      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+      color: var(--cyan); letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .case-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight: 800; color: var(--white);
+      line-height: 1.15; max-width: 600px;
+    }
+    .case-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem;
+    }
+    .case-tag {
+      font-family: var(--font-mono); font-size: 0.62rem; font-weight: 400;
+      color: rgba(240,231,213,0.5);
+      background: rgba(240,231,213,0.06);
+      border: 1px solid rgba(240,231,213,0.1);
+      padding: 0.25rem 0.7rem; border-radius: 50px;
+    }
+    .case-outcome-badges {
+      display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0;
+    }
+    .outcome-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600;
+      padding: 0.4rem 0.9rem; border-radius: 50px; white-space: nowrap;
+    }
+    .outcome-badge.green { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.25); color: #4ade80; }
+    .outcome-badge.cream { background: rgba(240,231,213,0.08); border: 1px solid rgba(240,231,213,0.15); color: rgba(240,231,213,0.7); }
+    .outcome-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+    /* Card body */
+    .case-body { padding: 2.5rem 3rem; }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .case-section-label {
+      font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
+      color: var(--blue); letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.8rem; display: block;
+    }
+
+    .case-body h3 {
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 600;
+      color: var(--gray-900); margin-bottom: 0.5rem;
+    }
+    .case-body p {
+      font-size: 0.9rem; color: var(--gray-600); line-height: 1.75; font-weight: 400;
+    }
+
+    /* Stats row */
+    .case-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--gray-200);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+    .case-stat {
+      background: var(--off-white);
+      padding: 1.5rem;
+      text-align: center;
+      transition: background var(--t);
+    }
+    .case-stat:hover { background: var(--cream); }
+    .case-stat .cs-num {
+      font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700;
+      color: var(--gray-900); line-height: 1; margin-bottom: 0.4rem;
+    }
+    .case-stat .cs-num span { color: var(--blue); }
+    .case-stat .cs-label {
+      font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500;
+      color: var(--gray-400); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* Timeline */
+    .case-timeline { margin-bottom: 2.5rem; }
+    .timeline-list { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .timeline-list::before {
+      content: '';
+      position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px;
+      background: var(--gray-200);
+    }
+    .timeline-item {
+      display: flex; gap: 1.5rem; padding: 0.8rem 0; position: relative;
+    }
+    .tl-dot {
+      width: 15px; height: 15px; border-radius: 50%;
+      background: var(--white); border: 2px solid var(--blue);
+      flex-shrink: 0; margin-top: 3px; position: relative; z-index: 1;
+    }
+    .tl-dot.done { background: var(--blue); }
+    .tl-content {}
+    .tl-phase {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600;
+      color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+    .tl-title {
+      font-family: var(--font-body); font-size: 0.88rem; font-weight: 600;
+      color: var(--gray-900); margin-bottom: 0.2rem;
+    }
+    .tl-desc {
+      font-size: 0.82rem; color: var(--gray-400); line-height: 1.6;
+    }
+
+    /* Tools used */
+    .case-tools { margin-bottom: 2rem; }
+    .tools-grid {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem;
+    }
+    .tool-pill {
+      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400;
+      color: var(--blue); background: rgba(33,40,66,0.06);
+      border: 1px solid rgba(33,40,66,0.15);
+      padding: 0.35rem 0.9rem; border-radius: 50px;
+      transition: background var(--t), color var(--t);
+    }
+    .tool-pill:hover { background: var(--blue); color: #F0E7D5; }
+
+    /* Bug findings table */
+    .case-findings { margin-bottom: 2rem; }
+    .findings-table {
+      width: 100%; border-collapse: collapse;
+      font-family: var(--font-mono); font-size: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .findings-table th {
+      background: var(--gray-100); color: var(--gray-600);
+      font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.6rem 1rem; text-align: left; font-size: 0.62rem;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .findings-table td {
+      padding: 0.65rem 1rem; border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-600); vertical-align: middle;
+    }
+    .findings-table tr:hover td { background: var(--cream); }
+    .sev-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.6rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 50px;
+    }
+    .sev-critical { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+    .sev-high     { background: rgba(249,115,22,0.1); color: #f97316; border: 1px solid rgba(249,115,22,0.2); }
+    .sev-medium   { background: rgba(234,179,8,0.1);  color: #ca8a04; border: 1px solid rgba(234,179,8,0.2); }
+    .sev-low      { background: rgba(34,197,94,0.1);  color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
+    .res-badge {
+      display: inline-flex; align-items: center;
+      font-size: 0.6rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 50px;
+      background: rgba(34,197,94,0.1); color: #16a34a; border: 1px solid rgba(34,197,94,0.2);
+    }
+
+    /* Quote/testimonial pull */
+    .case-quote {
+      background: var(--dark);
+      border-radius: var(--radius-sm);
+      padding: 1.8rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .case-quote::before {
+      content: '"';
+      position: absolute; top: -0.5rem; left: 1.2rem;
+      font-size: 5rem; font-family: var(--font-display);
+      color: rgba(240,231,213,0.06); line-height: 1;
+      pointer-events: none;
+    }
+    .case-quote p {
+      font-size: 0.95rem; font-style: italic; font-weight: 300;
+      color: rgba(240,231,213,0.7); line-height: 1.8;
+      position: relative; z-index: 1;
+    }
+    .case-quote-attr {
+      margin-top: 1rem;
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: rgba(240,231,213,0.35);
+      position: relative; z-index: 1;
+    }
+
+    /* Divider between cards */
+    .case-divider {
+      height: 1px; background: var(--gray-200);
+      margin: 3rem 0;
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      background: var(--dark);
+      padding: 3rem 0;
+      margin-top: 4rem;
+      border-top: 1px solid var(--dark-border);
+      position: relative;
+    }
+    .page-footer::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(196,180,154,0.5), rgba(240,231,213,0.7), rgba(196,180,154,0.5), transparent);
+    }
+    .page-footer-inner {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-name {
+      font-family: var(--font-display); font-size: 1rem; font-weight: 800;
+      color: var(--white);
+    }
+    .footer-name em { color: var(--cyan); font-style: normal; }
+    .footer-back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
+      color: rgba(240,231,213,0.5);
+      border: 1px solid rgba(240,231,213,0.12);
+      padding: 0.5rem 1.2rem; border-radius: 50px;
+      transition: color var(--t), border-color var(--t);
+    }
+    .footer-back:hover { color: #F0E7D5; border-color: rgba(240,231,213,0.3); }
+    .footer-copy {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: rgba(240,231,213,0.2);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .sidebar { display: none; } .main { margin-left: 0; } .mobile-nav { display: flex; }
+      .page-hero { padding-top: 80px; }
+      .case-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .case-header { grid-template-columns: 1fr; }
+      .case-outcome-badges { flex-direction: row; flex-wrap: wrap; }
+      .case-stats { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .page-hero { padding: 80px 1.5rem 3rem; }
+      .case-body { padding: 1.8rem 1.5rem; }
+      .case-header { padding: 1.8rem 1.5rem; }
+      .wrap { padding: 0 1.5rem; }
+      .case-stats { grid-template-columns: 1fr 1fr; }
+      .page-footer-inner { flex-direction: column; text-align: center; }
+      .page-hero-stats { gap: 1.5rem; }
+      .findings-table { font-size: 0.65rem; }
+      .findings-table th, .findings-table td { padding: 0.5rem 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-name"><span>Toby</span><span><em>Lees</em></span></div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="back-link">← Back to Portfolio</a>
+      <div class="sidebar-divider"></div>
+      <a href="#h4h" class="active">Help for Heroes</a>
+      <a href="#maggies">Maggie's</a>
+      <a href="#bipolar">Bipolar UK</a>
+      <a href="#bcuk">Breast Cancer UK</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div style="margin-bottom:.6rem"><span class="sidebar-dot"></span>unavailable</div>
+      qa_engineer<br/>uk_based
+    </div>
+  </aside>
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav">
+    <div class="mobile-nav-name">Case Studies</div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="closeMobileMenu()">← Portfolio</a>
+    <a href="#h4h" onclick="closeMobileMenu()">Help for Heroes</a>
+    <a href="#maggies" onclick="closeMobileMenu()">Maggie's</a>
+    <a href="#bipolar" onclick="closeMobileMenu()">Bipolar UK</a>
+    <a href="#bcuk" onclick="closeMobileMenu()">Breast Cancer UK</a>
+  </div>
+
+  <div class="main">
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <div class="page-hero-inner">
+        <div class="page-breadcrumb" data-reveal>
+          <a href="index.html">tobylees.dev</a>
+          <span>/</span>
+          <span>case_studies</span>
+        </div>
+        <h1 data-reveal>QA Case <em>Studies</em></h1>
+        <p class="page-hero-sub" data-reveal>
+          Deep-dives into four real-world QA engagements — covering strategy, execution, findings and outcomes across the UK charity sector.
+        </p>
+        <div class="page-hero-stats" data-reveal>
+          <div class="page-hero-stat">
+            <div class="label">// engagements</div>
+            <div class="value">4<span>+</span></div>
+          </div>
+          <div class="page-hero-stat">
+            <div class="label">// bugs_caught</div>
+            <div class="value">156<span>+</span></div>
+          </div>
+          <div class="page-hero-stat">
+            <div class="label">// p1_bugs_shipped</div>
+            <div class="value">0<span></span></div>
+          </div>
+          <div class="page-hero-stat">
+            <div class="label">// test_cases</div>
+            <div class="value">3k<span>+</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE STUDIES -->
+    <section class="cases-section" id="cases">
+      <div class="wrap">
+
+        <!-- ═══ CASE 1: Help for Heroes ═══ -->
+        <div class="case-card" id="h4h" data-reveal>
+          <div class="case-header">
+            <div>
+              <div class="case-number">// case_study_01</div>
+              <div class="case-client">Help for Heroes</div>
+              <h2>Delivering a Zero-Defect Veteran Support Platform</h2>
+              <div class="case-tags">
+                <span class="case-tag">end_to_end_qa</span>
+                <span class="case-tag">cypress</span>
+                <span class="case-tag">integration_testing</span>
+                <span class="case-tag">user_journeys</span>
+                <span class="case-tag">django_cms</span>
+              </div>
+            </div>
+            <div class="case-outcome-badges">
+              <div class="outcome-badge green"><div class="dot"></div>0 P1 Bugs Shipped</div>
+              <div class="outcome-badge cream"><div class="dot"></div>47 Test Cases</div>
+              <div class="outcome-badge cream"><div class="dot"></div>200+ Journeys</div>
+            </div>
+          </div>
+
+          <div class="case-body">
+
+            <div class="case-stats">
+              <div class="case-stat"><div class="cs-num">200<span>+</span></div><div class="cs-label">User Journeys</div></div>
+              <div class="case-stat"><div class="cs-num">47</div><div class="cs-label">Test Cases</div></div>
+              <div class="case-stat"><div class="cs-num">0</div><div class="cs-label">P1 Bugs Shipped</div></div>
+              <div class="case-stat"><div class="cs-num">100<span>%</span></div><div class="cs-label">Pass Rate</div></div>
+            </div>
+
+            <div class="case-grid">
+              <div>
+                <span class="case-section-label">// the_challenge</span>
+                <p>Help for Heroes required a full QA pass of their veteran support platform ahead of a major public launch. The platform handles sensitive benefit applications, account management and community resources for Armed Forces veterans — meaning reliability and accessibility were non-negotiable. The development team had limited QA resource and needed an experienced engineer to own the entire testing strategy from scratch.</p>
+              </div>
+              <div>
+                <span class="case-section-label">// my_approach</span>
+                <p>I began with a thorough requirements analysis — reviewing user stories, acceptance criteria and the existing tech stack (Django CMS4). I built a comprehensive test plan covering 200+ critical user journeys, prioritised by risk. Manual exploratory testing was conducted first to uncover edge cases, followed by structured test case execution. Key benefit application flows were automated using Cypress for regression confidence going forward.</p>
+              </div>
+            </div>
+
+            <div class="case-timeline">
+              <span class="case-section-label">// engagement_timeline</span>
+              <div class="timeline-list">
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Week 1</div>
+                    <div class="tl-title">Requirements analysis & test planning</div>
+                    <div class="tl-desc">Reviewed all user stories, mapped coverage areas, identified high-risk flows and produced a signed-off test strategy document.</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Week 2–3</div>
+                    <div class="tl-title">Exploratory & functional testing</div>
+                    <div class="tl-desc">Full manual test pass across benefit application forms, account flows, accessibility requirements and cross-browser compatibility.</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Week 4</div>
+                    <div class="tl-title">Automation suite & regression</div>
+                    <div class="tl-desc">Built Cypress automation covering critical happy paths and integrated into the CI/CD pipeline via GitHub Actions.</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Week 5</div>
+                    <div class="tl-title">Sign-off & launch</div>
+                    <div class="tl-desc">Final regression pass, sign-off report delivered, zero P1 issues. Platform launched on schedule.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-findings">
+              <span class="case-section-label">// key_findings</span>
+              <table class="findings-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Finding</th>
+                    <th>Severity</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>H4H-001</td><td>Form submit triggers 500 error on empty optional address field</td><td><span class="sev-badge sev-critical">critical</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>H4H-002</td><td>Tab order breaks after modal dismissal on Firefox 118</td><td><span class="sev-badge sev-high">high</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>H4H-003</td><td>Screen reader skips aria-label on benefit category dropdown</td><td><span class="sev-badge sev-high">high</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>H4H-004</td><td>Session timeout warning does not appear on Safari iOS</td><td><span class="sev-badge sev-medium">medium</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>H4H-005</td><td>Footer navigation links return 404 in staging environment</td><td><span class="sev-badge sev-low">low</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="case-tools">
+              <span class="case-section-label">// tools_used</span>
+              <div class="tools-grid">
+                <span class="tool-pill">Cypress</span>
+                <span class="tool-pill">GitHub Actions</span>
+                <span class="tool-pill">Django CMS4</span>
+                <span class="tool-pill">BrowserStack</span>
+                <span class="tool-pill">axe DevTools</span>
+                <span class="tool-pill">Jira</span>
+                <span class="tool-pill">TestRail</span>
+                <span class="tool-pill">Postman</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="case-divider"></div>
+
+        <!-- ═══ CASE 2: Maggie's ═══ -->
+        <div class="case-card" id="maggies" data-reveal>
+          <div class="case-header">
+            <div>
+              <div class="case-number">// case_study_02</div>
+              <div class="case-client">Maggie's</div>
+              <h2>QA for a Cancer Care Centre Booking & Resource Platform</h2>
+              <div class="case-tags">
+                <span class="case-tag">regression_testing</span>
+                <span class="case-tag">playwright</span>
+                <span class="case-tag">mobile_qa</span>
+                <span class="case-tag">cross_browser</span>
+                <span class="case-tag">browserstack</span>
+              </div>
+            </div>
+            <div class="case-outcome-badges">
+              <div class="outcome-badge green"><div class="dot"></div>31 Tests Passing</div>
+              <div class="outcome-badge cream"><div class="dot"></div>15 Devices Tested</div>
+              <div class="outcome-badge cream"><div class="dot"></div>Full Coverage</div>
+            </div>
+          </div>
+
+          <div class="case-body">
+
+            <div class="case-stats">
+              <div class="case-stat"><div class="cs-num">31</div><div class="cs-label">Test Cases</div></div>
+              <div class="case-stat"><div class="cs-num">15</div><div class="cs-label">Devices Tested</div></div>
+              <div class="case-stat"><div class="cs-num">6</div><div class="cs-label">Browsers</div></div>
+              <div class="case-stat"><div class="cs-num">0</div><div class="cs-label">Regressions</div></div>
+            </div>
+
+            <div class="case-grid">
+              <div>
+                <span class="case-section-label">// the_challenge</span>
+                <p>Maggie's needed comprehensive QA across their centre-finder tool, appointment booking system and online support resources — serving cancer patients and their families across the entire UK network. The audience is particularly vulnerable, making reliability and accessibility critical. The platform needed to work flawlessly across all devices and browsers their users would realistically access it from.</p>
+              </div>
+              <div>
+                <span class="case-section-label">// my_approach</span>
+                <p>I developed a detailed set of test cases from the functional specifications, prioritising the postcode-based centre finder and appointment booking journeys as the most critical paths. Cross-browser and device testing was conducted using BrowserStack across 15 real device/OS combinations. Playwright was used to automate regression tests ensuring ongoing stability. Accessibility was tested against WCAG 2.1 AA throughout.</p>
+              </div>
+            </div>
+
+            <div class="case-timeline">
+              <span class="case-section-label">// engagement_timeline</span>
+              <div class="timeline-list">
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Phase 1</div>
+                    <div class="tl-title">Test case authoring from specifications</div>
+                    <div class="tl-desc">Produced 31 detailed test cases covering all functional areas, with clear pass/fail criteria and priority ratings.</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Phase 2</div>
+                    <div class="tl-title">Cross-browser & device testing via BrowserStack</div>
+                    <div class="tl-desc">Tested across Chrome, Firefox, Safari, Edge, iOS Safari and Chrome Android on 15 real device configurations.</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Phase 3</div>
+                    <div class="tl-title">Playwright automation for regression</div>
+                    <div class="tl-desc">Key centre-finder and booking journeys automated to protect against future regressions through ongoing releases.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-findings">
+              <span class="case-section-label">// key_findings</span>
+              <table class="findings-table">
+                <thead>
+                  <tr><th>ID</th><th>Finding</th><th>Severity</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>MAG-001</td><td>Postcode autocomplete fails silently on iOS Safari 16.4</td><td><span class="sev-badge sev-high">high</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>MAG-002</td><td>Centre map fails to load on Chrome Android with hardware acceleration disabled</td><td><span class="sev-badge sev-high">high</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>MAG-003</td><td>Booking confirmation email not triggered when postcode contains lowercase</td><td><span class="sev-badge sev-medium">medium</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>MAG-004</td><td>Resource PDF links open in same tab rather than new tab on mobile</td><td><span class="sev-badge sev-low">low</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="case-tools">
+              <span class="case-section-label">// tools_used</span>
+              <div class="tools-grid">
+                <span class="tool-pill">Playwright</span>
+                <span class="tool-pill">BrowserStack</span>
+                <span class="tool-pill">TestRail</span>
+                <span class="tool-pill">axe DevTools</span>
+                <span class="tool-pill">Jira</span>
+                <span class="tool-pill">Chrome DevTools</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="case-divider"></div>
+
+        <!-- ═══ CASE 3: Bipolar UK ═══ -->
+        <div class="case-card" id="bipolar" data-reveal>
+          <div class="case-header">
+            <div>
+              <div class="case-number">// case_study_03</div>
+              <div class="case-client">Bipolar UK</div>
+              <h2>Ensuring Reliability of Website & Mental Health Assessment Form</h2>
+              <div class="case-tags">
+                <span class="case-tag">manual_qa</span>
+                <span class="case-tag">exploratory_testing</span>
+                <span class="case-tag">accessibility</span>
+                <span class="case-tag">uat</span>
+                <span class="case-tag">wcag_2.1</span>
+              </div>
+            </div>
+            <div class="case-outcome-badges">
+              <div class="outcome-badge green"><div class="dot"></div>WCAG 2.1 AA Compliant</div>
+              <div class="outcome-badge cream"><div class="dot"></div>28 Test Cases</div>
+              <div class="outcome-badge cream"><div class="dot"></div>Sensitive Audience</div>
+            </div>
+          </div>
+
+          <div class="case-body">
+
+            <div class="case-stats">
+              <div class="case-stat"><div class="cs-num">28</div><div class="cs-label">Test Cases</div></div>
+              <div class="case-stat"><div class="cs-num">AA</div><div class="cs-label">WCAG Level</div></div>
+              <div class="case-stat"><div class="cs-num">12</div><div class="cs-label">Bugs Found</div></div>
+              <div class="case-stat"><div class="cs-num">100<span>%</span></div><div class="cs-label">Resolved</div></div>
+            </div>
+
+            <div class="case-grid">
+              <div>
+                <span class="case-section-label">// the_challenge</span>
+                <p>Bipolar UK's self-assessment form is used by people in genuinely vulnerable mental health situations. Any bugs, confusing UX or accessibility failures carry real human consequences. The brief required comprehensive QA with a sensitivity to the audience — ensuring every user journey was not only functional but safe, clear and accessible to people who may be in crisis or using assistive technologies.</p>
+              </div>
+              <div>
+                <span class="case-section-label">// my_approach</span>
+                <p>I approached this engagement with particular care, conducting a thorough WCAG 2.1 AA audit alongside functional testing. Screen reader testing was performed using NVDA and VoiceOver. UAT sessions were structured to simulate real user behaviour including non-linear navigation, back-button usage and form abandonment patterns. All findings were documented with clear reproduction steps and impact assessments tailored to the charity's non-technical stakeholders.</p>
+              </div>
+            </div>
+
+            <div class="case-findings">
+              <span class="case-section-label">// key_findings</span>
+              <table class="findings-table">
+                <thead>
+                  <tr><th>ID</th><th>Finding</th><th>Severity</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>BUK-001</td><td>Assessment form skips required field validation when using browser back button</td><td><span class="sev-badge sev-critical">critical</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>BUK-002</td><td>NVDA screen reader announces form errors before they occur on question 3</td><td><span class="sev-badge sev-high">high</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>BUK-003</td><td>Crisis support link not keyboard-focusable on results page</td><td><span class="sev-badge sev-high">high</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>BUK-004</td><td>Progress indicator does not update when navigating backwards</td><td><span class="sev-badge sev-medium">medium</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>BUK-005</td><td>Colour contrast ratio on help text fails WCAG AA (2.8:1, needs 4.5:1)</td><td><span class="sev-badge sev-medium">medium</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="case-tools">
+              <span class="case-section-label">// tools_used</span>
+              <div class="tools-grid">
+                <span class="tool-pill">axe DevTools</span>
+                <span class="tool-pill">NVDA</span>
+                <span class="tool-pill">VoiceOver</span>
+                <span class="tool-pill">Colour Contrast Analyser</span>
+                <span class="tool-pill">Jira</span>
+                <span class="tool-pill">TestRail</span>
+                <span class="tool-pill">BrowserStack</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="case-divider"></div>
+
+        <!-- ═══ CASE 4: Breast Cancer UK ═══ -->
+        <div class="case-card" id="bcuk" data-reveal>
+          <div class="case-header">
+            <div>
+              <div class="case-number">// case_study_04</div>
+              <div class="case-client">Breast Cancer UK</div>
+              <h2>QA Strategy for Assessment Form & Sitewide Testing</h2>
+              <div class="case-tags">
+                <span class="case-tag">form_testing</span>
+                <span class="case-tag">cross_browser</span>
+                <span class="case-tag">api_testing</span>
+                <span class="case-tag">performance</span>
+                <span class="case-tag">responsiveness</span>
+              </div>
+            </div>
+            <div class="case-outcome-badges">
+              <div class="outcome-badge green"><div class="dot"></div>52 Tests Passing</div>
+              <div class="outcome-badge cream"><div class="dot"></div>18 Combinations</div>
+              <div class="outcome-badge cream"><div class="dot"></div>API Validated</div>
+            </div>
+          </div>
+
+          <div class="case-body">
+
+            <div class="case-stats">
+              <div class="case-stat"><div class="cs-num">52</div><div class="cs-label">Test Cases</div></div>
+              <div class="case-stat"><div class="cs-num">18</div><div class="cs-label">Device/Browser Combos</div></div>
+              <div class="case-stat"><div class="cs-num">100<span>%</span></div><div class="cs-label">API Coverage</div></div>
+              <div class="case-stat"><div class="cs-num">0</div><div class="cs-label">Critical Issues Shipped</div></div>
+            </div>
+
+            <div class="case-grid">
+              <div>
+                <span class="case-section-label">// the_challenge</span>
+                <p>Breast Cancer UK needed thorough QA across their website and a high-stakes risk assessment form used by thousands of women to assess their personal cancer risk factors. The form integrates with a backend API and produces personalised results — meaning data integrity and API reliability were as important as the UI. Cross-browser consistency across 18 device and browser combinations was also a key requirement.</p>
+              </div>
+              <div>
+                <span class="case-section-label">// my_approach</span>
+                <p>I structured the engagement in two parallel tracks — UI/functional testing and API testing. The assessment form was tested exhaustively including boundary value analysis on numeric inputs, validation edge cases, and API response handling. Postman was used to validate all API endpoints independently. Cross-browser and responsive testing was conducted using BrowserStack. Performance was assessed using Lighthouse and Chrome DevTools.</p>
+              </div>
+            </div>
+
+            <div class="case-timeline">
+              <span class="case-section-label">// engagement_timeline</span>
+              <div class="timeline-list">
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Track A — UI Testing</div>
+                    <div class="tl-title">Form validation & responsive testing</div>
+                    <div class="tl-desc">52 test cases covering all form paths, validation states, responsive breakpoints and cross-browser behaviour.</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Track B — API Testing</div>
+                    <div class="tl-title">Endpoint validation & response schema testing</div>
+                    <div class="tl-desc">All form submission endpoints validated via Postman — checking response schemas, error handling and data integrity.</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot done"></div>
+                  <div class="tl-content">
+                    <div class="tl-phase">Track C — Performance</div>
+                    <div class="tl-title">Lighthouse & Core Web Vitals audit</div>
+                    <div class="tl-desc">Performance audit identifying render-blocking resources and CLS issues, resolved before launch.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-findings">
+              <span class="case-section-label">// key_findings</span>
+              <table class="findings-table">
+                <thead>
+                  <tr><th>ID</th><th>Finding</th><th>Severity</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>BCUK-001</td><td>Donation amount resets to default after browser back navigation</td><td><span class="sev-badge sev-high">high</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>BCUK-002</td><td>API returns 200 with error body when age field contains non-numeric input</td><td><span class="sev-badge sev-high">high</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>BCUK-003</td><td>Form layout breaks at 375px viewport width on Samsung Galaxy S21</td><td><span class="sev-badge sev-medium">medium</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>BCUK-004</td><td>Cumulative Layout Shift score of 0.28 (exceeds 0.1 threshold) on homepage</td><td><span class="sev-badge sev-medium">medium</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                  <tr><td>BCUK-005</td><td>Print stylesheet missing — results page not printable</td><td><span class="sev-badge sev-low">low</span></td><td><span class="res-badge">✓ resolved</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="case-tools">
+              <span class="case-section-label">// tools_used</span>
+              <div class="tools-grid">
+                <span class="tool-pill">Postman</span>
+                <span class="tool-pill">BrowserStack</span>
+                <span class="tool-pill">Lighthouse</span>
+                <span class="tool-pill">Chrome DevTools</span>
+                <span class="tool-pill">axe DevTools</span>
+                <span class="tool-pill">Jira</span>
+                <span class="tool-pill">TestRail</span>
+                <span class="tool-pill">Cypress</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="page-footer">
+      <div class="wrap">
+        <div class="page-footer-inner">
+          <div class="footer-name">Toby <em>Lees</em></div>
+          <a href="index.html" class="footer-back">← Back to Portfolio</a>
+          <div class="footer-copy">© 2026 Toby Lees · qa_engineer · uk_based</div>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /main -->
+
+  <script>
+    'use strict';
+
+    /* ── Cursor ── */
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+    (function animRing() { rx += (mx-rx)*.1; ry += (my-ry)*.1; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); })();
+    document.addEventListener('mouseleave', () => { cursor.style.opacity=0; ring.style.opacity=0; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity=1; ring.style.opacity=1; });
+
+    /* ── Scroll Reveal ── */
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const siblings = [...e.target.parentElement.querySelectorAll('[data-reveal]')];
+        const i = siblings.indexOf(e.target);
+        setTimeout(() => e.target.classList.add('on'), i * 80);
+        revealObs.unobserve(e.target);
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
+    setTimeout(() => { document.querySelectorAll('.page-hero [data-reveal]').forEach((el,i) => setTimeout(() => el.classList.add('on'), 200+i*130)); }, 100);
+
+    /* ── Active sidebar on scroll ── */
+    const allSections = document.querySelectorAll('section[id], div[id]');
+    const sideLinks = document.querySelectorAll('.sidebar-nav a:not(.back-link)');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      allSections.forEach(s => { if (s.getBoundingClientRect().top <= 200) cur = s.id; });
+      sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    }, { passive: true });
+    window.dispatchEvent(new Event('scroll'));
+
+    /* ── Smooth scroll ── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    /* ── Mobile menu ── */
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let menuOpen = false;
+    mobileMenuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen; mobileMenu.classList.toggle('open', menuOpen);
+      const spans = mobileMenuBtn.querySelectorAll('span');
+      if (menuOpen) { spans[0].style.transform='translateY(7px) rotate(45deg)'; spans[1].style.opacity='0'; spans[2].style.transform='translateY(-7px) rotate(-45deg)'; }
+      else spans.forEach(s => { s.style.transform=''; s.style.opacity=''; });
+    });
+    function closeMobileMenu() { menuOpen=false; mobileMenu.classList.remove('open'); mobileMenuBtn.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
+  </script>
+</body>
+</html>

@@ -8,29 +8,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --blue:        #2563eb;
-      --blue-light:  #60a5fa;
-      --blue-mid:    #3b82f6;
-      --blue-dark:   #1e3a8a;
-      --blue-glow:   rgba(37,99,235,0.35);
-      --blue-subtle: rgba(37,99,235,0.07);
-      --cyan:        #06b6d4;
-      --cyan-light:  #67e8f9;
-      --white:       #ffffff;
-      --off-white:   #f8faff;
-      --cream:       #eff6ff;
-      --gray-100:    #e0eaff;
-      --gray-200:    #c7d9ff;
-      --gray-400:    #7e9cc7;
-      --gray-600:    #4a6fa5;
-      --gray-900:    #0f172a;
-      --dark:        #0a0f1e;
-      --dark-mid:    #111827;
-      --dark-border: rgba(255,255,255,0.07);
-      --font-display: 'Syne', sans-serif;
-      --font-body:    'Space Grotesk', sans-serif;
-      --font-mono:    'JetBrains Mono', monospace;
+     :root {
+  --blue:        #212842;
+  --blue-light:  #8b97b8;
+  --blue-mid:    #2e3d5c;
+  --blue-dark:   #151c30;
+  --blue-glow:   rgba(33,40,66,0.55);
+  --blue-subtle: rgba(240,231,213,0.12);
+  --cyan:        #c4b49a;
+  --cyan-light:  #d4c8b0;
+  --white:       #F0E7D5;
+  --off-white:   #f7f3ec;
+  --cream:       #ede3d0;
+  --gray-100:    #e8e0d0;
+  --gray-200:    #d4c8b0;
+  --gray-400:    #8b8070;
+  --gray-600:    #5a5045;
+  --gray-900:    #1a1520;
+  --dark:        #212842;
+  --dark-mid:    #2a3050;
+  --dark-border: rgba(240,231,213,0.08);
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'Space Grotesk', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
       --radius:    18px;
       --radius-sm: 10px;
       --radius-xs: 6px;
@@ -43,7 +43,7 @@
     html { scroll-behavior: smooth; font-size: 16px; }
     body { font-family: var(--font-body); background: var(--white); color: var(--gray-900); overflow-x: hidden; cursor: none; }
 
-    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blue); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; mix-blend-mode: difference; }
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blue); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; }
     .cursor-ring { position: fixed; width: 38px; height: 38px; border: 1.5px solid rgba(37,99,235,0.5); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: left .1s ease, top .1s ease; }
 
     body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 99997; opacity: 0.02; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
@@ -1229,7 +1229,7 @@
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(96,165,250,${p.alpha})`;
+      ctx.fillStyle = `rgba(240,231,213,${p.alpha})`;
       ctx.fill();
     });
 
@@ -1243,7 +1243,7 @@
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(37,99,235,${0.15 * (1 - dist / 110)})`;
+          ctx.strokeStyle = `rgba(240,231,213,${0.12 * (1 - dist/100)})`;
           ctx.lineWidth   = 0.5;
           ctx.stroke();
         }

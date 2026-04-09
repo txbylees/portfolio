@@ -3,107 +3,498 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toby Lees — QA Engineer</title>
+  <title>Toby Lees &mdash; QA Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet" />
   <style>
-     :root {
-  --blue:        #212842;
-  --blue-light:  #8b97b8;
-  --blue-mid:    #2e3d5c;
-  --blue-dark:   #151c30;
-  --blue-glow:   rgba(33,40,66,0.55);
-  --blue-subtle: rgba(240,231,213,0.12);
-  --cyan:        #c4b49a;
-  --cyan-light:  #d4c8b0;
-  --white:       #F0E7D5;
-  --off-white:   #f7f3ec;
-  --cream:       #ede3d0;
-  --gray-100:    #e8e0d0;
-  --gray-200:    #d4c8b0;
-  --gray-400:    #8b8070;
-  --gray-600:    #5a5045;
-  --gray-900:    #1a1520;
-  --dark:        #212842;
-  --dark-mid:    #2a3050;
-  --dark-border: rgba(240,231,213,0.08);
-  --font-display: 'Syne', sans-serif;
-  --font-body:    'Space Grotesk', sans-serif;
-  --font-mono:    'JetBrains Mono', monospace;
+    :root {
+      --blue:        #212842;
+      --blue-light:  #8b97b8;
+      --blue-mid:    #2e3d5c;
+      --blue-dark:   #151c30;
+      --blue-glow:   rgba(33,40,66,0.55);
+      --blue-subtle: rgba(240,231,213,0.12);
+      --cyan:        #c4b49a;
+      --cyan-light:  #d4c8b0;
+      --white:       #F0E7D5;
+      --off-white:   #f7f3ec;
+      --cream:       #ede3d0;
+      --gray-100:    #e8e0d0;
+      --gray-200:    #d4c8b0;
+      --gray-400:    #8b8070;
+      --gray-600:    #5a5045;
+      --gray-900:    #1a1520;
+      --dark:        #212842;
+      --dark-mid:    #2a3050;
+      --dark-border: rgba(240,231,213,0.08);
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'Space Grotesk', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
       --radius:    18px;
       --radius-sm: 10px;
       --radius-xs: 6px;
       --ease: cubic-bezier(0.4,0,0.2,1);
       --t:      0.3s;
       --t-slow: 0.7s;
+      --a11y-font-scale: 1;
     }
+/* ══════════════════════════════════════════════════
+   WCAG 2.1 ACCESSIBILITY ADDITIONS
+   Paste the CSS into your <style> tag
+   Paste the HTML after your <body> tag
+   Paste the JS at the end of your <script> tag
+   ══════════════════════════════════════════════════ */
+
+/* ── Skip to content (WCAG 2.4.1) ── */
+.skip-link {
+  position: fixed;
+  top: -120px;
+  left: 1.5rem;
+  z-index: 999999;
+  background: #212842;
+  color: #F0E7D5;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0 0 10px 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #F0E7D5;
+  border-top: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #c4b49a;
+  outline-offset: 3px;
+}
+
+/* ── Global focus styles (WCAG 2.4.7) ── */
+*:focus-visible {
+  outline: 3px solid #212842;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ── Screen reader only utility ── */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Accessibility modes ── */
+
+/* High contrast (WCAG 1.4.3 AAA) */
+body.a11y-high-contrast {
+  --white:     #ffffff;
+  --off-white: #ffffff;
+  --cream:     #efefef;
+  --gray-100:  #dddddd;
+  --gray-200:  #bbbbbb;
+  --gray-400:  #444444;
+  --gray-600:  #111111;
+  --gray-900:  #000000;
+  --blue:      #00008b;
+  --blue-light:#0000ff;
+  --blue-mid:  #00006b;
+  --cyan:      #005555;
+  --dark:      #000022;
+  --dark-border: rgba(255,255,255,0.4);
+  filter: contrast(1.15);
+}
+body.a11y-high-contrast *:focus-visible {
+  outline: 4px solid #ff0 !important;
+  outline-offset: 3px !important;
+}
+
+/* Reduce motion (WCAG 2.3.3) */
+body.a11y-reduce-motion *,
+body.a11y-reduce-motion *::before,
+body.a11y-reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Dyslexia-friendly font */
+body.a11y-dyslexia,
+body.a11y-dyslexia p,
+body.a11y-dyslexia h1,
+body.a11y-dyslexia h2,
+body.a11y-dyslexia h3,
+body.a11y-dyslexia h4,
+body.a11y-dyslexia span,
+body.a11y-dyslexia a,
+body.a11y-dyslexia button,
+body.a11y-dyslexia li,
+body.a11y-dyslexia div {
+  font-family: 'OpenDyslexic', sans-serif !important;
+  letter-spacing: 0.05em;
+  word-spacing: 0.15em;
+  line-height: 1.95 !important;
+}
+
+/* Enhanced focus rings */
+body.a11y-focus-enhanced *:focus-visible {
+  outline: 4px solid #212842 !important;
+  outline-offset: 5px !important;
+  border-radius: 4px;
+  box-shadow: 0 0 0 7px rgba(33,40,66,0.15) !important;
+}
+
+/* Large cursor */
+body.a11y-large-cursor { cursor: none; }
+
+/* Respect system preference (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   ACCESSIBILITY TOOLBAR COMPONENT
+   ══════════════════════════════════════════════════ */
+
+/* Trigger button — fixed to right edge */
+.a11y-trigger {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99900;
+  background: #212842;
+  color: #F0E7D5;
+  border: none;
+  border-radius: 12px 0 0 12px;
+  padding: 1rem 0.65rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: -4px 0 24px rgba(33,40,66,0.35);
+  transition: background 0.25s, padding-right 0.25s;
+}
+.a11y-trigger:hover {
+  background: #2e3d5c;
+  padding-right: 0.9rem;
+}
+.a11y-trigger:focus-visible {
+  outline: 3px solid #F0E7D5;
+  outline-offset: 2px;
+}
+.a11y-trigger svg {
+  width: 22px; height: 22px;
+  fill: #F0E7D5;
+  flex-shrink: 0;
+}
+.a11y-trigger-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: rgba(240,231,213,0.5);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+/* Panel */
+.a11y-panel {
+  position: fixed;
+  right: -360px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99899;
+  width: 340px;
+  background: #212842;
+  border-radius: 20px 0 0 20px;
+  box-shadow: -8px 0 50px rgba(0,0,0,0.45);
+  padding: 2rem;
+  transition: right 0.38s cubic-bezier(0.4,0,0.2,1);
+  max-height: 92vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(240,231,213,0.15) transparent;
+}
+.a11y-panel.open { right: 0; }
+
+.a11y-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(240,231,213,0.1);
+}
+.a11y-panel-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(240,231,213,0.4);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.a11y-close {
+  width: 30px; height: 30px;
+  background: rgba(240,231,213,0.07);
+  border: 1px solid rgba(240,231,213,0.12);
+  border-radius: 50%;
+  color: rgba(240,231,213,0.6);
+  font-size: 1rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.a11y-close:hover { background: rgba(240,231,213,0.15); color: #F0E7D5; }
+.a11y-close:focus-visible { outline: 3px solid #F0E7D5; outline-offset: 2px; }
+
+/* Section */
+.a11y-section { margin-bottom: 1.5rem; }
+.a11y-section-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: rgba(240,231,213,0.28);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+/* Font size row */
+.a11y-font-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(240,231,213,0.04);
+  border: 1px solid rgba(240,231,213,0.09);
+  border-radius: 12px;
+  padding: 0.5rem 0.6rem;
+}
+.a11y-font-btn {
+  width: 36px; height: 36px;
+  background: rgba(240,231,213,0.08);
+  border: 1px solid rgba(240,231,213,0.12);
+  border-radius: 8px;
+  color: #F0E7D5;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.a11y-font-btn:hover { background: rgba(240,231,213,0.18); }
+.a11y-font-btn:focus-visible { outline: 3px solid #F0E7D5; outline-offset: 2px; }
+.a11y-font-display {
+  flex: 1;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(240,231,213,0.75);
+}
+.a11y-font-reset {
+  background: none;
+  border: none;
+  color: rgba(240,231,213,0.28);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+  border-radius: 4px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.a11y-font-reset:hover { color: rgba(240,231,213,0.65); }
+.a11y-font-reset:focus-visible { outline: 3px solid #F0E7D5; }
+
+/* Toggle rows */
+.a11y-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0.85rem;
+  background: rgba(240,231,213,0.03);
+  border: 1px solid rgba(240,231,213,0.07);
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.a11y-toggle-row:hover {
+  background: rgba(240,231,213,0.07);
+  border-color: rgba(240,231,213,0.14);
+}
+.a11y-toggle-info { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.a11y-toggle-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: rgba(240,231,213,0.85);
+}
+.a11y-toggle-desc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: rgba(240,231,213,0.28);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Toggle switch */
+.a11y-switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+.a11y-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+.a11y-switch-track {
+  position: absolute;
+  inset: 0;
+  background: rgba(240,231,213,0.1);
+  border: 1px solid rgba(240,231,213,0.14);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s;
+}
+.a11y-switch-track::after {
+  content: '';
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 14px; height: 14px;
+  background: rgba(240,231,213,0.4);
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), background 0.25s;
+}
+.a11y-switch input:checked + .a11y-switch-track {
+  background: #c4b49a;
+  border-color: #c4b49a;
+}
+.a11y-switch input:checked + .a11y-switch-track::after {
+  transform: translateX(18px);
+  background: #F0E7D5;
+}
+.a11y-switch input:focus-visible + .a11y-switch-track {
+  outline: 3px solid #F0E7D5;
+  outline-offset: 2px;
+  border-radius: 24px;
+}
+
+.a11y-divider {
+  height: 1px;
+  background: rgba(240,231,213,0.08);
+  margin: 1.2rem 0;
+}
+
+/* Reset button */
+.a11y-reset-all {
+  width: 100%;
+  padding: 0.7rem;
+  background: rgba(240,231,213,0.04);
+  border: 1px solid rgba(240,231,213,0.09);
+  border-radius: 10px;
+  color: rgba(240,231,213,0.4);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  margin-bottom: 1rem;
+}
+.a11y-reset-all:hover {
+  background: rgba(240,231,213,0.09);
+  color: rgba(240,231,213,0.75);
+  border-color: rgba(240,231,213,0.18);
+}
+.a11y-reset-all:focus-visible { outline: 3px solid #F0E7D5; outline-offset: 2px; }
+
+/* WCAG compliance badge */
+.a11y-badge {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.75rem 0.85rem;
+  background: rgba(34,197,94,0.07);
+  border: 1px solid rgba(34,197,94,0.18);
+  border-radius: 10px;
+}
+.a11y-badge-dot {
+  width: 8px; height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+  animation: blinkDot 2s ease-in-out infinite;
+}
+.a11y-badge-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  line-height: 1.7;
+  color: rgba(34,197,94,0.75);
+}
+
+/* Mobile adjustments */
+@media (max-width: 1024px) {
+  .a11y-trigger {
+    top: auto;
+    bottom: 5rem;
+    transform: none;
+  }
+  .a11y-panel {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    transform: translateY(100%);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 85vh;
+    transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  }
+  .a11y-panel.open {
+    transform: translateY(0);
+    right: 0;
+  }
+}
 
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: calc(16px * var(--a11y-font-scale)); }
     body { font-family: var(--font-body); background: var(--white); color: var(--gray-900); overflow-x: hidden; cursor: none; }
-
-    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blue); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s, background .2s; }
-    .cursor-ring { position: fixed; width: 38px; height: 38px; border: 1.5px solid rgba(37,99,235,0.5); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: left .1s ease, top .1s ease; }
-
+    .cursor { position: fixed; width: 10px; height: 10px; background: #212842; border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+    .cursor-ring { position: fixed; width: 38px; height: 38px; border: 1.5px solid rgba(33,40,66,0.5); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: left .1s ease, top .1s ease; }
     body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 99997; opacity: 0.02; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
     h1,h2,h3,h4,h5 { font-family: var(--font-display); line-height: 1.1; }
     p { line-height: 1.75; color: var(--gray-600); font-family: var(--font-body); }
     em { font-style: italic; color: var(--blue); }
     a { text-decoration: none; color: inherit; }
     code, .mono { font-family: var(--font-mono); }
-
     .wrap { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
     [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
     [data-reveal].on { opacity: 1; transform: none; }
-
-    /* ── SIDEBAR ── */
     .sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 220px; background: var(--dark); border-right: 1px solid var(--dark-border); z-index: 900; display: flex; flex-direction: column; padding: 2.5rem 1.8rem; }
     .sidebar-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 2.5rem; }
     .sidebar-name span { display: block; }
     .sidebar-name em { color: var(--blue-light); font-style: normal; }
     .sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
-   .sidebar-nav a {
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: rgba(240,231,213,0.38);
-  padding: 0.55rem 0.8rem;
-  border-radius: var(--radius-xs);
-  letter-spacing: 0.02em;
-  transition: color var(--t), background var(--t);
-  position: relative;
-}
-
-.sidebar-nav a::before {
-  content: '';
-  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  width: 3px; height: 0;
-  background: #F0E7D5;
-  border-radius: 2px;
-  transition: height 0.3s ease;
-}
-
-.sidebar-nav a:hover {
-  color: rgba(240,231,213,0.7);
-  background: rgba(240,231,213,0.05);
-}
-
-/* Active — clearly visible for the entire time on that section */
-.sidebar-nav a.active {
-  color: #F0E7D5;
-  background: rgba(240,231,213,0.1);
-  font-weight: 600;
-}
-
-.sidebar-nav a.active::before {
-  height: 70%;
-}
+    .sidebar-nav a { font-family: var(--font-body); font-size: 0.78rem; font-weight: 500; color: rgba(240,231,213,0.38); padding: 0.55rem 0.8rem; border-radius: var(--radius-xs); letter-spacing: 0.02em; transition: color var(--t), background var(--t); position: relative; }
+    .sidebar-nav a::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 0; background: #F0E7D5; border-radius: 2px; transition: height 0.3s ease; }
+    .sidebar-nav a:hover { color: rgba(240,231,213,0.7); background: rgba(240,231,213,0.05); }
+    .sidebar-nav a.active { color: #F0E7D5; background: rgba(240,231,213,0.1); font-weight: 600; }
+    .sidebar-nav a.active::before { height: 70%; }
     .sidebar-bottom { margin-top: auto; font-size: 0.72rem; color: rgba(255,255,255,0.25); font-family: var(--font-mono); line-height: 1.6; }
     .sidebar-dot { display: inline-block; width: 6px; height: 6px; background: #ef4444; border-radius: 50%; margin-right: 6px; animation: blinkDot 2s ease-in-out infinite; vertical-align: middle; }
     @keyframes blinkDot { 0%,100%{opacity:1;} 50%{opacity:.4;} }
-
     .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; height: 60px; background: var(--dark); border-bottom: 1px solid var(--dark-border); z-index: 900; align-items: center; padding: 0 1.5rem; justify-content: space-between; }
     .mobile-nav-name { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--white); }
     .mobile-menu-btn { background: none; border: none; display: flex; flex-direction: column; gap: 5px; padding: 4px; cursor: none; }
@@ -112,61 +503,33 @@
     .mobile-menu.open { display: flex; }
     .mobile-menu a { font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; color: rgba(255,255,255,0.7); padding: 0.8rem 0; border-bottom: 1px solid var(--dark-border); transition: color var(--t); }
     .mobile-menu a:hover { color: var(--blue-light); }
-
     .main { margin-left: 220px; }
-
-    /* ═══════════════════════════════════════════
-       HERO — particle canvas + test runner
-    ═══════════════════════════════════════════ */
-    .hero {
-      min-height: 100vh;
-      background: var(--dark);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 3rem;
-      padding: 7rem 4rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #particleCanvas { position: absolute; inset: 0;  width: 100%;  height: 100%;  pointer-events: none; z-index: 0; }
-
+    .hero { min-height: 100vh; background: var(--dark); display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 3rem; padding: 7rem 4rem 4rem; position: relative; overflow: hidden; }
+    #particleCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
     .hero-bg-orb { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
     .hero-bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(37,99,235,0.3) 0%, transparent 70%); top: -150px; right: -50px; animation: orbDrift 12s ease-in-out infinite; }
     .hero-bg-orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%); bottom: -80px; left: 10%; animation: orbDrift 9s ease-in-out infinite; animation-delay: -4s; }
     @keyframes orbDrift { 0%,100%{transform:translate(0,0);} 33%{transform:translate(20px,-15px);} 66%{transform:translate(-12px,20px);} }
-
     .hero-scanline { position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(96,165,250,0.3), transparent); animation: scanline 5s linear infinite; pointer-events: none; z-index: 1; }
     @keyframes scanline { 0%{top:-1px;opacity:0;} 5%{opacity:1;} 95%{opacity:1;} 100%{top:100%;opacity:0;} }
-
     .hero-content { position: relative; z-index: 2; }
-
     .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.06em; color: var(--blue-light); border: 1px solid rgba(96,165,250,0.2); background: rgba(37,99,235,0.08); padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 2rem; }
     .hero-badge-dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: blinkDot 1.5s ease-in-out infinite; }
-
     .hero-title { font-family: var(--font-display); font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 800; color: var(--white); line-height: 1.0; margin-bottom: 1.8rem; }
     .hero-title .gradient-text { background: linear-gradient(135deg, var(--blue-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
     .hero-sub { font-family: var(--font-body); font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.8; max-width: 480px; margin-bottom: 2.5rem; }
-
     .hero-cta-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
-
     .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; background: linear-gradient(135deg, var(--blue), var(--blue-mid)); color: var(--white); padding: 0.85rem 1.8rem; border-radius: 50px; border: none; cursor: none; transition: transform var(--t), box-shadow var(--t); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px var(--blue-glow); }
     .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.7); padding: 0.85rem 1.8rem; border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.12); cursor: none; transition: border-color var(--t), color var(--t), transform var(--t); }
     .btn-outline:hover { border-color: var(--blue-light); color: var(--white); transform: translateY(-2px); }
-
     .hero-stats { display: flex; gap: 2rem; }
     .hero-stat .num { font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; color: var(--white); line-height: 1; }
     .hero-stat .num span { background: linear-gradient(135deg, var(--blue-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-stat p { font-size: 0.72rem; font-family: var(--font-mono); color: rgba(255,255,255,0.35); margin: 0.3rem 0 0; letter-spacing: 0.03em; }
     .hero-stat-divider { width: 1px; background: rgba(255,255,255,0.08); align-self: stretch; }
-
     .scroll-hint { position: absolute; bottom: 2.5rem; left: 4rem; display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.25); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; z-index: 2; }
     .scroll-hint-line { width: 36px; height: 1px; background: rgba(255,255,255,0.15); }
-
-    /* Test runner */
     .hero-visual { position: relative; z-index: 2; }
     .test-runner { background: #050c1a; border: 1px solid rgba(37,99,235,0.25); border-radius: var(--radius); overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(37,99,235,0.1); animation: floatUp 6s ease-in-out infinite; }
     @keyframes floatUp { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
@@ -205,45 +568,13 @@
     .ticker-item{padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.04);}
     .ticker-item .t-name{font-family:var(--font-mono);font-size:0.72rem;font-weight:500;color:rgba(255,255,255,0.45);}
     .ticker-item .t-type{font-size:0.62rem;font-family:var(--font-mono);color:rgba(255,255,255,0.2);margin-top:1px;}
-
-    /* ═══════════════════════════════════════════
-       MANIFESTO STRIP
-    ═══════════════════════════════════════════ */
-    .manifesto {
-      background: var(--blue);
-      padding: 0;
-      overflow: hidden;
-      position: relative;
-    }
-    .manifesto-track {
-      display: flex;
-      animation: manifestoScroll 25s linear infinite;
-      width: max-content;
-      padding: 1.2rem 0;
-    }
+    .manifesto { background: var(--blue); padding: 0; overflow: hidden; position: relative; }
+    .manifesto-track { display: flex; animation: manifestoScroll 25s linear infinite; width: max-content; padding: 1.2rem 0; }
     .manifesto-track:hover { animation-play-state: paused; }
     @keyframes manifestoScroll { from{transform:translateX(0);} to{transform:translateX(-50%);} }
-    .manifesto-item {
-      display: flex; align-items: center; gap: 1.2rem;
-      padding: 0 2.5rem;
-      border-right: 1px solid rgba(255,255,255,0.15);
-      white-space: nowrap;
-    }
-    .manifesto-item span {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.9);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .manifesto-item .sep {
-      width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; flex-shrink: 0;
-    }
-
-    /* ═══════════════════════════════════════════
-       STATS
-    ═══════════════════════════════════════════ */
+    .manifesto-item { display: flex; align-items: center; gap: 1.2rem; padding: 0 2.5rem; border-right: 1px solid rgba(255,255,255,0.15); white-space: nowrap; }
+    .manifesto-item span { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.9); letter-spacing: 0.04em; text-transform: uppercase; }
+    .manifesto-item .sep { width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; flex-shrink: 0; }
     .stats-section { background: var(--off-white); padding: 5rem 0; position: relative; overflow: hidden; border-bottom: 1px solid var(--gray-100); }
     .stats-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue-dark), var(--blue), var(--cyan), var(--blue), var(--blue-dark)); }
     .stats-header { margin-bottom: 3rem; }
@@ -260,10 +591,6 @@
     .industry-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .industry-tag { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--gray-600); background: var(--white); border: 1.5px solid var(--gray-200); padding: 0.4rem 1rem; border-radius: 50px; transition: border-color var(--t), color var(--t), background var(--t), transform var(--t); }
     .industry-tag:hover { border-color: var(--blue); color: var(--blue); background: var(--cream); transform: translateY(-2px); }
-
-    /* ═══════════════════════════════════════════
-       PROJECTS
-    ═══════════════════════════════════════════ */
     .projects-section { background: var(--white); padding: 6rem 0; }
     .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
     .section-label { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; }
@@ -291,111 +618,33 @@
     .tv-cm{color:rgba(255,255,255,0.2);font-style:italic;} .tv-pass{color:#22c55e;} .tv-fail{color:#ef4444;}
     .tv-cursor{color:#60a5fa;animation:cursorBlink 1s step-end infinite;}
     @keyframes cursorBlink{0%,100%{opacity:1;}50%{opacity:0;}}
-
-    /* ═══════════════════════════════════════════
-       COVERAGE BARS — new section
-    ═══════════════════════════════════════════ */
-    .coverage-section {
-      background: var(--dark);
-      padding: 6rem 0;
-      position: relative;
-      overflow: hidden;
-    }
+    .coverage-section { background: var(--dark); padding: 6rem 0; position: relative; overflow: hidden; }
     .coverage-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(37,99,235,0.12), transparent); pointer-events: none; }
     .coverage-section .section-label { color: var(--blue-light); }
     .coverage-section .section-title { color: var(--white); margin-bottom: 3rem; }
-
-    .coverage-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-
-    .coverage-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      transition: border-color var(--t), background var(--t);
-    }
+    .coverage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .coverage-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius); padding: 1.8rem; transition: border-color var(--t), background var(--t); }
     .coverage-card:hover { border-color: rgba(37,99,235,0.4); background: rgba(37,99,235,0.04); }
-
-    .coverage-card-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 0.6rem;
-    }
-    .coverage-card-title {
-      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
-      color: rgba(255,255,255,0.7);
-    }
-    .coverage-pct {
-      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
-      color: var(--blue-light);
-    }
-    .coverage-bar-track {
-      height: 6px; background: rgba(255,255,255,0.07);
-      border-radius: 6px; overflow: hidden; margin-bottom: 0.5rem;
-    }
-    .coverage-bar-fill {
-      height: 100%; border-radius: 6px;
-      background: linear-gradient(90deg, var(--blue), var(--cyan));
-      width: 0%;
-      transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
-    }
-    .coverage-meta {
-      font-family: var(--font-mono); font-size: 0.62rem; font-weight: 300;
-      color: rgba(255,255,255,0.25);
-    }
-
-    /* ═══════════════════════════════════════════
-       BUG TRACKER — interactive section
-    ═══════════════════════════════════════════ */
-    .bug-tracker-section {
-      background: var(--off-white);
-      padding: 6rem 0;
-    }
-
-    .bug-tracker-ui {
-      background: var(--white);
-      border: 1.5px solid var(--gray-200);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 4px 40px rgba(37,99,235,0.06);
-    }
-
-    .bt-toolbar {
-      background: var(--off-white);
-      border-bottom: 1px solid var(--gray-200);
-      padding: 1rem 1.5rem;
-      display: flex; align-items: center; gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .bt-toolbar-title {
-      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
-      color: var(--gray-600); margin-right: auto;
-    }
-    .bt-filter-btn {
-      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500;
-      padding: 0.3rem 0.8rem; border-radius: 50px; border: 1.5px solid var(--gray-200);
-      background: var(--white); color: var(--gray-600); cursor: none;
-      transition: border-color var(--t), color var(--t), background var(--t);
-    }
+    .coverage-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+    .coverage-card-title { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.7); }
+    .coverage-pct { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--blue-light); }
+    .coverage-bar-track { height: 6px; background: rgba(255,255,255,0.07); border-radius: 6px; overflow: hidden; margin-bottom: 0.5rem; }
+    .coverage-bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--blue), var(--cyan)); width: 0%; transition: width 1.4s cubic-bezier(0.4,0,0.2,1); }
+    .coverage-meta { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 300; color: rgba(255,255,255,0.25); }
+    .bug-tracker-section { background: var(--off-white); padding: 6rem 0; }
+    .bug-tracker-ui { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; box-shadow: 0 4px 40px rgba(37,99,235,0.06); }
+    .bt-toolbar { background: var(--off-white); border-bottom: 1px solid var(--gray-200); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .bt-toolbar-title { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--gray-600); margin-right: auto; }
+    .bt-filter-btn { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 50px; border: 1.5px solid var(--gray-200); background: var(--white); color: var(--gray-600); cursor: none; transition: border-color var(--t), color var(--t), background var(--t); }
     .bt-filter-btn:hover, .bt-filter-btn.active { border-color: var(--blue); color: var(--blue); background: var(--cream); }
     .bt-stats { display: flex; gap: 1.5rem; }
     .bt-stat { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.65rem; color: var(--gray-400); }
     .bt-stat-dot { width: 7px; height: 7px; border-radius: 50%; }
-
     .bt-list { display: flex; flex-direction: column; }
-    .bt-row {
-      display: grid; grid-template-columns: 80px 1fr 120px 110px 100px 80px;
-      padding: 0.9rem 1.5rem; border-bottom: 1px solid var(--gray-100);
-      align-items: center; gap: 1rem;
-      transition: background var(--t);
-    }
+    .bt-row { display: grid; grid-template-columns: 80px 1fr 120px 110px 100px 80px; padding: 0.9rem 1.5rem; border-bottom: 1px solid var(--gray-100); align-items: center; gap: 1rem; transition: background var(--t); }
     .bt-row:hover { background: var(--cream); }
     .bt-row.resolved { opacity: 0.45; }
     .bt-row.resolved .bt-title { text-decoration: line-through; }
-
     .bt-id { font-family: var(--font-mono); font-size: 0.65rem; color: var(--blue); font-weight: 500; }
     .bt-title { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .bt-severity { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 50px; }
@@ -406,21 +655,11 @@
     .bt-status { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; color: var(--gray-400); }
     .st-dot { width: 6px; height: 6px; border-radius: 50%; }
     .bt-client { font-family: var(--font-mono); font-size: 0.62rem; color: var(--gray-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .bt-action-btn {
-      font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
-      padding: 0.3rem 0.75rem; border-radius: 50px;
-      border: 1px solid var(--blue-light); color: var(--blue); background: none;
-      cursor: none; transition: background var(--t), color var(--t); white-space: nowrap;
-    }
+    .bt-action-btn { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 50px; border: 1px solid var(--blue-light); color: var(--blue); background: none; cursor: none; transition: background var(--t), color var(--t); white-space: nowrap; }
     .bt-action-btn:hover { background: var(--blue); color: var(--white); border-color: var(--blue); }
     .bt-action-btn.resolved-btn { border-color: var(--gray-200); color: var(--gray-400); }
-
     .bt-header { background: var(--gray-100); }
     .bt-header .bt-title, .bt-header .bt-id { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; }
-
-    /* ═══════════════════════════════════════════
-       SKILLS
-    ═══════════════════════════════════════════ */
     .about-section { background: var(--off-white); padding: 6rem 0; }
     .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; }
     .about-text h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin-bottom: 1.5rem; color: var(--gray-900); }
@@ -436,10 +675,6 @@
     .skill-icon-box { width: 36px; height: 36px; background: var(--blue-subtle); border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
     .skill-info strong { display: block; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; color: var(--gray-900); }
     .skill-info span { font-size: 0.72rem; color: var(--gray-400); font-family: var(--font-mono); }
-
-    /* ═══════════════════════════════════════════
-       PROCESS
-    ═══════════════════════════════════════════ */
     .process-section { background: var(--white); padding: 7rem 0; }
     .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--gray-200); border-radius: var(--radius); overflow: hidden; margin-top: 3rem; }
     .process-step { background: var(--white); padding: 2.5rem 2rem; transition: background var(--t); position: relative; overflow: hidden; }
@@ -449,10 +684,6 @@
     .step-num { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--blue); letter-spacing: 0.1em; margin-bottom: 1rem; }
     .process-step h3 { font-size: 0.95rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.75rem; font-family: var(--font-body); }
     .process-step p { font-size: 0.85rem; color: var(--gray-400); line-height: 1.7; font-weight: 400; }
-
-    /* ═══════════════════════════════════════════
-       ABOUT ME
-    ═══════════════════════════════════════════ */
     .about-me-section { background: linear-gradient(180deg, var(--off-white) 0%, var(--cream) 100%); padding: 8rem 0; position: relative; overflow: hidden; }
     .about-me-section::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%); top: -200px; right: -150px; border-radius: 50%; pointer-events: none; }
     .about-me-inner { display: grid; grid-template-columns: 420px 1fr; gap: 6rem; align-items: center; position: relative; z-index: 2; }
@@ -491,10 +722,6 @@
     .about-me-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .about-pill { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--blue); background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.15); padding: 0.35rem 0.9rem; border-radius: 50px; transition: background 0.25s, color 0.25s, transform 0.2s; cursor: default; }
     .about-pill:hover { background: var(--blue); color: var(--white); transform: translateY(-2px); }
-
-    /* ═══════════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════════ */
     .footer-cta { background: var(--dark); padding: 7rem 0 4rem; position: relative; overflow: hidden; }
     .footer-cta::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(37,99,235,0.18), transparent); }
     .footer-cta::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), var(--blue), transparent); }
@@ -506,10 +733,6 @@
     .footer-bar { background: var(--dark); border-top: 1px solid var(--dark-border); padding: 1.5rem 0; }
     .footer-bar-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: 0.72rem; color: rgba(255,255,255,0.25); font-family: var(--font-mono); }
     .footer-bar-inner em { font-style: normal; color: rgba(255,255,255,0.45); }
-
-    /* ═══════════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════════ */
     @media (max-width: 1024px) {
       .sidebar { display: none; } .main { margin-left: 0; } .mobile-nav { display: flex; }
       .hero { grid-template-columns: 1fr; padding-top: 80px; } .hero-visual { display: none; } .hero-ticker { display: none; }
@@ -532,17 +755,139 @@
       .bt-row > :nth-child(1), .bt-row > :nth-child(4), .bt-row > :nth-child(5), .bt-row > :nth-child(6) { display: none; }
       .manifesto-item span { font-size: 0.68rem; }
     }
+
   </style>
 </head>
+
+  <!-- ══ SKIP LINK (WCAG 2.4.1) ══ -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ══ ACCESSIBILITY TRIGGER ══ -->
+  <button
+    class="a11y-trigger"
+    id="a11yTrigger"
+    aria-label="Open accessibility options"
+    aria-expanded="false"
+    aria-controls="a11yPanel"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm8 6H4a1 1 0 0 0 0 2h3.5l-2 8a1 1 0 0 0 .97 1.24 1 1 0 0 0 .97-.76L9 14l1 3.5a1 1 0 0 0 1.93 0L13 14l1.56 4.48a1 1 0 0 0 .94.67 1 1 0 0 0 .94-1.34L16.5 10H20a1 1 0 0 0 0-2z"/>
+    </svg>
+    <span class="a11y-trigger-label">a11y</span>
+  </button>
+
+  <!-- ══ ACCESSIBILITY PANEL ══ -->
+  <div
+    class="a11y-panel"
+    id="a11yPanel"
+    role="dialog"
+    aria-label="Accessibility settings"
+    aria-modal="false"
+    tabindex="-1"
+  >
+    <div class="a11y-panel-header">
+      <span class="a11y-panel-title">// accessibility</span>
+      <button class="a11y-close" id="a11yClose" aria-label="Close accessibility panel">&#x2715;</button>
+    </div>
+
+    <!-- Text size -->
+    <div class="a11y-section">
+      <span class="a11y-section-label" id="font-size-label">Text size</span>
+      <div class="a11y-font-row" role="group" aria-labelledby="font-size-label">
+        <button class="a11y-font-btn" id="fontDecrease" aria-label="Decrease text size">A&#8722;</button>
+        <div class="a11y-font-display" id="fontDisplay" aria-live="polite" aria-atomic="true">100%</div>
+        <button class="a11y-font-btn" id="fontIncrease" aria-label="Increase text size">A+</button>
+        <button class="a11y-font-reset" id="fontReset" aria-label="Reset text size">reset</button>
+      </div>
+    </div>
+
+    <div class="a11y-divider" role="separator"></div>
+
+    <!-- Toggles -->
+    <div class="a11y-section">
+      <span class="a11y-section-label">Display options</span>
+
+      <label class="a11y-toggle-row" for="toggleContrast">
+        <div class="a11y-toggle-info">
+          <span class="a11y-toggle-name">High contrast</span>
+          <span class="a11y-toggle-desc">WCAG AAA contrast ratios</span>
+        </div>
+        <div class="a11y-switch">
+          <input type="checkbox" id="toggleContrast" role="switch" />
+          <span class="a11y-switch-track" aria-hidden="true"></span>
+        </div>
+      </label>
+
+      <label class="a11y-toggle-row" for="toggleMotion">
+        <div class="a11y-toggle-info">
+          <span class="a11y-toggle-name">Reduce motion</span>
+          <span class="a11y-toggle-desc">Stops all animations</span>
+        </div>
+        <div class="a11y-switch">
+          <input type="checkbox" id="toggleMotion" role="switch" />
+          <span class="a11y-switch-track" aria-hidden="true"></span>
+        </div>
+      </label>
+
+      <label class="a11y-toggle-row" for="toggleDyslexia">
+        <div class="a11y-toggle-info">
+          <span class="a11y-toggle-name">Dyslexia-friendly font</span>
+          <span class="a11y-toggle-desc">Switches to OpenDyslexic</span>
+        </div>
+        <div class="a11y-switch">
+          <input type="checkbox" id="toggleDyslexia" role="switch" />
+          <span class="a11y-switch-track" aria-hidden="true"></span>
+        </div>
+      </label>
+
+      <label class="a11y-toggle-row" for="toggleFocus">
+        <div class="a11y-toggle-info">
+          <span class="a11y-toggle-name">Enhanced focus rings</span>
+          <span class="a11y-toggle-desc">Larger keyboard outlines</span>
+        </div>
+        <div class="a11y-switch">
+          <input type="checkbox" id="toggleFocus" role="switch" />
+          <span class="a11y-switch-track" aria-hidden="true"></span>
+        </div>
+      </label>
+
+      <label class="a11y-toggle-row" for="toggleCursor">
+        <div class="a11y-toggle-info">
+          <span class="a11y-toggle-name">Large cursor</span>
+          <span class="a11y-toggle-desc">Increases cursor size</span>
+        </div>
+        <div class="a11y-switch">
+          <input type="checkbox" id="toggleCursor" role="switch" />
+          <span class="a11y-switch-track" aria-hidden="true"></span>
+        </div>
+      </label>
+    </div>
+
+    <div class="a11y-divider" role="separator"></div>
+
+    <button class="a11y-reset-all" id="a11yResetAll" aria-label="Reset all accessibility settings">
+      reset_all_settings
+    </button>
+
+    <div class="a11y-badge" role="note" aria-label="WCAG compliance information">
+      <div class="a11y-badge-dot" aria-hidden="true"></div>
+      <div class="a11y-badge-text">
+        WCAG 2.1 AA compliant<br/>
+        Skip links &middot; ARIA labels &middot; Focus management<br/>
+        Semantic HTML &middot; Colour contrast &middot; Reduced motion
+      </div>
+    </div>
+  </div>
+
 <body>
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Site navigation">
     <div class="sidebar-name"><span>Toby</span><span><em>Lees</em></span></div>
-    <nav class="sidebar-nav">
-      <a href="#stats" class="active">Stats</a>
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <a href="#stats">Stats</a>
       <a href="#projects">Projects</a>
       <a href="#coverage">Coverage</a>
       <a href="#bugs">Bug Tracker</a>
@@ -552,16 +897,18 @@
       <a href="case_studies.html">Case Studies</a>
     </nav>
     <div class="sidebar-bottom">
-      <div style="margin-bottom:.6rem"><span class="sidebar-dot"></span>unavailable</div>
+      <div style="margin-bottom:.6rem"><span class="sidebar-dot" aria-hidden="true"></span>unavailable</div>
       qa_engineer<br/>uk_based
     </div>
   </aside>
 
-  <nav class="mobile-nav">
+  <nav class="mobile-nav" aria-label="Mobile navigation">
     <div class="mobile-nav-name">Toby Lees</div>
-    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu">
     <a href="#stats" onclick="closeMobileMenu()">Stats</a>
     <a href="#projects" onclick="closeMobileMenu()">Projects</a>
     <a href="#coverage" onclick="closeMobileMenu()">Coverage</a>
@@ -571,93 +918,60 @@
     <a href="#about-me" onclick="closeMobileMenu()">About Me</a>
   </div>
 
-  <div class="main">
+  <div class="main" id="main-content">
 
-    <!-- ════ HERO ════ -->
-    <section class="hero" id="hero">
-      <canvas id="particleCanvas"></canvas>
-      <div class="hero-bg-orb hero-bg-orb-1"></div>
-      <div class="hero-bg-orb hero-bg-orb-2"></div>
-      <div class="hero-scanline"></div>
-
+    <section class="hero" id="hero" aria-label="Introduction">
+      <canvas id="particleCanvas" aria-hidden="true"></canvas>
+      <div class="hero-bg-orb hero-bg-orb-1" aria-hidden="true"></div>
+      <div class="hero-bg-orb hero-bg-orb-2" aria-hidden="true"></div>
+      <div class="hero-scanline" aria-hidden="true"></div>
       <div class="hero-content">
-        <div class="hero-badge" data-reveal>
-          <div class="hero-badge-dot"></div>
-          QA_ENGINEER / SOFTWARE_QUALITY
-        </div>
-        <h1 class="hero-title" data-reveal>
-          Toby<br/>
-          <span class="gradient-text">Lees</span>
-        </h1>
-        <p class="hero-sub" data-reveal>
-          I break things professionally — so your users don't have to.
-          Precision testing, automation & flawless software delivery.
-        </p>
+        <div class="hero-badge" data-reveal aria-hidden="true"><div class="hero-badge-dot"></div>QA_ENGINEER / SOFTWARE_QUALITY</div>
+        <h1 class="hero-title" data-reveal>Toby<br/><span class="gradient-text">Lees</span></h1>
+        <p class="hero-sub" data-reveal>I break things professionally &mdash; so your users don't have to. Precision testing, automation &amp; flawless software delivery.</p>
         <div class="hero-cta-row" data-reveal>
           <a href="#projects" class="btn-primary">View My Work</a>
           <a href="#skills" class="btn-outline">Learn More</a>
         </div>
-        <div class="hero-stats" data-reveal>
-          <div class="hero-stat">
-            <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
-            <p>// projects_tested</p>
-          </div>
-          <div class="hero-stat-divider"></div>
-          <div class="hero-stat">
-            <div class="num"><span class="count" data-count="3000">0</span><span>+</span></div>
-            <p>// test_cases_run</p>
-          </div>
-          <div class="hero-stat-divider"></div>
-          <div class="hero-stat">
-            <div class="num"><span class="count" data-count="98">0</span><span>%</span></div>
-            <p>// bug_detection</p>
-          </div>
+        <div class="hero-stats" data-reveal aria-label="Key statistics">
+          <div class="hero-stat"><div class="num"><span class="count" data-count="100">0</span><span>+</span></div><p>// projects_tested</p></div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat"><div class="num"><span class="count" data-count="3000">0</span><span>+</span></div><p>// test_cases_run</p></div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat"><div class="num"><span class="count" data-count="98">0</span><span>%</span></div><p>// bug_detection</p></div>
         </div>
       </div>
-
-      <div class="hero-visual" data-reveal>
+      <div class="hero-visual" data-reveal aria-hidden="true">
         <div class="test-runner">
-          <div class="tr-titlebar">
-            <div class="tr-dot r"></div><div class="tr-dot y"></div><div class="tr-dot g"></div>
-            <div class="tr-title">cypress — test runner</div>
-          </div>
-          <div class="tr-tabs">
-            <div class="tr-tab active">suite.spec.js</div>
-            <div class="tr-tab">api.spec.ts</div>
-            <div class="tr-tab">mobile.spec.js</div>
-          </div>
-          <div class="tr-progress">
-            <div class="tr-progress-bar"><div class="tr-progress-fill" id="trProgress"></div></div>
-            <div class="tr-progress-label" id="trProgressLabel">Running test suite...</div>
-          </div>
+          <div class="tr-titlebar"><div class="tr-dot r"></div><div class="tr-dot y"></div><div class="tr-dot g"></div><div class="tr-title">cypress &mdash; test runner</div></div>
+          <div class="tr-tabs"><div class="tr-tab active">suite.spec.js</div><div class="tr-tab">api.spec.ts</div><div class="tr-tab">mobile.spec.js</div></div>
+          <div class="tr-progress"><div class="tr-progress-bar"><div class="tr-progress-fill" id="trProgress"></div></div><div class="tr-progress-label" id="trProgressLabel">Running test suite...</div></div>
           <div class="tr-body" id="trBody">
-            <span class="log-line"><span class="c-cm">// QA Suite — Toby Lees</span></span>
+            <span class="log-line"><span class="c-cm">// QA Suite &mdash; Toby Lees</span></span>
             <span class="log-line"><span class="c-kw">describe</span>(<span class="c-str">'User Auth Flow'</span>) {</span>
             <span class="log-line">&nbsp;&nbsp;<span class="c-kw">it</span>(<span class="c-str">'logs in successfully'</span>) {</span>
             <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">visit</span>(<span class="c-str">'/login'</span>)</span>
             <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'#email'</span>).<span class="c-mt">type</span>(<span class="c-str">'test@qa.com'</span>)</span>
-            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'#password'</span>).<span class="c-mt">type</span>(<span class="c-str">'••••••••'</span>)</span>
+            <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'#password'</span>).<span class="c-mt">type</span>(<span class="c-str">'&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'</span>)</span>
             <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'.btn-login'</span>).<span class="c-mt">click</span>()</span>
             <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">url</span>().<span class="c-mt">should</span>(<span class="c-str">'include'</span>, <span class="c-str">'/dashboard'</span>)</span>
-            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">✓ PASSED</span> <span class="c-dim">(1.2s)</span></span>
+            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">&#x2713; PASSED</span> <span class="c-dim">(1.2s)</span></span>
             <span class="log-line">&nbsp;&nbsp;<span class="c-kw">it</span>(<span class="c-str">'validates API response schema'</span>) {</span>
             <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">request</span>(<span class="c-str">'GET'</span>, <span class="c-str">'/api/user'</span>)</span>
             <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;.<span class="c-mt">its</span>(<span class="c-str">'status'</span>).<span class="c-mt">should</span>(<span class="c-str">'eq'</span>, <span class="c-num">200</span>)</span>
-            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">✓ PASSED</span> <span class="c-dim">(0.3s)</span></span>
+            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">&#x2713; PASSED</span> <span class="c-dim">(0.3s)</span></span>
             <span class="log-line">&nbsp;&nbsp;<span class="c-kw">it</span>(<span class="c-str">'blocks invalid credentials'</span>) {</span>
             <span class="log-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-fn">cy</span>.<span class="c-mt">get</span>(<span class="c-str">'.error-msg'</span>).<span class="c-mt">should</span>(<span class="c-str">'be.visible'</span>)</span>
-            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">✓ PASSED</span> <span class="c-dim">(0.8s)</span></span>
+            <span class="log-line">&nbsp;&nbsp;} <span class="c-pass">&#x2713; PASSED</span> <span class="c-dim">(0.8s)</span></span>
             <span class="log-line">}</span>
-            <span class="log-line" style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem">
-              <span class="c-pass">✓ 14 passing</span>&nbsp;&nbsp;<span class="c-fail">0 failing</span>&nbsp;&nbsp;<span class="c-dim">(4.1s)</span>
-            </span>
-            <span class="log-line"><span class="c-cursor">▋</span></span>
+            <span class="log-line" style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="c-pass">&#x2713; 14 passing</span>&nbsp;&nbsp;<span class="c-fail">0 failing</span>&nbsp;&nbsp;<span class="c-dim">(4.1s)</span></span>
+            <span class="log-line"><span class="c-cursor">&#x258B;</span></span>
           </div>
           <div class="tr-statusbar">
             <div class="tr-status-left">
-              <span class="tr-status-pass" id="trPassCount">✓ 0 passing</span>
-              <span class="tr-status-fail">✗ 0 failing</span>
-              <span class="tr-status-pending" id="trPending">⏳ running...</span>
+              <span class="tr-status-pass" id="trPassCount">&#x2713; 0 passing</span>
+              <span class="tr-status-fail">&#x2717; 0 failing</span>
+              <span class="tr-status-pending" id="trPending">running...</span>
             </div>
             <div class="tr-status-right" id="trTime">0.0s</div>
           </div>
@@ -665,8 +979,7 @@
         <div class="tr-chip tr-chip-1"><div class="chip-dot-g"></div>All Tests Passing</div>
         <div class="tr-chip tr-chip-2"><div class="chip-dot-b"></div>14 Test Cases</div>
       </div>
-
-      <div class="hero-ticker">
+      <div class="hero-ticker" aria-hidden="true">
         <div class="hero-ticker-track">
           <div class="ticker-item"><div class="t-name">Help for Heroes</div><div class="t-type">Veterans Charity</div></div>
           <div class="ticker-item"><div class="t-name">Maggie's</div><div class="t-type">Cancer Care</div></div>
@@ -684,11 +997,10 @@
           <div class="ticker-item"><div class="t-name">The Daily Mile</div><div class="t-type">Kids Charity</div></div>
         </div>
       </div>
-      <div class="scroll-hint"><div class="scroll-hint-line"></div>scroll_to_explore</div>
+      <div class="scroll-hint" aria-hidden="true"><div class="scroll-hint-line"></div>scroll_to_explore</div>
     </section>
 
-    <!-- ════ MANIFESTO STRIP ════ -->
-    <div class="manifesto">
+    <div class="manifesto" aria-hidden="true">
       <div class="manifesto-track">
         <div class="manifesto-item"><div class="sep"></div><span>If it can break, it will break</span></div>
         <div class="manifesto-item"><div class="sep"></div><span>Quality is not a phase</span></div>
@@ -698,7 +1010,6 @@
         <div class="manifesto-item"><div class="sep"></div><span>Zero P1s in production</span></div>
         <div class="manifesto-item"><div class="sep"></div><span>Automation is a force multiplier</span></div>
         <div class="manifesto-item"><div class="sep"></div><span>Edge cases are features in disguise</span></div>
-        <!-- duplicate for loop -->
         <div class="manifesto-item"><div class="sep"></div><span>If it can break, it will break</span></div>
         <div class="manifesto-item"><div class="sep"></div><span>Quality is not a phase</span></div>
         <div class="manifesto-item"><div class="sep"></div><span>Every bug has a story</span></div>
@@ -710,251 +1021,187 @@
       </div>
     </div>
 
-    <!-- ════ STATS ════ -->
-    <section class="stats-section section" id="stats">
+    <section class="stats-section section" id="stats" aria-labelledby="stats-title">
       <div class="wrap">
         <div class="stats-header" data-reveal>
-          <p>Most teams don't have a <em>testing problem</em>.<br/>They have a <em>quality visibility</em> problem.</p>
+          <p id="stats-title">Most teams don't have a <em>testing problem</em>.<br/>They have a <em>quality visibility</em> problem.</p>
         </div>
         <div class="stats-grid" data-reveal>
-          <div class="stat-box">
-            <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
-            <p>Projects tested & delivered</p>
-          </div>
-          <div class="stat-box">
-            <div class="num"><span class="count" data-count="100">0</span><span>+</span></div>
-            <p>Applications validated end-to-end</p>
-          </div>
-          <div class="stat-box">
-            <div class="num"><span class="count" data-count="3000">0</span><span>+</span></div>
-            <p>Test cases executed across web & mobile</p>
-          </div>
+          <div class="stat-box"><div class="num"><span class="count" data-count="100">0</span><span>+</span></div><p>Projects tested &amp; delivered</p></div>
+          <div class="stat-box"><div class="num"><span class="count" data-count="100">0</span><span>+</span></div><p>Applications validated end-to-end</p></div>
+          <div class="stat-box"><div class="num"><span class="count" data-count="3000">0</span><span>+</span></div><p>Test cases executed across web &amp; mobile</p></div>
         </div>
-        <div class="industry-tags" data-reveal>
-          <span class="industry-tag">stress_testing</span>
-          <span class="industry-tag">django_cms4</span>
-          <span class="industry-tag">fe_rendering</span>
-          <span class="industry-tag">specification_testing</span>
-          <span class="industry-tag">donation_flows</span>
-          <span class="industry-tag">seo_testing</span>
-          <span class="industry-tag">mobile_apps</span>
-          <span class="industry-tag">accessibility</span>
+        <div class="industry-tags" data-reveal aria-label="Testing specialisms">
+          <span class="industry-tag">stress_testing</span><span class="industry-tag">django_cms4</span><span class="industry-tag">fe_rendering</span><span class="industry-tag">specification_testing</span><span class="industry-tag">donation_flows</span><span class="industry-tag">seo_testing</span><span class="industry-tag">mobile_apps</span><span class="industry-tag">accessibility</span>
         </div>
       </div>
     </section>
 
-    <!-- ════ PROJECTS ════ -->
-    <section class="projects-section" id="projects">
+    <section class="projects-section" id="projects" aria-labelledby="projects-title">
       <div class="wrap">
         <div class="section-header" data-reveal>
-          <div><p class="section-label">// recent_work</p><h2 class="section-title">Selected projects</h2></div>
-          <div><a href="#" class="pill-link filled">Case studies</a></div>
+          <div><p class="section-label">// recent_work</p><h2 class="section-title" id="projects-title">Selected projects</h2></div>
+          <div><a href="case_studies.html" class="pill-link filled">Case studies</a></div>
         </div>
         <div class="projects-list">
-          <div class="project-row" data-reveal>
+          <article class="project-row" data-reveal>
             <div class="project-info"><div>
               <div class="project-client-name">Help for Heroes</div>
               <h3 class="project-title">Delivering a Zero-Defect Veteran Support Platform</h3>
-              <p class="project-desc">End-to-end QA strategy covering 200+ critical user journeys — from benefit applications to account management. Zero P1 bugs shipped post-launch.</p>
+              <p class="project-desc">End-to-end QA strategy covering 200+ critical user journeys. Zero P1 bugs shipped post-launch.</p>
               <div class="project-tags"><span class="project-tag">beneficiary_journeys</span><span class="project-tag">software_testing</span><span class="project-tag">integration</span></div>
             </div></div>
-            <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
+            <div class="project-visual" aria-hidden="true"><div class="project-visual-inner"><div class="test-visual">
               <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">h4h.spec.js</span></div>
               <div><span class="tv-kw">describe</span>(<span class="tv-str">'Benefit Application'</span>) {</div>
               <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">visit</span>(<span class="tv-str">'/apply'</span>)</div>
               <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'form'</span>).<span class="tv-mt">submit</span>()</div>
-              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">url</span>().<span class="tv-mt">should</span>(<span class="tv-str">'include'</span>, <span class="tv-str">'/confirm'</span>)</div>
-              <div>} <span class="tv-pass">✓ PASSED</span></div>
-              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">✓ 47 passing</span> <span class="tv-fail">0 failing</span></div>
-              <div><span class="tv-cursor">▋</span></div>
+              <div>} <span class="tv-pass">&#x2713; PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">&#x2713; 47 passing</span> <span class="tv-fail">0 failing</span></div>
             </div></div></div>
-          </div>
-          <div class="project-row" data-reveal>
+          </article>
+          <article class="project-row" data-reveal>
             <div class="project-info"><div>
               <div class="project-client-name">Maggie's</div>
-              <h3 class="project-title">QA for a Cancer Care Centre Booking & Resource Platform</h3>
-              <p class="project-desc">Functional and regression testing of the centre-finder, online support resources and appointment booking journeys. Full cross-browser and mobile coverage.</p>
+              <h3 class="project-title">QA for a Cancer Care Centre Booking &amp; Resource Platform</h3>
+              <p class="project-desc">Functional and regression testing of the centre-finder, booking journeys. Full cross-browser and mobile coverage.</p>
               <div class="project-tags"><span class="project-tag">test_cases</span><span class="project-tag">browserstack</span><span class="project-tag">regression</span><span class="project-tag">mobile_qa</span></div>
             </div></div>
-            <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
+            <div class="project-visual" aria-hidden="true"><div class="project-visual-inner"><div class="test-visual">
               <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">maggies.spec.ts</span></div>
-              <div><span class="tv-kw">test</span>(<span class="tv-str">'centre finder works'</span>, <span class="tv-kw">async</span> () => {</div>
-              <div>&nbsp;&nbsp;<span class="tv-fn">page</span>.<span class="tv-mt">goto</span>(<span class="tv-str">'/centres'</span>)</div>
+              <div><span class="tv-kw">test</span>(<span class="tv-str">'centre finder works'</span>) {</div>
               <div>&nbsp;&nbsp;<span class="tv-fn">page</span>.<span class="tv-mt">fill</span>(<span class="tv-str">'#postcode'</span>, <span class="tv-str">'M1 1AE'</span>)</div>
-              <div>&nbsp;&nbsp;expect(<span class="tv-fn">page</span>).<span class="tv-mt">toHaveURL</span>(<span class="tv-str">/results/</span>)</div>
-              <div>}) <span class="tv-pass">✓ PASSED</span></div>
-              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">✓ 31 passing</span> <span class="tv-fail">0 failing</span></div>
-              <div><span class="tv-cursor">▋</span></div>
+              <div>} <span class="tv-pass">&#x2713; PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">&#x2713; 31 passing</span> <span class="tv-fail">0 failing</span></div>
             </div></div></div>
-          </div>
-          <div class="project-row" data-reveal>
+          </article>
+          <article class="project-row" data-reveal>
             <div class="project-info"><div>
               <div class="project-client-name">Bipolar UK</div>
-              <h3 class="project-title">Ensuring Reliability of Website & Assessment Form</h3>
-              <p class="project-desc">Comprehensive QA of the Bipolar UK Assessment Form and onboarding flows with a focus on safe, reliable user journeys for a sensitive mental health audience.</p>
+              <h3 class="project-title">Ensuring Reliability of Website &amp; Assessment Form</h3>
+              <p class="project-desc">Comprehensive QA of the Bipolar UK Assessment Form with a focus on safe, reliable user journeys for a sensitive audience.</p>
               <div class="project-tags"><span class="project-tag">manual_qa</span><span class="project-tag">exploratory</span><span class="project-tag">uat</span><span class="project-tag">accessibility</span></div>
             </div></div>
-            <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
+            <div class="project-visual" aria-hidden="true"><div class="project-visual-inner"><div class="test-visual">
               <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">bipolar.spec.js</span></div>
               <div><span class="tv-kw">describe</span>(<span class="tv-str">'Assessment Form'</span>) {</div>
               <div>&nbsp;&nbsp;<span class="tv-fn">axe</span>.<span class="tv-mt">run</span>(<span class="tv-str">'#assessment'</span>)</div>
-              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'.result'</span>).<span class="tv-mt">should</span>(<span class="tv-str">'exist'</span>)</div>
-              <div>} <span class="tv-pass">✓ PASSED</span></div>
-              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">✓ 28 passing</span> <span class="tv-fail">0 failing</span></div>
-              <div><span class="tv-cursor">▋</span></div>
+              <div>} <span class="tv-pass">&#x2713; PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">&#x2713; 28 passing</span> <span class="tv-fail">0 failing</span></div>
             </div></div></div>
-          </div>
-          <div class="project-row" data-reveal>
+          </article>
+          <article class="project-row" data-reveal>
             <div class="project-info"><div>
               <div class="project-client-name">Breast Cancer UK</div>
-              <h3 class="project-title">QA Strategy for Assessment Form & Sitewide Testing</h3>
-              <p class="project-desc">Full QA execution across the charity's website and assessment form. Cross-browser testing on 18 device/browser combinations, robust performance and flawless UI/UX.</p>
+              <h3 class="project-title">QA Strategy for Assessment Form &amp; Sitewide Testing</h3>
+              <p class="project-desc">Full QA execution across the charity's website. Cross-browser testing on 18 device/browser combinations.</p>
               <div class="project-tags"><span class="project-tag">form_testing</span><span class="project-tag">cross_browser</span><span class="project-tag">responsiveness</span><span class="project-tag">api</span></div>
             </div></div>
-            <div class="project-visual"><div class="project-visual-inner"><div class="test-visual">
+            <div class="project-visual" aria-hidden="true"><div class="project-visual-inner"><div class="test-visual">
               <div class="tv-bar"><div class="tv-dot r"></div><div class="tv-dot y"></div><div class="tv-dot g"></div><span class="tv-file">bcuk.spec.js</span></div>
               <div><span class="tv-kw">describe</span>(<span class="tv-str">'Donation Flow'</span>) {</div>
-              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">intercept</span>(<span class="tv-str">'POST'</span>, <span class="tv-str">'/api/donate'</span>)</div>
               <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'#amount'</span>).<span class="tv-mt">type</span>(<span class="tv-str">'25'</span>)</div>
-              <div>&nbsp;&nbsp;<span class="tv-fn">cy</span>.<span class="tv-mt">get</span>(<span class="tv-str">'.submit'</span>).<span class="tv-mt">click</span>()</div>
-              <div>} <span class="tv-pass">✓ PASSED</span></div>
-              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">✓ 52 passing</span> <span class="tv-fail">0 failing</span></div>
-              <div><span class="tv-cursor">▋</span></div>
+              <div>} <span class="tv-pass">&#x2713; PASSED</span></div>
+              <div style="margin-top:.5rem;border-top:1px solid rgba(37,99,235,.12);padding-top:.5rem"><span class="tv-pass">&#x2713; 52 passing</span> <span class="tv-fail">0 failing</span></div>
             </div></div></div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- ════ COVERAGE BARS ════ -->
-    <section class="coverage-section" id="coverage">
+    <section class="coverage-section" id="coverage" aria-labelledby="coverage-title">
       <div class="wrap">
         <p class="section-label" data-reveal>// test_coverage</p>
-        <h2 class="section-title" data-reveal>Coverage by discipline</h2>
+        <h2 class="section-title" data-reveal id="coverage-title">Coverage by discipline</h2>
         <div class="coverage-grid" data-reveal>
-          <div class="coverage-card">
-            <div class="coverage-card-header"><span class="coverage-card-title">Functional Testing</span><span class="coverage-pct">96%</span></div>
-            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="96"></div></div>
-            <div class="coverage-meta">847 / 882 test cases passing</div>
-          </div>
-          <div class="coverage-card">
-            <div class="coverage-card-header"><span class="coverage-card-title">API & Integration</span><span class="coverage-pct">91%</span></div>
-            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="91"></div></div>
-            <div class="coverage-meta">312 / 343 endpoints validated</div>
-          </div>
-          <div class="coverage-card">
-            <div class="coverage-card-header"><span class="coverage-card-title">Accessibility (WCAG 2.1)</span><span class="coverage-pct">88%</span></div>
-            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="88"></div></div>
-            <div class="coverage-meta">220 / 250 criteria audited</div>
-          </div>
-          <div class="coverage-card">
-            <div class="coverage-card-header"><span class="coverage-card-title">Cross-browser & Device</span><span class="coverage-pct">94%</span></div>
-            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="94"></div></div>
-            <div class="coverage-meta">18 device/browser combinations</div>
-          </div>
-          <div class="coverage-card">
-            <div class="coverage-card-header"><span class="coverage-card-title">Regression Automation</span><span class="coverage-pct">78%</span></div>
-            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="78"></div></div>
-            <div class="coverage-meta">Cypress + Playwright suites</div>
-          </div>
-          <div class="coverage-card">
-            <div class="coverage-card-header"><span class="coverage-card-title">Performance & Load</span><span class="coverage-pct">82%</span></div>
-            <div class="coverage-bar-track"><div class="coverage-bar-fill" data-pct="82"></div></div>
-            <div class="coverage-meta">Core Web Vitals monitored</div>
-          </div>
+          <div class="coverage-card"><div class="coverage-card-header"><span class="coverage-card-title">Functional Testing</span><span class="coverage-pct">96%</span></div><div class="coverage-bar-track" role="progressbar" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100" aria-label="Functional Testing 96%"><div class="coverage-bar-fill" data-pct="96"></div></div><div class="coverage-meta">847 / 882 test cases passing</div></div>
+          <div class="coverage-card"><div class="coverage-card-header"><span class="coverage-card-title">API &amp; Integration</span><span class="coverage-pct">91%</span></div><div class="coverage-bar-track" role="progressbar" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100" aria-label="API and Integration 91%"><div class="coverage-bar-fill" data-pct="91"></div></div><div class="coverage-meta">312 / 343 endpoints validated</div></div>
+          <div class="coverage-card"><div class="coverage-card-header"><span class="coverage-card-title">Accessibility (WCAG 2.1)</span><span class="coverage-pct">88%</span></div><div class="coverage-bar-track" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100" aria-label="Accessibility 88%"><div class="coverage-bar-fill" data-pct="88"></div></div><div class="coverage-meta">220 / 250 criteria audited</div></div>
+          <div class="coverage-card"><div class="coverage-card-header"><span class="coverage-card-title">Cross-browser &amp; Device</span><span class="coverage-pct">94%</span></div><div class="coverage-bar-track" role="progressbar" aria-valuenow="94" aria-valuemin="0" aria-valuemax="100" aria-label="Cross-browser 94%"><div class="coverage-bar-fill" data-pct="94"></div></div><div class="coverage-meta">18 device/browser combinations</div></div>
+          <div class="coverage-card"><div class="coverage-card-header"><span class="coverage-card-title">Regression Automation</span><span class="coverage-pct">78%</span></div><div class="coverage-bar-track" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="Regression Automation 78%"><div class="coverage-bar-fill" data-pct="78"></div></div><div class="coverage-meta">Cypress + Playwright suites</div></div>
+          <div class="coverage-card"><div class="coverage-card-header"><span class="coverage-card-title">Performance &amp; Load</span><span class="coverage-pct">82%</span></div><div class="coverage-bar-track" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" aria-label="Performance and Load 82%"><div class="coverage-bar-fill" data-pct="82"></div></div><div class="coverage-meta">Core Web Vitals monitored</div></div>
         </div>
       </div>
     </section>
 
-    <!-- ════ BUG TRACKER ════ -->
-    <section class="bug-tracker-section" id="bugs">
+    <section class="bug-tracker-section" id="bugs" aria-labelledby="bugs-title">
       <div class="wrap">
         <p class="section-label" data-reveal>// live_bug_tracker</p>
-        <h2 class="section-title" data-reveal>Sample bug report — click to resolve</h2>
-        <p style="margin-bottom:2rem;font-size:0.88rem;" data-reveal>A snapshot of the kind of bugs I catch. Click "Resolve" to mark them fixed — just like the real thing.</p>
-
+        <h2 class="section-title" data-reveal id="bugs-title">Sample bug report &mdash; click to resolve</h2>
+        <p style="margin-bottom:2rem;font-size:0.88rem;" data-reveal>A snapshot of the kind of bugs I catch. Click "Resolve" to mark them fixed.</p>
         <div class="bug-tracker-ui" data-reveal>
           <div class="bt-toolbar">
-            <span class="bt-toolbar-title">OPEN ISSUES — Sprint 14</span>
-            <button class="bt-filter-btn active" onclick="filterBugs('all', this)">All</button>
-            <button class="bt-filter-btn" onclick="filterBugs('open', this)">Open</button>
-            <button class="bt-filter-btn" onclick="filterBugs('resolved', this)">Resolved</button>
-            <div class="bt-stats">
-              <div class="bt-stat"><div class="bt-stat-dot" style="background:#ef4444"></div><span id="openCount">8 open</span></div>
-              <div class="bt-stat"><div class="bt-stat-dot" style="background:#22c55e"></div><span id="resolvedCount">0 resolved</span></div>
+            <span class="bt-toolbar-title">OPEN ISSUES &mdash; Sprint 14</span>
+            <button class="bt-filter-btn active" onclick="filterBugs('all', this)" aria-pressed="true">All</button>
+            <button class="bt-filter-btn" onclick="filterBugs('open', this)" aria-pressed="false">Open</button>
+            <button class="bt-filter-btn" onclick="filterBugs('resolved', this)" aria-pressed="false">Resolved</button>
+            <div class="bt-stats" aria-live="polite" aria-atomic="true">
+              <div class="bt-stat"><div class="bt-stat-dot" style="background:#ef4444" aria-hidden="true"></div><span id="openCount">8 open</span></div>
+              <div class="bt-stat"><div class="bt-stat-dot" style="background:#22c55e" aria-hidden="true"></div><span id="resolvedCount">0 resolved</span></div>
             </div>
           </div>
-          <div class="bt-list">
-            <div class="bt-row bt-header">
-              <div class="bt-id">ID</div>
-              <div class="bt-title">Title</div>
-              <div class="bt-severity">Severity</div>
-              <div class="bt-status">Status</div>
-              <div class="bt-client">Client</div>
-              <div></div>
+          <div class="bt-list" role="table" aria-label="Bug tracker issues">
+            <div class="bt-row bt-header" role="row">
+              <div class="bt-id" role="columnheader">ID</div>
+              <div class="bt-title" role="columnheader">Title</div>
+              <div role="columnheader">Severity</div>
+              <div role="columnheader">Status</div>
+              <div class="bt-client" role="columnheader">Client</div>
+              <div role="columnheader"><span class="sr-only">Actions</span></div>
             </div>
-            <!-- Bugs injected by JS -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ════ SKILLS ════ -->
-    <section class="about-section section" id="skills">
+    <section class="about-section section" id="skills" aria-labelledby="skills-title">
       <div class="wrap">
         <div class="about-grid">
           <div class="about-text" data-reveal>
             <p class="section-label">// skills</p>
-            <h2>I find bugs <em>before</em> your customers do.</h2>
+            <h2 id="skills-title">I find bugs <em>before</em> your customers do.</h2>
             <p>With a meticulous eye for detail and a genuine passion for software quality, I specialise in manual and automated testing across web and mobile platforms.</p>
-            <p>From exploratory testing to building robust Cypress & Playwright suites, I partner with development teams to ship with total confidence.</p>
-            <div class="about-tags">
-              <span class="about-tag">agile_scrum</span>
-              <span class="about-tag">ci_cd_pipelines</span>
-              <span class="about-tag">api_testing</span>
-              <span class="about-tag">test_strategy</span>
-              <span class="about-tag">wcag_compliance</span>
-              <span class="about-tag">risk_based_testing</span>
+            <p>From exploratory testing to building robust Cypress &amp; Playwright suites, I partner with development teams to ship with total confidence.</p>
+            <div class="about-tags" aria-label="Core skills">
+              <span class="about-tag">agile_scrum</span><span class="about-tag">ci_cd_pipelines</span><span class="about-tag">api_testing</span><span class="about-tag">test_strategy</span><span class="about-tag">wcag_compliance</span><span class="about-tag">risk_based_testing</span>
             </div>
           </div>
           <div data-reveal>
-            <div class="skills-card">
-              <div class="skill-row"><div class="skill-icon-box">⚡</div><div class="skill-info"><strong>Test Automation</strong><span>cypress · playwright · selenium · jest</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">🔍</div><div class="skill-info"><strong>Manual & Exploratory</strong><span>regression · smoke · uat · edge_cases</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">🌐</div><div class="skill-info"><strong>API Testing</strong><span>postman · rest · graphql · insomnia</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">📱</div><div class="skill-info"><strong>Mobile QA</strong><span>ios · android · appium · browserstack</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">🚀</div><div class="skill-info"><strong>CI/CD & DevOps</strong><span>github_actions · jenkins · docker · circleci</span></div></div>
-              <div class="skill-row"><div class="skill-icon-box">📋</div><div class="skill-info"><strong>Tools & Management</strong><span>jira · testrail · confluence · zephyr</span></div></div>
+            <div class="skills-card" role="list" aria-label="Technical skills">
+              <div class="skill-row" role="listitem"><div class="skill-icon-box" aria-hidden="true">&#x26A1;</div><div class="skill-info"><strong>Test Automation</strong><span>cypress &middot; playwright &middot; selenium &middot; jest</span></div></div>
+              <div class="skill-row" role="listitem"><div class="skill-icon-box" aria-hidden="true">&#x1F50D;</div><div class="skill-info"><strong>Manual &amp; Exploratory</strong><span>regression &middot; smoke &middot; uat &middot; edge_cases</span></div></div>
+              <div class="skill-row" role="listitem"><div class="skill-icon-box" aria-hidden="true">&#x1F310;</div><div class="skill-info"><strong>API Testing</strong><span>postman &middot; rest &middot; graphql &middot; insomnia</span></div></div>
+              <div class="skill-row" role="listitem"><div class="skill-icon-box" aria-hidden="true">&#x1F4F1;</div><div class="skill-info"><strong>Mobile QA</strong><span>ios &middot; android &middot; appium &middot; browserstack</span></div></div>
+              <div class="skill-row" role="listitem"><div class="skill-icon-box" aria-hidden="true">&#x1F680;</div><div class="skill-info"><strong>CI/CD &amp; DevOps</strong><span>github_actions &middot; jenkins &middot; docker &middot; circleci</span></div></div>
+              <div class="skill-row" role="listitem"><div class="skill-icon-box" aria-hidden="true">&#x1F4CB;</div><div class="skill-info"><strong>Tools &amp; Management</strong><span>jira &middot; testrail &middot; confluence &middot; zephyr</span></div></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ════ PROCESS ════ -->
-    <section class="process-section" id="process">
+    <section class="process-section" id="process" aria-labelledby="process-title">
       <div class="wrap">
         <p class="section-label" data-reveal>// how_i_work</p>
-        <h2 class="section-title" data-reveal>A clear, collaborative process designed to remove ambiguity and protect quality.</h2>
+        <h2 class="section-title" data-reveal id="process-title">A clear, collaborative process designed to remove ambiguity and protect quality.</h2>
         <div class="process-grid" data-reveal>
-          <div class="process-step"><div class="step-num">01</div><h3>Discovery & Alignment</h3><p>We start by understanding your product, your users, and your biggest quality concerns. As much about fit as scope.</p></div>
-          <div class="process-step"><div class="step-num">02</div><h3>Test Planning & Strategy</h3><p>I map out coverage, define test cases, and agree on tooling before a single test runs. No surprises mid-sprint.</p></div>
-          <div class="process-step"><div class="step-num">03</div><h3>Execute, Report & Ship</h3><p>Testing runs in focused loops with clear, actionable bug reports. We iterate quickly and sign off with confidence.</p></div>
+          <div class="process-step"><div class="step-num" aria-hidden="true">01</div><h3>Discovery &amp; Alignment</h3><p>We start by understanding your product, your users, and your biggest quality concerns. As much about fit as scope.</p></div>
+          <div class="process-step"><div class="step-num" aria-hidden="true">02</div><h3>Test Planning &amp; Strategy</h3><p>I map out coverage, define test cases, and agree on tooling before a single test runs. No surprises mid-sprint.</p></div>
+          <div class="process-step"><div class="step-num" aria-hidden="true">03</div><h3>Execute, Report &amp; Ship</h3><p>Testing runs in focused loops with clear, actionable bug reports. We iterate quickly and sign off with confidence.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- ════ ABOUT ME ════ -->
-    <section class="about-me-section" id="about-me">
+    <section class="about-me-section" id="about-me" aria-labelledby="about-me-title">
       <div class="wrap">
         <div class="about-me-inner">
           <div class="about-me-image-wrap" data-reveal>
-            <div class="about-me-img-placeholder">
-              <div class="placeholder-initials">TL</div>
-              <div class="placeholder-label">// add_photo_here</div>
+            <div class="about-me-img-placeholder" role="img" aria-label="Toby Lees photo placeholder">
+              <div class="placeholder-initials" aria-hidden="true">TL</div>
+              <div class="placeholder-label" aria-hidden="true">// add_photo_here</div>
             </div>
-            <div class="about-me-chip"><div class="chip-dot"></div><span>unavailable</span></div>
-            <div class="about-me-chip-2">
+            <div class="about-me-chip" aria-hidden="true"><div class="chip-dot"></div><span>unavailable</span></div>
+            <div class="about-me-chip-2" aria-hidden="true">
               <div class="chip-2-label">experience</div>
               <div class="chip-2-value">5+ Yrs</div>
               <div class="chip-2-sub">qa_engineering</div>
@@ -962,20 +1209,20 @@
           </div>
           <div class="about-me-text" data-reveal>
             <span class="section-label">// about_me</span>
-            <h2>The person behind<br/>the <em>test suite.</em></h2>
+            <h2 id="about-me-title">The person behind<br/>the <em>test suite.</em></h2>
             <div class="about-me-paragraphs" id="aboutBorderEl">
-              <div class="border-fill"></div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien at risus dapibus, eget facilisis libero varius. Proin dignissim ipsum non nisl tincidunt, vel consequat arcu fermentum. Nullam vehicula justo vel dui convallis, in dictum velit scelerisque.</p>
-              <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur fermentum, risus nec fringilla tincidunt, urna turpis vestibulum orci, a sodales nunc nulla vel enim. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</p>
+              <div class="border-fill" aria-hidden="true"></div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien at risus dapibus, eget facilisis libero varius. Proin dignissim ipsum non nisl tincidunt, vel consequat arcu fermentum.</p>
+              <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur fermentum, risus nec fringilla tincidunt, urna turpis vestibulum orci.</p>
             </div>
             <div class="about-me-facts">
-              <div class="fact-item"><div class="fact-icon">☕</div><strong>Fuelled by coffee</strong><span>& edge_cases</span></div>
-              <div class="fact-item"><div class="fact-icon">📍</div><strong>Based in the UK</strong><span>remote_first</span></div>
-              <div class="fact-item"><div class="fact-icon">🐛</div><strong>Bug hunter</strong><span>by_trade & nature</span></div>
-              <div class="fact-item"><div class="fact-icon">🎯</div><strong>Zero tolerance</strong><span>p1s_in_prod</span></div>
+              <div class="fact-item"><div class="fact-icon" aria-hidden="true">&#x2615;</div><strong>Fuelled by coffee</strong><span>&amp; edge_cases</span></div>
+              <div class="fact-item"><div class="fact-icon" aria-hidden="true">&#x1F4CD;</div><strong>Based in the UK</strong><span>remote_first</span></div>
+              <div class="fact-item"><div class="fact-icon" aria-hidden="true">&#x1F41B;</div><strong>Bug hunter</strong><span>by_trade &amp; nature</span></div>
+              <div class="fact-item"><div class="fact-icon" aria-hidden="true">&#x1F3AF;</div><strong>Zero tolerance</strong><span>p1s_in_prod</span></div>
             </div>
             <p class="about-me-pills-label">// my_toolkit</p>
-            <div class="about-me-pills">
+            <div class="about-me-pills" aria-label="Tools and technologies">
               <span class="about-pill">cypress</span><span class="about-pill">playwright</span><span class="about-pill">selenium</span>
               <span class="about-pill">postman</span><span class="about-pill">jira</span><span class="about-pill">testrail</span>
               <span class="about-pill">github_actions</span><span class="about-pill">browserstack</span>
@@ -986,15 +1233,14 @@
       </div>
     </section>
 
-    <!-- ════ FOOTER CTA ════ -->
     <div class="footer-cta">
       <div class="wrap">
         <div class="footer-cta-inner" data-reveal>
-          <div class="badge"><span class="sidebar-dot"></span>status: unavailable</div>
+          <div class="badge"><span class="sidebar-dot" aria-hidden="true"></span>status: unavailable</div>
           <h2>Let's build something <em>bulletproof.</em></h2>
           <p>A quick conversation to understand your project, your quality goals, and whether we're the right fit.</p>
           <div class="footer-cta-btns">
-            <a href="mailto:leestoby31@gmail.com" class="btn-primary">Get in touch →</a>
+            <a href="mailto:leestoby31@gmail.com" class="btn-primary">Get in touch &rarr;</a>
           </div>
         </div>
       </div>
@@ -1003,13 +1249,13 @@
     <div class="footer-bar">
       <div class="wrap">
         <div class="footer-bar-inner">
-          <span>© 2026 <em>Toby Lees</em>. All rights reserved.</span>
-          <span>qa_engineer · uk_based</span>
+          <span>&copy; 2026 <em>Toby Lees</em>. All rights reserved.</span>
+          <span>qa_engineer &middot; uk_based</span>
         </div>
       </div>
     </div>
 
-  </div><!-- /main -->
+  </div>
 
   <script>
     'use strict';
@@ -1048,22 +1294,14 @@
     document.querySelectorAll('.count').forEach(el => countObs.observe(el));
 
     /* ── Active sidebar ── */
-const allSections = document.querySelectorAll('section[id]');
-const sideLinks = document.querySelectorAll('.sidebar-nav a');
-
-window.addEventListener('scroll', () => {
-  let cur = '';
-  allSections.forEach(s => {
-    const top = s.getBoundingClientRect().top;
-    if (top <= 200) cur = s.id;
-  });
-  sideLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
-  });
-}, { passive: true });
-
-/* Highlight on load */
-window.dispatchEvent(new Event('scroll'));
+    const allSections = document.querySelectorAll('section[id]');
+    const sideLinks = document.querySelectorAll('.sidebar-nav a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      allSections.forEach(s => { if (s.getBoundingClientRect().top <= 200) cur = s.id; });
+      sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    }, { passive: true });
+    window.dispatchEvent(new Event('scroll'));
 
     /* ── Mobile menu ── */
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -1071,11 +1309,12 @@ window.dispatchEvent(new Event('scroll'));
     let menuOpen = false;
     mobileMenuBtn.addEventListener('click', () => {
       menuOpen = !menuOpen; mobileMenu.classList.toggle('open', menuOpen);
+      mobileMenuBtn.setAttribute('aria-expanded', menuOpen);
       const spans = mobileMenuBtn.querySelectorAll('span');
       if (menuOpen) { spans[0].style.transform='translateY(7px) rotate(45deg)'; spans[1].style.opacity='0'; spans[2].style.transform='translateY(-7px) rotate(-45deg)'; }
       else spans.forEach(s => { s.style.transform=''; s.style.opacity=''; });
     });
-    function closeMobileMenu() { menuOpen=false; mobileMenu.classList.remove('open'); mobileMenuBtn.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
+    function closeMobileMenu() { menuOpen=false; mobileMenu.classList.remove('open'); mobileMenuBtn.setAttribute('aria-expanded','false'); mobileMenuBtn.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
 
     /* ── Project tilt ── */
     document.querySelectorAll('.project-row').forEach(row => {
@@ -1101,13 +1340,11 @@ window.dispatchEvent(new Event('scroll'));
       const pending = document.getElementById('trPending');
       const timer = document.getElementById('trTime');
       const passLines = [8,10,12];
-
       function runAnimation() {
         let lineIdx=0, passing=0, elapsed=0;
         lines.forEach(l => l.classList.remove('visible'));
         passCount.textContent='✓ 0 passing'; pending.textContent='⏳ running...'; pending.style.color='#fbbf24';
         timer.textContent='0.0s'; progress.style.width='0%'; progressLabel.textContent='Running test suite...';
-
         const lineInt = setInterval(() => {
           if (lineIdx < lines.length) {
             lines[lineIdx].classList.add('visible');
@@ -1115,10 +1352,8 @@ window.dispatchEvent(new Event('scroll'));
             lineIdx++;
           } else { clearInterval(lineInt); progressLabel.textContent='All tests complete ✓'; pending.textContent='✓ complete'; pending.style.color='#22c55e'; }
         }, 280);
-
         const timeInt = setInterval(() => { elapsed+=0.1; timer.textContent=elapsed.toFixed(1)+'s'; if(elapsed>=4.1) clearInterval(timeInt); }, 100);
       }
-
       setTimeout(runAnimation, 1200);
       setInterval(runAnimation, 14000);
     })();
@@ -1148,22 +1383,18 @@ window.dispatchEvent(new Event('scroll'));
       { id:'QA-007', title:'Footer links 404 in staging environment', sev:'low', status:'open', client:'Breast Cancer UK', statusColor:'#16a34a' },
       { id:'QA-008', title:'Tab order breaks after modal dismissal on Firefox', sev:'low', status:'open', client:'Help for Heroes', statusColor:'#16a34a' },
     ];
-
     let currentFilter = 'all';
     let resolvedIds = new Set();
-
     function renderBugs() {
       const list = document.querySelector('.bt-list');
       const header = list.querySelector('.bt-header');
       list.innerHTML = '';
       list.appendChild(header);
-
-      let shown = bugs.filter(b => {
+      const shown = bugs.filter(b => {
         if (currentFilter === 'open') return !resolvedIds.has(b.id);
         if (currentFilter === 'resolved') return resolvedIds.has(b.id);
         return true;
       });
-
       shown.forEach(bug => {
         const resolved = resolvedIds.has(bug.id);
         const row = document.createElement('div');
@@ -1172,131 +1403,243 @@ window.dispatchEvent(new Event('scroll'));
           <div class="bt-id">${bug.id}</div>
           <div class="bt-title">${bug.title}</div>
           <div><span class="bt-severity sev-${bug.sev}">${bug.sev}</span></div>
-          <div class="bt-status"><div class="st-dot" style="background:${bug.statusColor}"></div>${resolved ? 'resolved' : bug.status}</div>
+          <div class="bt-status"><div class="st-dot" style="background:${bug.statusColor}" aria-hidden="true"></div>${resolved ? 'resolved' : bug.status}</div>
           <div class="bt-client">${bug.client}</div>
-          <div><button class="bt-action-btn${resolved ? ' resolved-btn' : ''}" onclick="toggleBug('${bug.id}')">${resolved ? '✓ Resolved' : 'Resolve'}</button></div>
+          <div><button class="bt-action-btn${resolved ? ' resolved-btn' : ''}" onclick="toggleBug('${bug.id}')" aria-label="${resolved ? 'Reopen' : 'Resolve'} bug ${bug.id}">${resolved ? '&#x2713; Resolved' : 'Resolve'}</button></div>
         `;
         list.appendChild(row);
       });
-
       document.getElementById('openCount').textContent = `${bugs.length - resolvedIds.size} open`;
       document.getElementById('resolvedCount').textContent = `${resolvedIds.size} resolved`;
     }
-
-    function toggleBug(id) {
-      if (resolvedIds.has(id)) resolvedIds.delete(id);
-      else resolvedIds.add(id);
-      renderBugs();
-    }
-
+    function toggleBug(id) { if (resolvedIds.has(id)) resolvedIds.delete(id); else resolvedIds.add(id); renderBugs(); }
     function filterBugs(filter, btn) {
       currentFilter = filter;
-      document.querySelectorAll('.bt-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      document.querySelectorAll('.bt-filter-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
       renderBugs();
     }
-
     renderBugs();
 
     /* ── Particle canvas ── */
-  /* ── Particle canvas — REPLACE the existing initParticles function with this ── */
-(function initParticles() {
-  const canvas = document.getElementById('particleCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const hero = canvas.parentElement;
-  let w = 0, h = 0;
-  const particles = [];
-  const mouse = { x: -9999, y: -9999 };
-  const COUNT = 120;
-
-  function resize() {
-    w = canvas.width = hero.offsetWidth;
-    h = canvas.height = hero.offsetHeight;
-  }
-
-  /* Wait for fonts + layout to settle before first measure */
-  window.addEventListener('load', resize);
-  window.addEventListener('resize', resize);
-  resize();
-
-  /* Also re-measure on next frame in case layout isn't ready yet */
-  requestAnimationFrame(() => { resize(); });
-  setTimeout(resize, 300);
-
-  hero.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-  hero.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
-
-  for (let i = 0; i < COUNT; i++) {
-    particles.push({
-      x:     Math.random() * (w || 1400),
-      y:     Math.random() * (h || 900),
-      vx:    (Math.random() - 0.5) * 0.35,
-      vy:    (Math.random() - 0.5) * 0.35,
-      r:     Math.random() * 1.5 + 0.4,
-      alpha: Math.random() * 0.45 + 0.1,
-    });
-  }
-
-  function draw() {
-    /* If canvas still has no size, keep trying */
-    if (w === 0 || h === 0) { resize(); requestAnimationFrame(draw); return; }
-
-    ctx.clearRect(0, 0, w, h);
-
-    particles.forEach(p => {
-      const dx   = p.x - mouse.x;
-      const dy   = p.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < 130 && dist > 0) {
-        const force = (130 - dist) / 130 * 0.9;
-        p.vx += (dx / dist) * force;
-        p.vy += (dy / dist) * force;
+    (function initParticles() {
+      const canvas = document.getElementById('particleCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const hero = canvas.parentElement;
+      let w = 0, h = 0;
+      const particles = [];
+      const mouse = { x: -9999, y: -9999 };
+      const COUNT = 120;
+      function resize() { w = canvas.width = hero.offsetWidth; h = canvas.height = hero.offsetHeight; }
+      window.addEventListener('load', resize);
+      window.addEventListener('resize', resize);
+      resize();
+      requestAnimationFrame(() => { resize(); });
+      setTimeout(resize, 300);
+      hero.addEventListener('mousemove', e => { const rect = canvas.getBoundingClientRect(); mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top; });
+      hero.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+      for (let i = 0; i < COUNT; i++) {
+        particles.push({ x:Math.random()*(w||1400), y:Math.random()*(h||900), vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35, r:Math.random()*1.5+.4, alpha:Math.random()*.45+.1 });
       }
-
-      p.vx *= 0.97;
-      p.vy *= 0.97;
-      p.x  += p.vx;
-      p.y  += p.vy;
-
-      if (p.x < 0)  p.x = w;
-      if (p.x > w)  p.x = 0;
-      if (p.y < 0)  p.y = h;
-      if (p.y > h)  p.y = 0;
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(240,231,213,${p.alpha})`;
-      ctx.fill();
-    });
-
-    /* Connections */
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx   = particles[i].x - particles[j].x;
-        const dy   = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 110) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(240,231,213,${0.12 * (1 - dist/100)})`;
-          ctx.lineWidth   = 0.5;
-          ctx.stroke();
+      function draw() {
+        if (w===0||h===0) { resize(); requestAnimationFrame(draw); return; }
+        ctx.clearRect(0,0,w,h);
+        particles.forEach(p => {
+          const dx=p.x-mouse.x, dy=p.y-mouse.y, dist=Math.sqrt(dx*dx+dy*dy);
+          if (dist<130&&dist>0) { const force=(130-dist)/130*.9; p.vx+=(dx/dist)*force; p.vy+=(dy/dist)*force; }
+          p.vx*=.97; p.vy*=.97; p.x+=p.vx; p.y+=p.vy;
+          if(p.x<0)p.x=w; if(p.x>w)p.x=0; if(p.y<0)p.y=h; if(p.y>h)p.y=0;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle=`rgba(240,231,213,${p.alpha})`; ctx.fill();
+        });
+        for(let i=0;i<particles.length;i++) {
+          for(let j=i+1;j<particles.length;j++) {
+            const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y, dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<110){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(240,231,213,${.12*(1-dist/100)})`;ctx.lineWidth=.5;ctx.stroke();}
+          }
         }
+        requestAnimationFrame(draw);
       }
-    }
+      draw();
+    })();
 
-    requestAnimationFrame(draw);
-  }
+    /* ══════════════════════════════════════════════════
+       ACCESSIBILITY TOOLBAR — WCAG 2.1
+    ══════════════════════════════════════════════════ */
+    (function a11yToolbar() {
+      'use strict';
 
-  draw();
-})();
+      const STORAGE_KEY = 'toby_a11y_prefs_v2';
+      const root  = document.documentElement;
+      const body  = document.body;
+
+      /* Default prefs */
+      let prefs = {
+        fontScale:     1,
+        highContrast:  false,
+        reduceMotion:  false,
+        dyslexia:      false,
+        focusEnhanced: false,
+        largeCursor:   false,
+      };
+
+      /* Load saved prefs */
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) prefs = Object.assign({}, prefs, JSON.parse(saved));
+      } catch(e) {}
+
+      /* Save prefs */
+      function save() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs)); } catch(e) {}
+      }
+
+      /* Apply all prefs to DOM */
+      function apply() {
+        /* 1. Font scale */
+        const scale = Math.min(Math.max(prefs.fontScale, 0.85), 1.6);
+        prefs.fontScale = scale;
+        root.style.setProperty('--a11y-font-scale', scale);
+        const display = document.getElementById('fontDisplay');
+        if (display) display.textContent = Math.round(scale * 100) + '%';
+
+        /* 2. High contrast */
+        body.classList.toggle('a11y-high-contrast', prefs.highContrast);
+        const contrastToggle = document.getElementById('toggleContrast');
+        if (contrastToggle) {
+          contrastToggle.checked = prefs.highContrast;
+          contrastToggle.setAttribute('aria-checked', prefs.highContrast);
+        }
+
+        /* 3. Reduce motion */
+        body.classList.toggle('a11y-reduce-motion', prefs.reduceMotion);
+        const motionToggle = document.getElementById('toggleMotion');
+        if (motionToggle) {
+          motionToggle.checked = prefs.reduceMotion;
+          motionToggle.setAttribute('aria-checked', prefs.reduceMotion);
+        }
+
+        /* 4. Dyslexia font */
+        body.classList.toggle('a11y-dyslexia', prefs.dyslexia);
+        const dyslexiaToggle = document.getElementById('toggleDyslexia');
+        if (dyslexiaToggle) {
+          dyslexiaToggle.checked = prefs.dyslexia;
+          dyslexiaToggle.setAttribute('aria-checked', prefs.dyslexia);
+        }
+
+        /* 5. Enhanced focus */
+        body.classList.toggle('a11y-focus-enhanced', prefs.focusEnhanced);
+        const focusToggle = document.getElementById('toggleFocus');
+        if (focusToggle) {
+          focusToggle.checked = prefs.focusEnhanced;
+          focusToggle.setAttribute('aria-checked', prefs.focusEnhanced);
+        }
+
+        /* 6. Large cursor */
+        const cur  = document.getElementById('cursor');
+        const rng  = document.getElementById('cursorRing');
+        body.classList.toggle('a11y-large-cursor', prefs.largeCursor);
+        const cursorToggle = document.getElementById('toggleCursor');
+        if (cursorToggle) {
+          cursorToggle.checked = prefs.largeCursor;
+          cursorToggle.setAttribute('aria-checked', prefs.largeCursor);
+        }
+        if (cur && rng) {
+          if (prefs.largeCursor) {
+            cur.style.width = '20px'; cur.style.height = '20px';
+            rng.style.width = '56px'; rng.style.height = '56px';
+          } else {
+            cur.style.width = ''; cur.style.height = '';
+            rng.style.width = ''; rng.style.height = '';
+          }
+        }
+
+        save();
+      }
+
+      /* Panel open/close */
+      const trigger  = document.getElementById('a11yTrigger');
+      const panel    = document.getElementById('a11yPanel');
+      const closeBtn = document.getElementById('a11yClose');
+      let isOpen = false;
+
+      function openPanel() {
+        isOpen = true;
+        panel.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.focus();
+      }
+
+      function closePanel() {
+        isOpen = false;
+        panel.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus();
+      }
+
+      if (trigger) trigger.addEventListener('click', () => isOpen ? closePanel() : openPanel());
+      if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+      /* Close on Escape key (WCAG 2.1.2) */
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && isOpen) closePanel();
+      });
+
+      /* Close on outside click */
+      document.addEventListener('click', e => {
+        if (isOpen && !panel.contains(e.target) && e.target !== trigger) closePanel();
+      });
+
+      /* Font size controls */
+      const steps = [0.85, 0.9, 1, 1.1, 1.2, 1.35, 1.5, 1.6];
+
+      document.getElementById('fontIncrease').addEventListener('click', () => {
+        const idx = steps.findIndex(s => s > prefs.fontScale);
+        if (idx !== -1) { prefs.fontScale = steps[idx]; apply(); }
+      });
+
+      document.getElementById('fontDecrease').addEventListener('click', () => {
+        const idx = [...steps].reverse().findIndex(s => s < prefs.fontScale);
+        if (idx !== -1) { prefs.fontScale = steps[steps.length - 1 - idx]; apply(); }
+      });
+
+      document.getElementById('fontReset').addEventListener('click', () => {
+        prefs.fontScale = 1; apply();
+      });
+
+      /* Toggle handlers */
+      document.getElementById('toggleContrast').addEventListener('change', e => {
+        prefs.highContrast = e.target.checked; apply();
+      });
+      document.getElementById('toggleMotion').addEventListener('change', e => {
+        prefs.reduceMotion = e.target.checked; apply();
+      });
+      document.getElementById('toggleDyslexia').addEventListener('change', e => {
+        prefs.dyslexia = e.target.checked; apply();
+      });
+      document.getElementById('toggleFocus').addEventListener('change', e => {
+        prefs.focusEnhanced = e.target.checked; apply();
+      });
+      document.getElementById('toggleCursor').addEventListener('change', e => {
+        prefs.largeCursor = e.target.checked; apply();
+      });
+
+      /* Reset all */
+      document.getElementById('a11yResetAll').addEventListener('click', () => {
+        prefs = { fontScale:1, highContrast:false, reduceMotion:false, dyslexia:false, focusEnhanced:false, largeCursor:false };
+        apply();
+      });
+
+      /* Honour system prefers-reduced-motion on first load */
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && !prefs.reduceMotion) {
+        prefs.reduceMotion = true;
+      }
+
+      /* Apply saved/default prefs on load */
+      apply();
+
+    })();
 
   </script>
 </body>

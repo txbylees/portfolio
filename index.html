@@ -109,9 +109,14 @@ body.a11y-high-contrast {
   --dark-border: rgba(255,255,255,0.4);
   filter: contrast(1.15);
 }
-body.a11y-high-contrast *:focus-visible {
-  outline: 4px solid #ff0 !important;
-  outline-offset: 3px !important;
+body.a11y-high-contrast .a11y-panel {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+body.a11y-high-contrast .a11y-trigger {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
 }
 
 /* Reduce motion (WCAG 2.3.3) */
@@ -227,7 +232,11 @@ body.a11y-large-cursor { cursor: none; }
   scrollbar-width: thin;
   scrollbar-color: rgba(240,231,213,0.15) transparent;
 }
-.a11y-panel.open { right: 0; }
+.a11y-panel.open {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .a11y-panel-header {
   display: flex;
